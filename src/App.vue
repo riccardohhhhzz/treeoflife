@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <Login class="center"></Login>
+    <Register class="center"></Register>
   </div>
 </template>
 
 <script>
-import Login from "./pages/Login.vue";
+import Register from "./pages/Register.vue";
 export default {
   name: "App",
-  components: { Login },
+  components: { Register },
 };
 </script>
 
@@ -31,6 +31,9 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
+}
+.margin-bottom-30 {
+  margin-bottom: 30px;
 }
 .margin-bottom-40 {
   margin-bottom: 40px;

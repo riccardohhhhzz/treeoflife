@@ -4,7 +4,7 @@
     <LifeTitle class="title"></LifeTitle>
     <TextField title="用户名/邮箱" class="margin-bottom-40"></TextField>
     <TextField title="密码" inputType="password"></TextField>
-    <MyButton class="myButton"></MyButton>
+    <MyButton class="myButton">登录</MyButton>
     <div class="links">
       <LinkText
         content="创建新账号"

@@ -1,5 +1,7 @@
 <template>
-  <button>登录</button>
+  <button>
+    <slot>按钮</slot>
+  </button>
 </template>
 
 <script>
