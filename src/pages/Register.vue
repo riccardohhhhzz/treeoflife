@@ -1,5 +1,5 @@
 <template>
-  <div class="form">
+  <div class="form center">
     <div class="topBar"></div>
     <LifeTitle class="title"></LifeTitle>
     <div class="haveAccount">
@@ -7,7 +7,7 @@
         已有帐号？<LinkText
           content="登录"
           style="display: inline-block"
-          href="https://baidu.com"
+          routeName="login"
         ></LinkText>
       </h4>
     </div>

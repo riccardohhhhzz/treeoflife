@@ -1,5 +1,5 @@
 <template>
-  <div class="form">
+  <div class="form center">
     <div class="topBar"></div>
     <LifeTitle class="title"></LifeTitle>
     <TextField title="用户名/邮箱" class="margin-bottom-40"></TextField>
@@ -8,14 +8,10 @@
     <div class="links">
       <LinkText
         content="创建新账号"
-        href="https://baidu.com"
+        routeName="register"
         class="float-left"
       ></LinkText>
-      <LinkText
-        content="忘记密码？"
-        href="https://baidu.com"
-        class="float-right"
-      ></LinkText>
+      <LinkText content="忘记密码？" class="float-right"></LinkText>
     </div>
   </div>
 </template>

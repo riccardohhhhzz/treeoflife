@@ -1,14 +1,15 @@
 <template>
   <div id="app">
-    <Register class="center"></Register>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Login from "./pages/Login.vue";
 import Register from "./pages/Register.vue";
 export default {
   name: "App",
-  components: { Register },
+  components: { Login, Register },
 };
 </script>
 

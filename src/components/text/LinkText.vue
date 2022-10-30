@@ -1,10 +1,9 @@
 <template>
   <div>
     <a
-      :href="href"
-      target="_blank"
       @mouseover="hover = true"
       @mouseleave="hover = false"
+      @click="changeRoute"
       >{{ content }}</a
     >
     <transition name="expand">
@@ -16,7 +15,7 @@
 <script>
 export default {
   name: "LinkText",
-  props: ["href", "content"],
+  props: ["routeName", "content"],
   data() {
     return {
       hover: false,
@@ -29,6 +28,13 @@ export default {
       };
     },
   },
+  methods: {
+    changeRoute() {
+      this.$router.push({
+        name: this.routeName,
+      });
+    },
+  },
 };
 </script>
 
@@ -36,6 +42,9 @@ export default {
 a {
   color: #3a62ca;
   font-size: 16px;
+}
+a:hover {
+  cursor: pointer;
 }
 .underline {
   height: 1.5px;
