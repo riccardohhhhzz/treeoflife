@@ -2,7 +2,7 @@
   <div class="form">
     <div class="topBar"></div>
     <LifeTitle class="title"></LifeTitle>
-    <TextField title="用户名or邮箱" class="margin-bottom-40"></TextField>
+    <TextField title="用户名/邮箱" class="margin-bottom-40"></TextField>
     <TextField title="密码" inputType="password"></TextField>
     <MyButton class="myButton"></MyButton>
     <div class="links">
