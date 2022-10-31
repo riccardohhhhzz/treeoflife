@@ -25,7 +25,7 @@
       title="用户名"
       subtitle="这对其他Treeoflife成员可见。您可以使用匿名名称。"
     ></TextField>
-    <!-- <MyDropdown></MyDropdown> -->
+    <MyDropdown></MyDropdown>
     <MyButton class="myButton">创建账号</MyButton>
   </div>
 </template>
