@@ -1,43 +1,23 @@
 <template>
-  <div>
-    <h2 class="title">{{ title }}</h2>
-    <h3 class="subtitle">{{ subtitle }}</h3>
-    <div class="myInput clearfix">
-      <input :type="localInputType" class="basic" />
-      <svg-icon
-        :icon-class="eyeIcon"
-        class="eye"
-        @click.native="changeEyeIcon"
-        v-if="showEye"
-      ></svg-icon>
-    </div>
-    <div class="hintBox" v-if="showWarn">
-      <svg-icon icon-class="warn"></svg-icon>
-      <h3 class="hint">{{ hint }}</h3>
-    </div>
+  <div class="myInput">
+    <input :type="localInputType" class="basic" />
+    <svg-icon
+      :icon-class="eyeIcon"
+      class="eye"
+      @click.native="changeEyeIcon"
+      v-if="showEye"
+    ></svg-icon>
   </div>
 </template>
 
 <script>
 export default {
-  name: "TextField",
+  name: "TextInput",
   props: {
+    // text,password
     inputType: {
       type: String,
       default: "text",
-    },
-    title: {
-      type: String,
-    },
-    subtitle: {
-      type: String,
-    },
-    showWarn: {
-      type: Boolean,
-      default: false,
-    },
-    hint: {
-      type: String,
     },
   },
   data() {
@@ -72,19 +52,7 @@ export default {
 };
 </script>
 
-<style scoped>
-h2 {
-  font-size: 18px;
-  font-weight: 400;
-  color: #333333;
-  width: fit-content;
-}
-h3 {
-  font-size: 14px;
-  font-weight: 400;
-  color: #6e6e6e;
-  width: fit-content;
-}
+<style>
 input:hover {
   border: 1px solid #939597;
 }
@@ -93,16 +61,6 @@ input:focus {
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
   /* 去掉默认input焦点边框 */
   outline: none;
-}
-.title {
-  margin-bottom: 10px;
-}
-.subtitle {
-  margin-bottom: 5px;
-}
-.hint {
-  display: inline;
-  margin-left: 10px;
 }
 .basic {
   width: 278px;
@@ -113,10 +71,6 @@ input:focus {
   color: #333333;
   padding: 0px 10px;
   margin-bottom: 5px;
-}
-.hintBox {
-  padding-left: 20px;
-  width: 280px;
 }
 .eye {
   position: absolute;

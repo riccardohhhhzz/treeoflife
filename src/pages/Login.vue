@@ -2,8 +2,11 @@
   <div class="form center">
     <div class="topBar"></div>
     <LifeTitle class="title"></LifeTitle>
-    <TextField title="用户名/邮箱" class="margin-bottom-40"></TextField>
-    <TextField title="密码" inputType="password"></TextField>
+    <UserInfoInputItem
+      title="用户名/邮箱"
+      class="margin-bottom-40"
+    ></UserInfoInputItem>
+    <UserInfoInputItem title="密码" inputType="password"></UserInfoInputItem>
     <MyButton class="myButton">登录</MyButton>
     <div class="links">
       <LinkText
@@ -17,13 +20,13 @@
 </template>
 
 <script>
-import TextField from "../components/basic/TextField.vue";
 import LifeTitle from "../components/text/LifeTitle.vue";
 import MyButton from "../components/basic/MyButton.vue";
 import LinkText from "../components/text/LinkText.vue";
+import UserInfoInputItem from "../components/complex/UserInfoInputItem.vue";
 export default {
   name: "Login",
-  components: { TextField, LifeTitle, MyButton, LinkText },
+  components: { LifeTitle, MyButton, LinkText, UserInfoInputItem },
 };
 </script>
 

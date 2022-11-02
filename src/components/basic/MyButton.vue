@@ -1,5 +1,5 @@
 <template>
-  <button>
+  <button :style="styleVar">
     <slot>按钮</slot>
   </button>
 </template>
@@ -7,13 +7,26 @@
 <script>
 export default {
   name: "MyButton",
+  props: {
+    width: {
+      type: Number,
+      default: 140,
+    },
+  },
+  computed: {
+    styleVar() {
+      return {
+        "--width": this.width + "px",
+      };
+    },
+  },
 };
 </script>
 
 <style scoped>
 button {
   padding: 0px 10px;
-  width: 140px;
+  width: var(--width);
   height: 48px;
   font-size: 18px;
   background-color: #4dcf90;
