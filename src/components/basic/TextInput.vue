@@ -52,7 +52,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 input:hover {
   border: 1px solid #939597;
 }

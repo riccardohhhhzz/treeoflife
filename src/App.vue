@@ -5,11 +5,8 @@
 </template>
 
 <script>
-import Login from "./pages/Login.vue";
-import Register from "./pages/Register.vue";
 export default {
   name: "App",
-  components: { Login, Register },
 };
 </script>
 
@@ -32,6 +29,12 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
+}
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+.margin-bottom-20 {
+  margin-bottom: 20px;
 }
 .margin-bottom-30 {
   margin-bottom: 30px;

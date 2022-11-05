@@ -14,7 +14,11 @@
         routeName="register"
         class="float-left"
       ></LinkText>
-      <LinkText content="忘记密码？" class="float-right"></LinkText>
+      <LinkText
+        content="忘记密码？"
+        routeName="setnewpsw"
+        class="float-right"
+      ></LinkText>
     </div>
   </div>
 </template>

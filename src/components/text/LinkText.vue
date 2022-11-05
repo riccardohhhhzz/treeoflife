@@ -4,9 +4,10 @@
       @mouseover="hover = true"
       @mouseleave="hover = false"
       @click="changeRoute"
+      :style="styleVar"
       >{{ content }}</a
     >
-    <transition name="expand">
+    <transition name="expand" v-if="showUnderline">
       <div class="underline" :style="styleVar" v-if="hover"></div>
     </transition>
   </div>
@@ -15,7 +16,26 @@
 <script>
 export default {
   name: "LinkText",
-  props: ["routeName", "content"],
+  props: {
+    routeName: {
+      type: String,
+    },
+    content: {
+      type: String,
+    },
+    fontSize: {
+      type: Number,
+      default: 16,
+    },
+    showUnderline: {
+      type: Boolean,
+      default: true,
+    },
+    enableChangeRoute: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       hover: false,
@@ -24,15 +44,18 @@ export default {
   computed: {
     styleVar() {
       return {
-        "--width": this.content.length * 16 + "px",
+        "--width": this.content.length * this.fontSize + "px",
+        "--fontSize": this.fontSize + "px",
       };
     },
   },
   methods: {
     changeRoute() {
-      this.$router.push({
-        name: this.routeName,
-      });
+      if (this.enableChangeRoute) {
+        this.$router.push({
+          name: this.routeName,
+        });
+      }
     },
   },
 };
@@ -41,7 +64,7 @@ export default {
 <style scoped>
 a {
   color: #3a62ca;
-  font-size: 16px;
+  font-size: var(--fontSize);
 }
 a:hover {
   cursor: pointer;

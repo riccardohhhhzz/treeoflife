@@ -31,7 +31,9 @@
       subtitle="这仅对其他 Treeoflife 社区成员可见。"
       inputType="birthday"
     ></UserInfoInputItem>
-    <MyButton class="myButton" :width="180">创建账号</MyButton>
+    <MyButton class="myButton" :width="180" @click.native="gotoVerification"
+      >创建账号</MyButton
+    >
   </div>
 </template>
 
@@ -48,6 +50,27 @@ export default {
     MyButton,
     LinkText,
     UserInfoInputItem,
+  },
+  data() {
+    return {
+      userInfo: {
+        email: null,
+        password: null,
+        userName: null,
+        birthday: {
+          year: null,
+          month: null,
+          day: null,
+        },
+      },
+    };
+  },
+  methods: {
+    gotoVerification() {
+      this.$router.push({
+        name: "verify",
+      });
+    },
   },
 };
 </script>

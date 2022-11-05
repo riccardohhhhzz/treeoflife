@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 //引入路由组件
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import SetNewPsw from "../pages/SetNewPsw";
+import Verification from "../pages/Verification"
 
 //创建router实例对象
 const router = new VueRouter({
@@ -10,18 +12,28 @@ const router = new VueRouter({
         {
             name: "default",
             path: '/',
-            component: Login
+            component: Login,
         },
         {
             name: "login",
             path: '/login',
-            component: Login
+            component: Login,
         },
         {
             name: "register",
             path: '/register',
             component: Register
-        }
+        },
+        {
+            name: "setnewpsw",
+            path: "/setnewpsw",
+            component: SetNewPsw,
+        },
+        {
+            name: "verify",
+            path: "/verify",
+            component: Verification,
+        },
     ]
 })
 
