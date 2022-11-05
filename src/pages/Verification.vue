@@ -1,4 +1,3 @@
-// 邮箱验证码界面
 <template>
   <div class="form center">
     <div class="topBar"></div>

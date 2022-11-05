@@ -4,7 +4,9 @@
       :type="localInputType"
       class="basic"
       v-model="str"
-      @blur="sendMessage"
+      @blur="sendMessage('update')"
+      @input="sendMessage('updateImmediately')"
+      :style="styleVar"
     />
     <svg-icon
       :icon-class="eyeIcon"
@@ -23,6 +25,22 @@ export default {
     inputType: {
       type: String,
       default: "text",
+    },
+    bgColor: {
+      type: String,
+      default: "#e9f0fe",
+    },
+    borderRadius: {
+      type: Number,
+      default: 0,
+    },
+    focusBorderColor: {
+      type: String,
+      default: "#5e5e5e",
+    },
+    showShadow: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -50,13 +68,21 @@ export default {
         return false;
       }
     },
+    styleVar() {
+      return {
+        "--bgColor": this.bgColor,
+        "--borderRadius": this.borderRadius + "px",
+        "--focusBorderColor": this.focusBorderColor,
+        "--shadow": this.showShadow ? "rbga(0, 0, 0, 0.25)" : "none",
+      };
+    },
   },
   methods: {
     changeEyeIcon() {
       this.pswIsVisible = !this.pswIsVisible;
     },
-    sendMessage() {
-      this.$emit("update", this.str);
+    sendMessage(eventName) {
+      this.$emit(eventName, this.str);
     },
   },
 };
@@ -67,17 +93,18 @@ input:hover {
   border: 1px solid #939597;
 }
 input:focus {
-  border: 1px solid #5e5e5e;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--focusBorderColor);
+  box-shadow: 0px 0px 6px 0px var(--shadow);
   /* 去掉默认input焦点边框 */
   outline: none;
 }
 .basic {
   width: 278px;
-  height: 36px;
+  height: 40px;
   font-size: 16px;
   border: 1px solid #cdcdcd;
-  background-color: #e9f0fe;
+  background-color: var(--bgColor);
+  border-radius: var(--borderRadius);
   color: #333333;
   padding: 0px 10px;
   margin-bottom: 5px;
@@ -85,7 +112,7 @@ input:focus {
 .eye {
   position: absolute;
   left: 90%;
-  top: 20%;
+  top: 23%;
 }
 .eye:hover {
   cursor: pointer;
