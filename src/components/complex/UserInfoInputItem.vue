@@ -2,8 +2,12 @@
   <div>
     <h2 class="title">{{ title }}</h2>
     <h3 class="subtitle">{{ subtitle }}</h3>
-    <TextInput :inputType="inputType" v-if="showTextInput"></TextInput>
-    <TimeDropdown v-if="showTimeDropdown"></TimeDropdown>
+    <TextInput
+      :inputType="inputType"
+      v-if="showTextInput"
+      @update="getValue"
+    ></TextInput>
+    <TimeDropdown v-if="showTimeDropdown" @update="getValue"></TimeDropdown>
     <div class="hintBox" v-if="showWarn">
       <svg-icon icon-class="warn"></svg-icon>
       <h3 class="hint">{{ hint }}</h3>
@@ -36,6 +40,8 @@ export default {
   data() {
     return {
       showWarn: false,
+      // 用户输入数据
+      value: null,
     };
   },
   computed: {
@@ -44,6 +50,11 @@ export default {
     },
     showTimeDropdown() {
       return this.inputType == "birthday";
+    },
+  },
+  methods: {
+    getValue(newValue) {
+      this.value = newValue;
     },
   },
 };

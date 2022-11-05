@@ -15,21 +15,25 @@
       title="邮箱"
       subtitle="您的电子邮件地址不会与任何人共享"
       class="margin-bottom-40"
+      ref="email"
     ></UserInfoInputItem>
     <UserInfoInputItem
       title="密码"
       inputType="password"
       class="margin-bottom-40"
+      ref="psw"
     ></UserInfoInputItem>
     <UserInfoInputItem
       title="用户名"
       subtitle="这对其他Treeoflife成员可见。您可以使用匿名名称。"
       class="margin-bottom-40"
+      ref="username"
     ></UserInfoInputItem>
     <UserInfoInputItem
       title="生日"
       subtitle="这仅对其他 Treeoflife 社区成员可见。"
       inputType="birthday"
+      ref="birthday"
     ></UserInfoInputItem>
     <MyButton class="myButton" :width="180" @click.native="gotoVerification"
       >创建账号</MyButton
@@ -67,6 +71,12 @@ export default {
   },
   methods: {
     gotoVerification() {
+      // 收集表单数据
+      this.userInfo.email = this.$refs["email"].value;
+      this.userInfo.password = this.$refs["psw"].value;
+      this.userInfo.userName = this.$refs["username"].value;
+      this.userInfo.birthday = this.$refs["birthday"].value;
+      //  TODO: 发送axios请求
       this.$router.push({
         name: "verify",
       });

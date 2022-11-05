@@ -2,7 +2,7 @@
   <div>
     <div class="dropdownBox" :style="styleVar">
       <svg-icon icon-class="dropdown" class="dropdownIcon"></svg-icon>
-      <select :style="styleVar" v-model="currentValue">
+      <select :style="styleVar" v-model="currentValue" @blur="blurEmit">
         <option v-for="(m, index) in arr" :key="index" :value="m">
           {{ m }}
         </option>
@@ -51,6 +51,11 @@ export default {
       handler(newValue, oldValue) {
         this.updateValue(this.inputType, newValue);
       },
+    },
+  },
+  methods: {
+    blurEmit() {
+      this.$emit("blur");
     },
   },
 };

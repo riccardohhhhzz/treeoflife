@@ -7,6 +7,7 @@
       unit="年"
       :width="80"
       :updateValue="updateSelectDate"
+      @blur="sendMessage"
     ></MyDropdown>
     <MyDropdown
       class="display-inline-block"
@@ -15,6 +16,7 @@
       unit="月"
       :width="70"
       :updateValue="updateSelectDate"
+      @blur="sendMessage"
     ></MyDropdown>
     <MyDropdown
       class="display-inline-block"
@@ -23,6 +25,7 @@
       unit="日"
       :width="70"
       :updateValue="updateSelectDate"
+      @blur="sendMessage"
     ></MyDropdown>
   </div>
 </template>
@@ -79,6 +82,9 @@ export default {
         default:
           break;
       }
+    },
+    sendMessage() {
+      this.$emit("update", this.selectDate);
     },
   },
 };

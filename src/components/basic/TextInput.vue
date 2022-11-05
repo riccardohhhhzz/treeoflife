@@ -1,6 +1,11 @@
 <template>
   <div class="myInput">
-    <input :type="localInputType" class="basic" />
+    <input
+      :type="localInputType"
+      class="basic"
+      v-model="str"
+      @blur="sendMessage"
+    />
     <svg-icon
       :icon-class="eyeIcon"
       class="eye"
@@ -23,6 +28,8 @@ export default {
   data() {
     return {
       pswIsVisible: false,
+      // 用户输入的String
+      str: null,
     };
   },
   computed: {
@@ -47,6 +54,9 @@ export default {
   methods: {
     changeEyeIcon() {
       this.pswIsVisible = !this.pswIsVisible;
+    },
+    sendMessage() {
+      this.$emit("update", this.str);
     },
   },
 };
