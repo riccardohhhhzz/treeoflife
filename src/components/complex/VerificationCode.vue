@@ -31,6 +31,8 @@ export default {
       if (this.sixCode[index] !== undefined && index < 5) {
         this.$refs.verifyCode[index + 1].focus();
       }
+      var verifyCode = this.sixCode.join().replace(/[,]/g, "");
+      this.$emit("finished", verifyCode);
     },
     deleteCode(index) {
       if (index > 0) {

@@ -79,6 +79,9 @@ export default {
       //  TODO: 发送axios请求
       this.$router.push({
         name: "verify",
+        params: {
+          email: this.userInfo.email,
+        },
       });
     },
   },

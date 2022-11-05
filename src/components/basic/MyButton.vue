@@ -47,6 +47,10 @@ export default {
       type: Number,
       default: 10,
     },
+    clickable: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     styleVar() {
@@ -55,9 +59,10 @@ export default {
         "--height": this.height + "px",
         "--fontSize": this.fontSize + "px",
         "--color": this.color,
-        "--bgColor": this.bgColor,
-        "--hoverColor": this.hoverColor,
+        "--bgColor": this.clickable ? this.bgColor : "#E5E5E5",
+        "--hoverColor": this.clickable ? this.hoverColor : "#E5E5E5",
         "--paddingHorizon": this.paddingHorizon + "px",
+        "--cursor": this.clickable ? "pointer" : "default",
       };
     },
   },
@@ -66,6 +71,7 @@ export default {
 
 <style scoped>
 button {
+  outline: none;
   padding: 0px var(--paddingHorizon);
   width: var(--width);
   height: var(--height);
@@ -77,7 +83,7 @@ button {
 }
 button:hover {
   background-color: var(--hoverColor);
-  cursor: pointer;
+  cursor: var(--cursor);
 }
 .myIcon {
   margin-right: 2px;

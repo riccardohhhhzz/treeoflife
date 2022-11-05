@@ -5,9 +5,14 @@
     <UserInfoInputItem
       title="用户名/邮箱"
       class="margin-bottom-40"
+      ref="usernameOrEmail"
     ></UserInfoInputItem>
-    <UserInfoInputItem title="密码" inputType="password"></UserInfoInputItem>
-    <MyButton class="myButton">登录</MyButton>
+    <UserInfoInputItem
+      title="密码"
+      inputType="password"
+      ref="password"
+    ></UserInfoInputItem>
+    <MyButton class="myButton" @click.native="gotoHomepage">登录</MyButton>
     <div class="links">
       <LinkText
         content="创建新账号"
@@ -31,6 +36,20 @@ import UserInfoInputItem from "../components/complex/UserInfoInputItem.vue";
 export default {
   name: "Login",
   components: { LifeTitle, MyButton, LinkText, UserInfoInputItem },
+  data() {
+    return {
+      loginInfo: {
+        usernameOrEmail: null,
+        password: null,
+      },
+    };
+  },
+  methods: {
+    gotoHomepage() {
+      this.loginInfo.usernameOrEmail = this.$refs["usernameOrEmail"].value;
+      this.loginInfo.password = this.$refs["password"].value;
+    },
+  },
 };
 </script>
 

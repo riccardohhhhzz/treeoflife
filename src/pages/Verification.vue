@@ -18,9 +18,13 @@
     >
     <h3 class="margin-bottom-10">输入邮箱验证码</h3>
     <h5 class="subtitle margin-bottom-20">
-      请输入发送至xxx的6位验证码，有效期10分钟
+      请输入发送至<font class="email">{{ userEmail }}</font
+      >的6位验证码，有效期10分钟
     </h5>
-    <VerificationCode class="margin-bottom-10"></VerificationCode>
+    <VerificationCode
+      class="margin-bottom-10"
+      @finished="getVerifyCode"
+    ></VerificationCode>
     <div style="height: 20px">
       <h5 class="subtitle" v-if="second > 0">
         {{ second }}秒后可重新获取验证码
@@ -34,7 +38,13 @@
         :enableChangeRoute="false"
       ></LinkText>
     </div>
-    <MyButton :width="298" :height="40" :fontSize="16" class="myButton"
+    <MyButton
+      :width="298"
+      :height="40"
+      :fontSize="16"
+      :clickable="btnClickable"
+      class="myButton"
+      @click.native="gotoHomepage"
       >下一步</MyButton
     >
   </div>
@@ -50,7 +60,14 @@ export default {
   data() {
     return {
       second: 59,
+      verifyCode: "",
+      userEmail: "",
     };
+  },
+  computed: {
+    btnClickable() {
+      return this.verifyCode.length === 6;
+    },
   },
   methods: {
     back() {
@@ -59,11 +76,23 @@ export default {
     reGetVerifyCode() {
       this.second = 59;
     },
+    getVerifyCode(value) {
+      this.verifyCode = value;
+    },
+    gotoHomepage() {
+      if (this.btnClickable) {
+        console.log(this.verifyCode);
+        console.log("完成验证");
+      } else {
+        alert("请输入验证码");
+      }
+    },
   },
   mounted() {
     this.timer = setInterval(() => {
       this.second -= 1;
     }, 1000);
+    this.userEmail = this.$route.params.email;
   },
   beforeDestroy() {
     clearInterval(this.timer);
@@ -90,8 +119,13 @@ export default {
   color: #6e6e6e;
   font-weight: 400;
   font-size: 14px;
+  height: 26px;
 }
 .myButton {
-  margin-top: 98px;
+  margin-top: 92px;
+}
+.email {
+  color: #000;
+  font-weight: 500;
 }
 </style>
