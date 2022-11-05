@@ -19,7 +19,7 @@ export default {
   name: "VerificationCode",
   data() {
     return {
-      sixCode: Array(6).fill(null),
+      sixCode: Array(6).fill(""),
     };
   },
   methods: {
