@@ -19,13 +19,13 @@
     <div class="links">
       <LinkText
         content="创建新账号"
-        routeName="register"
         class="float-left"
+        @click="gotoRegister"
       ></LinkText>
       <LinkText
         content="忘记密码？"
-        routeName="setnewpsw"
         class="float-right"
+        @click="gotoSetNewPsw"
       ></LinkText>
     </div>
   </div>
@@ -47,6 +47,8 @@ export default {
       },
       // 保证初次渲染时不会报警示
       showWarn: false,
+      // 提醒用户输入邮箱
+      emailInputWarn: false,
     };
   },
   computed: {
@@ -61,8 +63,14 @@ export default {
       var hint1 = "请输入用户名/邮箱";
       // case2: 后端判断没有该邮箱；
       var hint2 = "请输入正确的用户名/邮箱";
+      // case3: 忘记密码要求输入邮箱；
+      var hint3 = "请输入您的个人注册邮箱";
       if (this.loginInfo.usernameOrEmail.length === 0 && this.showWarn) {
         return hint1;
+      }
+      if (this.emailInputWarn) {
+        this.emailInputWarn = false;
+        return hint3;
       }
       return "";
     },
@@ -85,6 +93,25 @@ export default {
         });
       } else {
         this.showWarn = true;
+      }
+    },
+    gotoRegister() {
+      this.$router.push("/register");
+    },
+    gotoSetNewPsw() {
+      // 只有当用户输入了邮箱，才可进入
+      var string = this.loginInfo.usernameOrEmail.replace(/\s|&nbsp;/g, "");
+      var reg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+      if (reg.test(string)) {
+        this.$router.push({
+          name: "verify",
+          params: {
+            email: string,
+            from: "login",
+          },
+        });
+      } else {
+        this.emailInputWarn = true;
       }
     },
     updateEmail(value) {

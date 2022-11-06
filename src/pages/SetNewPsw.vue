@@ -33,7 +33,7 @@
       :fontSize="16"
       :clickable="btnClickable"
       class="myButton"
-      @click.native="gotoHomepage"
+      @click.native="gotoLogin"
       >下一步</MyButton
     >
   </div>
@@ -49,6 +49,7 @@ export default {
     return {
       newPsw: "",
       qualified: false,
+      userEmail: "",
     };
   },
   computed: {
@@ -76,13 +77,16 @@ export default {
       }
       this.newPsw = value;
     },
-    gotoHomepage() {
+    gotoLogin() {
       if (this.btnClickable) {
-        console.log("新密码设置完成");
+        this.$router.push("/login");
       } else {
         alert("请输入新密码");
       }
     },
+  },
+  mounted() {
+    this.userEmail = this.$route.params.email;
   },
 };
 </script>

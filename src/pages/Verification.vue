@@ -43,7 +43,7 @@
       :fontSize="16"
       :clickable="btnClickable"
       class="myButton"
-      @click.native="gotoHomepage"
+      @click.native="gotoPage"
       >下一步</MyButton
     >
   </div>
@@ -61,6 +61,8 @@ export default {
       second: 59,
       verifyCode: "",
       userEmail: "",
+      // 从哪个路由来的
+      from: "",
     };
   },
   computed: {
@@ -78,10 +80,26 @@ export default {
     getVerifyCode(value) {
       this.verifyCode = value;
     },
-    gotoHomepage() {
+    gotoPage() {
       if (this.btnClickable) {
-        console.log(this.verifyCode);
-        console.log("完成验证");
+        // 忘记密码
+        if (this.from === "login") {
+          this.$router.push({
+            name: "setnewpsw",
+            params: {
+              email: this.userEmail,
+            },
+          });
+        }
+        // 注册
+        if (this.from === "register") {
+          this.$router.push({
+            name: "homepage",
+            params: {
+              email: this.userEmail,
+            },
+          });
+        }
       } else {
         alert("请输入验证码");
       }
@@ -92,6 +110,7 @@ export default {
       this.second -= 1;
     }, 1000);
     this.userEmail = this.$route.params.email;
+    this.from = this.$route.params.from;
   },
   beforeDestroy() {
     clearInterval(this.timer);

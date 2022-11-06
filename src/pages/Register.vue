@@ -7,7 +7,7 @@
         已有帐号？<LinkText
           content="登录"
           style="display: inline-block"
-          routeName="login"
+          @click="gotoLogin"
         ></LinkText>
       </h4>
     </div>
@@ -81,8 +81,12 @@ export default {
         name: "verify",
         params: {
           email: this.userInfo.email,
+          from: "register",
         },
       });
+    },
+    gotoLogin() {
+      this.$router.push("/login");
     },
   },
 };

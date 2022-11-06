@@ -51,11 +51,7 @@ export default {
   },
   methods: {
     changeRoute() {
-      if (this.enableChangeRoute) {
-        this.$router.push({
-          name: this.routeName,
-        });
-      }
+      this.$emit("click");
     },
   },
 };
