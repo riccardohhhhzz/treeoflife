@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import SetNewPsw from "../pages/SetNewPsw";
 import Verification from "../pages/Verification"
+import Homepage from "../pages/Homepage"
 
 //创建router实例对象
 const router = new VueRouter({
@@ -34,6 +35,11 @@ const router = new VueRouter({
             path: "/verify",
             component: Verification,
         },
+        {
+            name: "homepage",
+            path: "/home",
+            component: Homepage,
+        }
     ]
 })
 

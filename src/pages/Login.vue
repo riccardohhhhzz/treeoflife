@@ -4,13 +4,16 @@
     <LifeTitle class="title"></LifeTitle>
     <UserInfoInputItem
       title="用户名/邮箱"
-      class="margin-bottom-40"
-      ref="usernameOrEmail"
+      class="margin-bottom-40 userInput"
+      :hint="emailInputHint"
+      @input="updateEmail"
     ></UserInfoInputItem>
     <UserInfoInputItem
       title="密码"
+      class="userInput"
+      :hint="pswInputHint"
+      @input="updatePsw"
       inputType="password"
-      ref="password"
     ></UserInfoInputItem>
     <MyButton class="myButton" @click.native="gotoHomepage">登录</MyButton>
     <div class="links">
@@ -39,15 +42,56 @@ export default {
   data() {
     return {
       loginInfo: {
-        usernameOrEmail: null,
-        password: null,
+        usernameOrEmail: "",
+        password: "",
       },
+      // 保证初次渲染时不会报警示
+      showWarn: false,
     };
+  },
+  computed: {
+    emptyInput() {
+      return (
+        this.loginInfo.usernameOrEmail.length === 0 ||
+        this.loginInfo.password.length === 0
+      );
+    },
+    emailInputHint() {
+      // case1: 输入为空
+      var hint1 = "请输入用户名/邮箱";
+      // case2: 后端判断没有该邮箱；
+      var hint2 = "请输入正确的用户名/邮箱";
+      if (this.loginInfo.usernameOrEmail.length === 0 && this.showWarn) {
+        return hint1;
+      }
+      return "";
+    },
+    pswInputHint() {
+      // case1: 输入为空
+      var hint1 = "请输入密码";
+      // case2: 后端判断密码错误；
+      var hint2 = "请输入正确的密码";
+      if (this.loginInfo.password.length === 0 && this.showWarn) {
+        return hint1;
+      }
+      return "";
+    },
   },
   methods: {
     gotoHomepage() {
-      this.loginInfo.usernameOrEmail = this.$refs["usernameOrEmail"].value;
-      this.loginInfo.password = this.$refs["password"].value;
+      if (!this.emptyInput) {
+        this.$router.push({
+          name: "homepage",
+        });
+      } else {
+        this.showWarn = true;
+      }
+    },
+    updateEmail(value) {
+      this.loginInfo.usernameOrEmail = value || "";
+    },
+    updatePsw(value) {
+      this.loginInfo.password = value || "";
     },
   },
 };
@@ -75,5 +119,8 @@ export default {
 }
 .myButton {
   margin: 70px 80px;
+}
+.userInput {
+  height: 81px;
 }
 </style>

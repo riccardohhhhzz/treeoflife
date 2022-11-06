@@ -6,9 +6,10 @@
       :inputType="inputType"
       v-if="showTextInput"
       @update="getValue"
+      @updateImmediately="sendValue"
     ></TextInput>
     <TimeDropdown v-if="showTimeDropdown" @update="getValue"></TimeDropdown>
-    <div class="hintBox" v-if="showWarn">
+    <div class="hintBox" v-if="hint.length > 0">
       <svg-icon icon-class="warn"></svg-icon>
       <h3 class="hint">{{ hint }}</h3>
     </div>
@@ -30,6 +31,7 @@ export default {
     },
     hint: {
       type: String,
+      default: "",
     },
     // text,password,birthday
     inputType: {
@@ -39,8 +41,6 @@ export default {
   },
   data() {
     return {
-      showWarn: false,
-      // 用户输入数据
       value: null,
     };
   },
@@ -55,6 +55,9 @@ export default {
   methods: {
     getValue(newValue) {
       this.value = newValue;
+    },
+    sendValue(newValue) {
+      this.$emit("input", newValue);
     },
   },
 };

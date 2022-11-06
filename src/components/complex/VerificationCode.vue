@@ -24,11 +24,14 @@ export default {
   },
   methods: {
     onlyOneNum(value) {
-      return value.replace(/\D/g, "")[0];
+      return value.replace(/[\D]/g, "")[0];
     },
     inputCode(index) {
-      this.sixCode[index] = this.onlyOneNum(this.sixCode[index]);
-      if (this.sixCode[index] !== undefined && index < 5) {
+      // TODO: 修复输入拼音控制台报错问题(OK)
+      // 原因是没有排除掉undefined和null的影响， 用一个 null || ""保证如果为
+      // 空则为空字符串即可解决
+      this.sixCode[index] = this.onlyOneNum(this.sixCode[index]) || "";
+      if (this.sixCode[index].length !== 0 && index < 5) {
         this.$refs.verifyCode[index + 1].focus();
       }
       var verifyCode = this.sixCode.join().replace(/[,]/g, "");
