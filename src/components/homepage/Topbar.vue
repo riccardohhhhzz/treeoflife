@@ -40,9 +40,11 @@ export default {
 .nav {
   height: 100%;
   float: left;
+  width: calc(100% - 15rem);
 }
 .nav > .search {
   margin-left: 2rem;
   margin-top: 1rem;
+  width: 35%;
 }
 </style>

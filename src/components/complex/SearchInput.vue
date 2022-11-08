@@ -1,19 +1,21 @@
 <template>
   <div id="searchInput">
-    <input
-      type="text"
-      :placeholder="placeholder"
-      v-model="str"
-      @mouseover="hover = true"
-      @mouseleave="hover = false"
-    />
-    <svg-icon
-      icon-class="clearInput"
-      id="clear"
-      @click.native="clearInput"
-      @mouseover.native="hover = true"
-      v-show="hover"
-    ></svg-icon>
+    <span style="position: relative">
+      <input
+        type="text"
+        :placeholder="placeholder"
+        v-model="str"
+        @mouseover="hover = true"
+        @mouseleave="hover = false"
+      />
+      <svg-icon
+        icon-class="clearInput"
+        id="clear"
+        @click.native="clearInput"
+        @mouseover.native="hover = true"
+        v-show="hover"
+      ></svg-icon>
+    </span>
     <button>
       <svg-icon icon-class="search"></svg-icon>
     </button>
@@ -43,15 +45,12 @@ export default {
 };
 </script>
 
-<style>
-#searchInput {
-  position: relative;
-}
+<style scoped>
 input {
   vertical-align: middle;
   font-size: 14px;
   height: 2rem;
-  width: 28rem;
+  width: calc(100% - 1.2em - 2rem);
   background-color: #f7f7f7;
   outline: none;
   border: none;
@@ -74,7 +73,7 @@ button:hover {
 #clear {
   background-color: transparent;
   position: absolute;
-  right: 8%;
-  top: 18%;
+  right: 3%;
+  top: 10%;
 }
 </style>

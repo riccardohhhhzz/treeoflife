@@ -12,6 +12,6 @@ export default {
 #leftbar {
   width: 15em;
   height: 93%;
-  background-color: #64666d;
+  background-color: #2b2d34;
 }
 </style>
