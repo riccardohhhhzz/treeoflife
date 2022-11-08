@@ -16,8 +16,10 @@ export default {
   padding: 0;
   margin: 0;
 }
+html,
 body {
   font-family: "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB";
+  font-size: 16px;
 }
 a {
   text-decoration: none;
