@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import LifeTitle from "../components/text/LifeTitle.vue";
 import MyButton from "../components/basic/MyButton.vue";
 import LinkText from "../components/text/LinkText.vue";
@@ -46,7 +47,8 @@ export default {
         password: "",
       },
       // 保证初次渲染时不会报警示
-      showWarn: false,
+      emailShowWarn: false,
+      pswShowWarn: false,
       // 提醒用户输入邮箱
       emailInputWarn: false,
     };
@@ -65,11 +67,10 @@ export default {
       var hint2 = "请输入正确的用户名/邮箱";
       // case3: 忘记密码要求输入邮箱；
       var hint3 = "请输入您的个人注册邮箱";
-      if (this.loginInfo.usernameOrEmail.length === 0 && this.showWarn) {
+      if (this.emailShowWarn && this.loginInfo.usernameOrEmail.length === 0) {
         return hint1;
       }
       if (this.emailInputWarn) {
-        this.emailInputWarn = false;
         return hint3;
       }
       return "";
@@ -79,7 +80,7 @@ export default {
       var hint1 = "请输入密码";
       // case2: 后端判断密码错误；
       var hint2 = "请输入正确的密码";
-      if (this.loginInfo.password.length === 0 && this.showWarn) {
+      if (this.pswShowWarn && this.loginInfo.password.length === 0) {
         return hint1;
       }
       return "";
@@ -87,12 +88,24 @@ export default {
   },
   methods: {
     gotoHomepage() {
+      axios
+        .post("/login", {
+          params: {
+            username_or_email: this.loginInfo.usernameOrEmail,
+            password: this.loginInfo.password,
+          },
+        })
+        .then((res) => {
+          console.log("返回", res);
+        });
       if (!this.emptyInput) {
         this.$router.push({
           name: "homepage",
         });
       } else {
-        this.showWarn = true;
+        this.emailShowWarn = true;
+        this.pswShowWarn = true;
+        this.emailInputWarn = false;
       }
     },
     gotoRegister() {
@@ -112,6 +125,8 @@ export default {
         });
       } else {
         this.emailInputWarn = true;
+        this.emailShowWarn = false;
+        this.pswShowWarn = false;
       }
     },
     updateEmail(value) {
