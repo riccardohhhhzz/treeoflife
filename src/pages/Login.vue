@@ -5,13 +5,13 @@
     <UserInfoInputItem
       title="用户名/邮箱"
       class="margin-bottom-40 userInput"
-      :hint="emailInputHint"
+      :hint="showWarn.email"
       @input="updateEmail"
     ></UserInfoInputItem>
     <UserInfoInputItem
       title="密码"
       class="userInput"
-      :hint="pswInputHint"
+      :hint="showWarn.psw"
       @input="updatePsw"
       inputType="password"
     ></UserInfoInputItem>
@@ -46,11 +46,10 @@ export default {
         usernameOrEmail: "",
         password: "",
       },
-      // 保证初次渲染时不会报警示
-      emailShowWarn: false,
-      pswShowWarn: false,
-      // 提醒用户输入邮箱
-      emailInputWarn: false,
+      showWarn: {
+        email: "",
+        psw: "",
+      },
     };
   },
   computed: {
@@ -60,52 +59,45 @@ export default {
         this.loginInfo.password.length === 0
       );
     },
-    emailInputHint() {
-      // case1: 输入为空
-      var hint1 = "请输入用户名/邮箱";
-      // case2: 后端判断没有该邮箱；
-      var hint2 = "请输入正确的用户名/邮箱";
-      // case3: 忘记密码要求输入邮箱；
-      var hint3 = "请输入您的个人注册邮箱";
-      if (this.emailShowWarn && this.loginInfo.usernameOrEmail.length === 0) {
-        return hint1;
-      }
-      if (this.emailInputWarn) {
-        return hint3;
-      }
-      return "";
-    },
-    pswInputHint() {
-      // case1: 输入为空
-      var hint1 = "请输入密码";
-      // case2: 后端判断密码错误；
-      var hint2 = "请输入正确的密码";
-      if (this.pswShowWarn && this.loginInfo.password.length === 0) {
-        return hint1;
-      }
-      return "";
-    },
   },
   methods: {
     gotoHomepage() {
-      axios
-        .post("/login", {
-          data: {
+      if (!this.emptyInput) {
+        axios({
+          url: "/login",
+          method: "post",
+          params: {
             username_or_email: this.loginInfo.usernameOrEmail,
             password: this.loginInfo.password,
           },
-        })
-        .then((res) => {
-          console.log(res);
-        });
-      if (!this.emptyInput) {
-        this.$router.push({
-          name: "homepage",
+        }).then((res) => {
+          var data = res.data;
+          console.log(data);
+          if (data.state === 1000) {
+            this.showWarn.psw = "密码错误";
+            this.showWarn.email = "";
+          }
+          if (data.state === 1001) {
+            this.showWarn.email = "用户名/邮箱未注册";
+            this.showWarn.psw = "";
+          }
+          if (data.state === 200) {
+            this.$router.push({
+              name: "homepage",
+            });
+          }
         });
       } else {
-        this.emailShowWarn = true;
-        this.pswShowWarn = true;
-        this.emailInputWarn = false;
+        if (this.loginInfo.usernameOrEmail.length === 0) {
+          this.showWarn.email = "请输入用户名/邮箱";
+        } else {
+          this.showWarn.email = "";
+        }
+        if (this.loginInfo.password.length === 0) {
+          this.showWarn.psw = "请输入密码";
+        } else {
+          this.showWarn.psw = "";
+        }
       }
     },
     gotoRegister() {
@@ -124,9 +116,7 @@ export default {
           },
         });
       } else {
-        this.emailInputWarn = true;
-        this.emailShowWarn = false;
-        this.pswShowWarn = false;
+        this.showWarn.email = "format";
       }
     },
     updateEmail(value) {

@@ -50,13 +50,14 @@ input {
   vertical-align: middle;
   font-size: 14px;
   height: 2.4rem;
-  width: calc(100% - 1.2em - 2.4rem);
+  width: calc(100% - 1.8em - 2.4rem);
   background-color: #f7f7f7;
   outline: none;
   border: none;
   border-radius: 4px 0px 0px 4px;
   caret-color: #333;
-  padding: 0 0.6em;
+  padding-left: 0.6em;
+  padding-right: 1.2em;
 }
 button {
   vertical-align: middle;
