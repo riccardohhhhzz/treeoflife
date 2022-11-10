@@ -5,10 +5,15 @@
     <TextInput
       :inputType="inputType"
       v-if="showTextInput"
+      class="textInput"
       @update="getValue"
       @updateImmediately="sendValue"
     ></TextInput>
-    <TimeSelect v-if="showTimeDropdown" @update="getValue"></TimeSelect>
+    <TimeSelect
+      v-if="showTimeDropdown"
+      @update="sendValue($event), getValue($event)"
+      class="timeSelect"
+    ></TimeSelect>
     <div class="hintBox" v-if="hint.length > 0">
       <svg-icon icon-class="warn"></svg-icon>
       <h3 class="hint">{{ hint }}</h3>
@@ -68,18 +73,20 @@ h2 {
   font-size: 18px;
   font-weight: 400;
   color: #333333;
-  width: fit-content;
 }
 h3 {
   font-size: 14px;
   font-weight: 400;
   color: #6e6e6e;
-  width: fit-content;
 }
 .title {
   margin-bottom: 10px;
 }
 .subtitle {
+  margin-bottom: 5px;
+}
+.textInput,
+.timeSelect {
   margin-bottom: 5px;
 }
 .hint {

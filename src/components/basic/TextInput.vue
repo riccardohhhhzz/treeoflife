@@ -107,12 +107,11 @@ input:focus {
   border-radius: var(--borderRadius);
   color: #333333;
   padding: 0px 10px;
-  margin-bottom: 5px;
 }
 .eye {
   position: absolute;
   left: 90%;
-  top: 23%;
+  top: 25%;
 }
 .eye:hover {
   cursor: pointer;
