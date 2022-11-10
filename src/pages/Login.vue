@@ -116,14 +116,16 @@ export default {
           },
         });
       } else {
-        this.showWarn.email = "format";
+        this.showWarn.email = "请输入您的个人注册邮箱";
       }
     },
     updateEmail(value) {
       this.loginInfo.usernameOrEmail = value || "";
+      this.showWarn.email = "";
     },
     updatePsw(value) {
       this.loginInfo.password = value || "";
+      this.showWarn.psw = "";
     },
   },
 };
