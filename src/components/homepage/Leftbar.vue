@@ -10,8 +10,8 @@ export default {
 
 <style>
 #leftbar {
-  width: 15em;
-  height: 93%;
+  width: 15rem;
+  height: calc(100% - 4.8rem);
   background-color: #2b2d34;
 }
 </style>

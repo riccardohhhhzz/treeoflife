@@ -77,6 +77,7 @@ export default {
       this.userInfo.userName = this.$refs["username"].value;
       this.userInfo.birthday = this.$refs["birthday"].value;
       //  TODO: 发送axios请求
+
       this.$router.push({
         name: "verify",
         params: {

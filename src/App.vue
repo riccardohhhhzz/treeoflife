@@ -24,6 +24,13 @@ body {
 a {
   text-decoration: none;
 }
+select {
+  /*将默认的select选择框样式清除*/
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+}
 .center {
   position: absolute;
   margin: auto;

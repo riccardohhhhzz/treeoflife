@@ -5,21 +5,23 @@
     </div>
     <div class="nav">
       <SearchInput class="search"></SearchInput>
+      <MyDropdown class="createNew"></MyDropdown>
     </div>
   </div>
 </template>
 
 <script>
 import SearchInput from "../complex/SearchInput.vue";
+import MyDropdown from "../basic/MyDropdown.vue";
 export default {
   name: "Topbar",
-  components: { SearchInput },
+  components: { SearchInput, MyDropdown },
 };
 </script>
 
 <style scoped>
 #topbar {
-  height: 7%;
+  height: 4.8rem;
   width: 100%;
   background-color: #fff;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
@@ -43,8 +45,16 @@ export default {
   width: calc(100% - 15rem);
 }
 .nav > .search {
+  display: inline-block;
   margin-left: 2rem;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   width: 35%;
+  float: left;
+}
+.nav > .createNew {
+  display: inline-block;
+  float: left;
+  margin-top: 1.2rem;
+  margin-left: calc(50% - 15rem);
 }
 </style>

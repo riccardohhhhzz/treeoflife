@@ -49,8 +49,8 @@ export default {
 input {
   vertical-align: middle;
   font-size: 14px;
-  height: 2rem;
-  width: calc(100% - 1.2em - 2rem);
+  height: 2.4rem;
+  width: calc(100% - 1.2em - 2.4rem);
   background-color: #f7f7f7;
   outline: none;
   border: none;
@@ -60,8 +60,8 @@ input {
 }
 button {
   vertical-align: middle;
-  height: 2rem;
-  width: 2rem;
+  height: 2.4rem;
+  width: 2.4rem;
   border: none;
   border-radius: 0px 4px 4px 0px;
   background-color: #bcc1c9;

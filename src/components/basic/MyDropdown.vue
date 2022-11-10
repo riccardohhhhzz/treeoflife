@@ -1,105 +1,80 @@
 <template>
-  <div>
-    <div class="dropdownBox" :style="styleVar">
-      <svg-icon icon-class="dropdown" class="dropdownIcon"></svg-icon>
-      <select :style="styleVar" v-model="currentValue" @blur="blurEmit">
-        <option v-for="(m, index) in arr" :key="index" :value="m">
-          {{ m }}
-        </option>
-      </select>
+  <div id="mydropdown">
+    <button class="dropbtn" @click="showContent = !showContent">
+      <p class="droptitle">创建新的</p>
+      <svg-icon
+        icon-class="dropdown_white"
+        style="vertical-align: middle"
+      ></svg-icon>
+    </button>
+    <div class="dropdown-content" v-if="showContent">
+      <a @click="clickItem">日记</a>
+      <a @click="clickItem">用药计划</a>
     </div>
-    <h4 class="unit">{{ unit }}</h4>
   </div>
 </template>
 
 <script>
 export default {
-  name: "MyDropdown",
-  props: {
-    arr: {
-      type: Array,
-    },
-    inputType: {
-      inputType: String,
-    },
-    unit: {
-      type: String,
-    },
-    width: {
-      type: Number,
-      default: 80,
-    },
-    // 用于与父组件TimeDropdown通信的回调函数--props通信
-    updateValue: {
-      type: Function,
-    },
-  },
-  computed: {
-    styleVar() {
-      return {
-        "--width": this.width.toString() + "px",
-      };
-    },
-  },
+  name: "MySelect",
   data() {
     return {
-      currentValue: null,
+      showContent: false,
     };
   },
-  watch: {
-    currentValue: {
-      handler(newValue, oldValue) {
-        this.updateValue(this.inputType, newValue);
-      },
-    },
-  },
   methods: {
-    blurEmit() {
-      this.$emit("blur");
+    clickItem() {
+      console.log("clickme");
+      this.showContent = false;
     },
   },
 };
 </script>
 
 <style scoped>
-select {
-  /*将默认的select选择框样式清除*/
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  outline: none;
-  width: var(--width);
-  height: 40px;
-  border: 1px solid #cdcdcd;
-  border-radius: 20px;
-  font-size: 16px;
-  padding: 0 12px;
-  color: #333333;
+#mydropdown {
+  position: relative;
 }
-select:hover {
-  border-color: #939597;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+.dropbtn {
+  height: 2.4rem;
+  width: 6.8rem;
+  background-color: #df6153;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 4px;
+  padding-left: 4px;
   cursor: pointer;
 }
-select:focus {
-  border-color: #5e5e5e;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+.dropbtn:hover {
+  background-color: #d05042;
 }
-.dropdownBox {
-  width: var(--width);
-  position: relative;
+.droptitle {
+  vertical-align: middle;
   display: inline-block;
+  margin-right: 5px;
 }
-.dropdownIcon {
+.dropdown-content {
+  display: block;
   position: absolute;
-  left: 65%;
-  top: 25%;
+  top: 3.6rem;
+  right: 0;
+  width: 8rem;
+  padding: 0.5rem;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 8, 0.25);
 }
-.unit {
-  display: inline-block;
-  margin-left: 5px;
-  color: #333333;
-  font-weight: 500;
-  font-size: 16px;
+.dropdown-content a {
+  display: block;
+  height: 1.8rem;
+  line-height: 1.8rem;
+  border-radius: 4px;
+  padding: 0 1rem;
+  color: #333;
+}
+.dropdown-content a:hover {
+  background-color: #53cf91;
+  color: #fff;
 }
 </style>

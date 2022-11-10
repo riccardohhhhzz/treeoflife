@@ -8,7 +8,7 @@
       @update="getValue"
       @updateImmediately="sendValue"
     ></TextInput>
-    <TimeDropdown v-if="showTimeDropdown" @update="getValue"></TimeDropdown>
+    <TimeSelect v-if="showTimeDropdown" @update="getValue"></TimeSelect>
     <div class="hintBox" v-if="hint.length > 0">
       <svg-icon icon-class="warn"></svg-icon>
       <h3 class="hint">{{ hint }}</h3>
@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import TimeDropdown from "./TimeDropdown.vue";
+import TimeSelect from "./TimeSelect.vue";
 import TextInput from "../basic/TextInput.vue";
 export default {
   name: "UserInfoInputItem",
-  components: { TimeDropdown, TextInput },
+  components: { TimeSelect, TextInput },
   props: {
     title: {
       type: String,

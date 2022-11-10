@@ -1,6 +1,6 @@
 <template>
   <div class="selectTime">
-    <MyDropdown
+    <MySelect
       class="display-inline-block"
       :arr="optionalDate.years"
       inputType="year"
@@ -8,8 +8,8 @@
       :width="80"
       :updateValue="updateSelectDate"
       @blur="sendMessage"
-    ></MyDropdown>
-    <MyDropdown
+    ></MySelect>
+    <MySelect
       class="display-inline-block"
       :arr="optionalDate.months"
       inputType="month"
@@ -17,8 +17,8 @@
       :width="70"
       :updateValue="updateSelectDate"
       @blur="sendMessage"
-    ></MyDropdown>
-    <MyDropdown
+    ></MySelect>
+    <MySelect
       class="display-inline-block"
       :arr="optionalDateDays"
       inputType="day"
@@ -26,15 +26,15 @@
       :width="70"
       :updateValue="updateSelectDate"
       @blur="sendMessage"
-    ></MyDropdown>
+    ></MySelect>
   </div>
 </template>
 
 <script>
-import MyDropdown from "../basic/MyDropdown.vue";
+import MySelect from "../basic/MySelect.vue";
 export default {
-  name: "TimeDropdown",
-  components: { MyDropdown },
+  name: "TimeSelect",
+  components: { MySelect },
   data() {
     return {
       optionalDate: {

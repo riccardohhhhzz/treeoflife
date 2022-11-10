@@ -90,13 +90,13 @@ export default {
     gotoHomepage() {
       axios
         .post("/login", {
-          params: {
+          data: {
             username_or_email: this.loginInfo.usernameOrEmail,
             password: this.loginInfo.password,
           },
         })
         .then((res) => {
-          console.log("返回", res);
+          console.log(res);
         });
       if (!this.emptyInput) {
         this.$router.push({
