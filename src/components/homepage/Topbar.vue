@@ -1,6 +1,6 @@
 <template>
   <div id="topbar">
-    <div class="logo">
+    <div class="logo" @click="openLeftbar">
       <h1>TREEOFLIFE</h1>
     </div>
     <div class="nav">
@@ -18,6 +18,12 @@ import Avatar from "../basic/Avatar.vue";
 export default {
   name: "Topbar",
   components: { SearchInput, MyDropdown, Avatar },
+  methods: {
+    openLeftbar() {
+      console.log("clicked");
+      document.getElementById("leftbar").style.width = "15rem";
+    },
+  },
 };
 </script>
 
@@ -36,7 +42,7 @@ export default {
   justify-content: center;
   align-items: center;
   float: left;
-  cursor: default;
+  cursor: pointer;
 }
 .logo h1 {
   font-size: 28px;
