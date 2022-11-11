@@ -15,21 +15,21 @@
       title="邮箱"
       subtitle="您的电子邮件地址不会与任何人共享"
       class="infoInput margin-bottom-20"
-      :hint="emailHint"
+      :hint="showWarn.email"
       @input="updateEmail"
     ></UserInfoInputItem>
     <UserInfoInputItem
       title="密码"
       inputType="password"
       class="infoInput"
-      :hint="pswHint"
+      :hint="showWarn.psw"
       @input="updatePsw"
     ></UserInfoInputItem>
     <UserInfoInputItem
       title="用户名"
       subtitle="这对其他Treeoflife成员可见。您可以使用匿名名称。"
       class="infoInput margin-bottom-40"
-      :hint="usernameHint"
+      :hint="showWarn.username"
       @input="updateUsername"
     ></UserInfoInputItem>
     <UserInfoInputItem
@@ -37,7 +37,7 @@
       subtitle="这仅对其他 Treeoflife 社区成员可见。"
       inputType="birthday"
       class="infoInput"
-      :hint="birthdayHint"
+      :hint="showWarn.birthday"
       @input="updateBirthday"
     ></UserInfoInputItem>
     <MyButton class="myButton" :width="180" @click.native="gotoVerification"
@@ -51,6 +51,7 @@ import LifeTitle from "../components/text/LifeTitle.vue";
 import MyButton from "../components/basic/MyButton.vue";
 import LinkText from "../components/text/LinkText.vue";
 import UserInfoInputItem from "../components/complex/UserInfoInputItem.vue";
+import axios from "axios";
 
 export default {
   name: "Register",
@@ -73,10 +74,10 @@ export default {
         },
       },
       showWarn: {
-        email: false,
-        psw: false,
-        username: false,
-        birthday: false,
+        email: "",
+        psw: "",
+        username: "",
+        birthday: "",
       },
     };
   },
@@ -96,58 +97,34 @@ export default {
         this.birthdayEmptyInput
       );
     },
-    emailHint() {
-      // case1: 输入为空
-      var hint1 = "请输入个人邮箱";
-      if (this.showWarn["email"] && this.userInfo.email.length === 0) {
-        this.showWarn["email"] = false;
-        return hint1;
-      }
-      return "";
-    },
-    pswHint() {
-      // case1: 输入为空
-      var hint1 = "请设置密码";
-      if (this.showWarn["psw"] && this.userInfo.password.length === 0) {
-        this.showWarn["psw"] = false;
-        return hint1;
-      }
-      return "";
-    },
-    usernameHint() {
-      // case1: 输入为空
-      var hint1 = "请设置用户名";
-      if (this.showWarn["username"] && this.userInfo.userName.length === 0) {
-        this.showWarn["username"] = false;
-        return hint1;
-      }
-      return "";
-    },
-    birthdayHint() {
-      // case1: 输入为空
-      var hint1 = "请输入您的生日";
-      if (this.showWarn["birthday"] && this.birthdayEmptyInput) {
-        this.showWarn["birthday"] = false;
-        return hint1;
-      }
-      return "";
-    },
   },
   methods: {
     gotoVerification() {
       //  TODO: 发送axios请求
       if (!this.emptyInput) {
-        this.$router.push({
-          name: "verify",
-          params: {
+        axios({
+          url: "/reg",
+          method: "post",
+          data: {
+            username: this.userInfo.userName,
             email: this.userInfo.email,
-            from: "register",
+            password: this.userInfo.password,
+            birthday_year: this.userInfo.birthday.year,
+            birthday_month: this.userInfo.birthday.month,
+            birthday_day: this.userInfo.birthday.day,
           },
+        }).then((res) => {
+          console.log("返回", res);
         });
+        // this.$router.push({
+        //   name: "verify",
+        //   params: {
+        //     email: this.userInfo.email,
+        //     from: "register",
+        //   },
+        // });
       } else {
-        for (var key in this.showWarn) {
-          this.showWarn[key] = true;
-        }
+        console.log("输入为空");
       }
     },
     gotoLogin() {

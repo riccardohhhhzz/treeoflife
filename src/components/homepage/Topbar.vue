@@ -6,6 +6,7 @@
     <div class="nav">
       <SearchInput class="search"></SearchInput>
       <MyDropdown class="createNew"></MyDropdown>
+      <Avatar class="avatar"></Avatar>
     </div>
   </div>
 </template>
@@ -13,9 +14,10 @@
 <script>
 import SearchInput from "../complex/SearchInput.vue";
 import MyDropdown from "../basic/MyDropdown.vue";
+import Avatar from "../basic/Avatar.vue";
 export default {
   name: "Topbar",
-  components: { SearchInput, MyDropdown },
+  components: { SearchInput, MyDropdown, Avatar },
 };
 </script>
 
@@ -34,6 +36,7 @@ export default {
   justify-content: center;
   align-items: center;
   float: left;
+  cursor: default;
 }
 .logo h1 {
   font-size: 28px;
@@ -56,5 +59,12 @@ export default {
   float: left;
   margin-top: 1.2rem;
   margin-left: calc(50% - 15rem);
+}
+
+.nav > .avatar {
+  display: inline-block;
+  float: right;
+  margin-right: 1.2rem;
+  margin-top: 0.9rem;
 }
 </style>

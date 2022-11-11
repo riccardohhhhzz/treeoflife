@@ -34,6 +34,7 @@ export default {
 <style scoped>
 #mydropdown {
   position: relative;
+  outline: none;
 }
 .dropbtn {
   height: 2.4rem;
@@ -72,6 +73,7 @@ export default {
   border-radius: 4px;
   padding: 0 1rem;
   color: #333;
+  cursor: default;
 }
 .dropdown-content a:hover {
   background-color: #53cf91;
