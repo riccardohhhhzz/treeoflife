@@ -1,26 +1,39 @@
 <template>
-  <div>
-    <div class="left">
-      <input
-        type="text"
-        v-for="(c, index) in sixCode"
-        :key="index"
-        v-model="sixCode[index]"
-        @input="inputCode(index)"
-        @keyup.delete="deleteCode(index)"
-        ref="verifyCode"
-      />
-    </div>
+  <div id="verifyCode">
+    <input
+      type="text"
+      v-for="(c, index) in sixCode"
+      :key="index"
+      v-model="sixCode[index]"
+      @input="inputCode(index)"
+      @keyup.delete="deleteCode(index)"
+      :style="styleVar"
+      ref="verifyCode"
+    />
   </div>
 </template>
 
 <script>
 export default {
   name: "VerificationCode",
+  props: {
+    showWarn: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       sixCode: Array(6).fill(""),
     };
+  },
+  computed: {
+    styleVar() {
+      return {
+        "--borderColor": this.showWarn ? "#f14947" : "#cdcdcd",
+        "--focusBorderColor": this.showWarn ? "#f14947" : "#4dcf90",
+      };
+    },
   },
   methods: {
     onlyOneNum(value) {
@@ -50,25 +63,25 @@ export default {
 </script>
 
 <style scoped>
+#verifyCode {
+  display: flex;
+  justify-content: space-between;
+}
 input {
   width: 36px;
   height: 36px;
-  border: 1.5px solid #cdcdcd;
+  border: 1.5px solid var(--borderColor);
   font-size: 18px;
   text-align: center;
   border-radius: 6px;
 }
 
 input:hover {
-  border: 1.5px solid #cdcdcd;
+  border: 1.5px solid var(--borderColor);
 }
 input:focus {
-  border: 1.5px solid #4dcf90;
+  border: 1.5px solid var(--focusBorderColor);
   box-shadow: none;
   outline: none;
-}
-.left {
-  display: flex;
-  justify-content: space-between;
 }
 </style>

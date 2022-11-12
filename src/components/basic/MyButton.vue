@@ -1,7 +1,7 @@
 <template>
   <button :style="styleVar">
     <svg-icon :icon-class="icon" v-if="showIcon" class="myIcon"></svg-icon>
-    <slot>button</slot>
+    <slot class="content">button</slot>
   </button>
 </template>
 
@@ -87,5 +87,9 @@ button:hover {
 }
 .myIcon {
   margin-right: 2px;
+  vertical-align: middle;
+}
+.content {
+  vertical-align: middle;
 }
 </style>

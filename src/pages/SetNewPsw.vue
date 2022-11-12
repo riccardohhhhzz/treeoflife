@@ -16,8 +16,11 @@
       >返回</MyButton
     >
     <h3 class="margin-bottom-10">设置新密码</h3>
-    <h5 class="subtitle margin-bottom-40">
+    <h5 class="subtitle margin-bottom-40" v-if="showWarn.length === 0">
       请输入6-20位字符，支持英文大小写、数字、下划线
+    </h5>
+    <h5 class="subtitle margin-bottom-40 warn" v-if="showWarn.length > 0">
+      {{ showWarn }}
     </h5>
     <TextInput
       inputType="password"
@@ -42,6 +45,7 @@
 <script>
 import MyButton from "../components/basic/MyButton.vue";
 import TextInput from "../components/basic/TextInput.vue";
+import axios from "axios";
 export default {
   name: "SetNewPsw",
   components: { MyButton, TextInput },
@@ -50,6 +54,7 @@ export default {
       newPsw: "",
       qualified: false,
       userEmail: "",
+      showWarn: "",
     };
   },
   computed: {
@@ -79,7 +84,24 @@ export default {
     },
     gotoLogin() {
       if (this.btnClickable) {
-        this.$router.push("/login");
+        axios({
+          url: "/changePassword",
+          method: "post",
+          params: {
+            email: this.userEmail,
+            password: this.newPsw,
+          },
+        }).then((res) => {
+          var data = res.data;
+          if (data.state === 2003) {
+            this.showWarn =
+              "新密码格式错误，请输入6-20位字符，支持英文大小写、数字、下划线";
+          }
+          if (data.state === 200) {
+            alert("修改密码成功！");
+            this.$router.push("/login");
+          }
+        });
       } else {
         alert("请输入新密码");
       }
@@ -114,5 +136,8 @@ export default {
 }
 .myButton {
   margin-top: 92px;
+}
+.warn {
+  color: #f14947;
 }
 </style>

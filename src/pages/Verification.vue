@@ -16,13 +16,17 @@
       >返回</MyButton
     >
     <h3 class="margin-bottom-10">输入邮箱验证码</h3>
-    <h5 class="subtitle margin-bottom-20">
+    <h5 class="subtitle margin-bottom-20" v-if="showWarn.length === 0">
       请输入发送至<font class="email">{{ userEmail }}</font
       >的6位验证码，有效期10分钟
+    </h5>
+    <h5 class="subtitle margin-bottom-20 warn" v-if="showWarn.length > 0">
+      {{ showWarn }}
     </h5>
     <VerificationCode
       class="margin-bottom-10"
       @finished="getVerifyCode"
+      :showWarn="showWarn.length > 0"
     ></VerificationCode>
     <div style="height: 20px">
       <h5 class="subtitle" v-if="second > 0">
@@ -53,6 +57,7 @@
 import VerificationCode from "../components/complex/VerificationCode.vue";
 import MyButton from "../components/basic/MyButton.vue";
 import LinkText from "../components/text/LinkText.vue";
+import axios from "axios";
 export default {
   name: "Verification",
   components: { VerificationCode, MyButton, LinkText },
@@ -63,6 +68,7 @@ export default {
       userEmail: "",
       // 从哪个路由来的
       from: "",
+      showWarn: "",
     };
   },
   computed: {
@@ -76,30 +82,53 @@ export default {
     },
     reGetVerifyCode() {
       this.second = 59;
+      axios({
+        url: "/verify/resend",
+        method: "post",
+        params: {
+          email: this.userEmail,
+        },
+      });
     },
     getVerifyCode(value) {
       this.verifyCode = value;
+      this.showWarn = "";
     },
     gotoPage() {
       if (this.btnClickable) {
-        // 忘记密码
-        if (this.from === "login") {
-          this.$router.push({
-            name: "setnewpsw",
-            params: {
-              email: this.userEmail,
-            },
-          });
-        }
-        // 注册
-        if (this.from === "register") {
-          this.$router.push({
-            name: "homepage",
-            params: {
-              email: this.userEmail,
-            },
-          });
-        }
+        axios({
+          url: "/verify",
+          method: "post",
+          params: {
+            email: this.userEmail,
+            code: this.verifyCode,
+          },
+        }).then((res) => {
+          var data = res.data;
+          if (data.state === 2010) {
+            this.showWarn = "验证码错误, 请重新输入";
+          }
+          if (data.state === 200) {
+            this.showWarn = "";
+            if (this.from === "login") {
+              this.$router.push({
+                name: "setnewpsw",
+                params: {
+                  email: this.userEmail,
+                },
+              });
+            }
+            if (this.from === "register") {
+              alert("注册成功！欢迎加入Treeoflife");
+              this.$router.push({
+                name: "homepage",
+                params: {
+                  email: this.userEmail,
+                },
+              });
+            }
+          }
+        });
       } else {
         alert("请输入验证码");
       }
@@ -137,13 +166,16 @@ export default {
   color: #6e6e6e;
   font-weight: 400;
   font-size: 14px;
-  height: 26px;
 }
 .myButton {
-  margin-top: 92px;
+  position: absolute;
+  bottom: 8%;
 }
 .email {
   color: #000;
   font-weight: 500;
+}
+.warn {
+  color: #f14947;
 }
 </style>

@@ -66,7 +66,7 @@ export default {
       userInfo: {
         email: "",
         password: "",
-        userName: "",
+        username: "",
         birthday: {
           year: null,
           month: null,
@@ -93,38 +93,77 @@ export default {
       return (
         this.userInfo.email.length === 0 ||
         this.userInfo.password.length === 0 ||
-        this.userInfo.userName === 0 ||
+        this.userInfo.username === 0 ||
         this.birthdayEmptyInput
       );
     },
   },
   methods: {
+    clearWarn() {
+      for (var key in this.showWarn) {
+        this.showWarn[key] = "";
+      }
+    },
     gotoVerification() {
       //  TODO: 发送axios请求
       if (!this.emptyInput) {
         axios({
           url: "/reg",
           method: "post",
-          data: {
-            username: this.userInfo.userName,
-            email: this.userInfo.email,
-            password: this.userInfo.password,
-            birthday_year: this.userInfo.birthday.year,
-            birthday_month: this.userInfo.birthday.month,
-            birthday_day: this.userInfo.birthday.day,
-          },
+          data: this.userInfo,
         }).then((res) => {
-          console.log("返回", res);
+          var data = res.data;
+          if (data.state === 2001) {
+            this.clearWarn();
+            this.showWarn.email = "该邮箱已被注册";
+          }
+          if (data.state === 2002) {
+            this.clearWarn();
+            this.showWarn.email = "邮箱不合法";
+          }
+          if (data.state === 2003) {
+            this.clearWarn();
+            this.showWarn.psw = "请输入6-20位字符,支持英文、数字、下划线";
+          }
+          if (data.state === 2004) {
+            this.clearWarn();
+            this.showWarn.username = "请输入4-16位字符,支持英文、数字、下划线";
+          }
+          if (data.state === 2005) {
+            this.clearWarn();
+            this.showWarn.username = "该用户名已被注册";
+          }
+          if (data.state === 200) {
+            this.$router.push({
+              name: "verify",
+              params: {
+                email: this.userInfo.email,
+                from: "register",
+              },
+            });
+          }
         });
-        // this.$router.push({
-        //   name: "verify",
-        //   params: {
-        //     email: this.userInfo.email,
-        //     from: "register",
-        //   },
-        // });
       } else {
-        console.log("输入为空");
+        if (this.userInfo.email.length === 0) {
+          this.showWarn.email = "请输入邮箱";
+        } else {
+          this.showWarn.email = "";
+        }
+        if (this.userInfo.password.length === 0) {
+          this.showWarn.psw = "请输入密码";
+        } else {
+          this.showWarn.psw = "";
+        }
+        if (this.userInfo.username.length === 0) {
+          this.showWarn.username = "请输入用户名";
+        } else {
+          this.showWarn.username = "";
+        }
+        if (this.birthdayEmptyInput) {
+          this.showWarn.birthday = "请输入生日";
+        } else {
+          this.showWarn.birthday = "";
+        }
       }
     },
     gotoLogin() {
@@ -137,7 +176,7 @@ export default {
       this.userInfo.password = value || "";
     },
     updateUsername(value) {
-      this.userInfo.userName = value || "";
+      this.userInfo.username = value || "";
     },
     updateBirthday(value) {
       this.userInfo.birthday = value || "";

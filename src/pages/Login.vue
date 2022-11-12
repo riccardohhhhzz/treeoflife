@@ -72,7 +72,6 @@ export default {
           },
         }).then((res) => {
           var data = res.data;
-          console.log(data);
           if (data.state === 1000) {
             this.showWarn.psw = "密码错误";
             this.showWarn.email = "";
@@ -82,9 +81,20 @@ export default {
             this.showWarn.psw = "";
           }
           if (data.state === 200) {
-            this.$router.push({
-              name: "homepage",
-            });
+            if (data.data.state === "active") {
+              this.$router.push({
+                name: "homepage",
+              });
+            }
+            if (data.data.state === "inactive") {
+              this.$router.push({
+                name: "verify",
+                params: {
+                  email: data.data.email,
+                  from: "register",
+                },
+              });
+            }
           }
         });
       } else {
@@ -105,19 +115,40 @@ export default {
     },
     gotoSetNewPsw() {
       // 只有当用户输入了邮箱，才可进入
-      var string = this.loginInfo.usernameOrEmail.replace(/\s|&nbsp;/g, "");
-      var reg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
-      if (reg.test(string)) {
-        this.$router.push({
-          name: "verify",
-          params: {
-            email: string,
-            from: "login",
-          },
-        });
-      } else {
-        this.showWarn.email = "请输入您的个人注册邮箱";
-      }
+      axios({
+        url: "/verify/resend",
+        method: "post",
+        params: {
+          email: this.loginInfo.usernameOrEmail,
+        },
+      }).then((res) => {
+        var data = res.data;
+        if (data.state === 1001) {
+          this.showWarn.email = "请输入您的个人注册邮箱";
+        }
+        if (data.state === 200) {
+          this.$router.push({
+            name: "verify",
+            params: {
+              email: this.loginInfo.usernameOrEmail,
+              from: "login",
+            },
+          });
+        }
+      });
+      // var string = this.loginInfo.usernameOrEmail.replace(/\s|&nbsp;/g, "");
+      // var reg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+      // if (reg.test(string)) {
+      //   this.$router.push({
+      //     name: "verify",
+      //     params: {
+      //       email: string,
+      //       from: "login",
+      //     },
+      //   });
+      // } else {
+      //   this.showWarn.email = "请输入您的个人注册邮箱";
+      // }
     },
     updateEmail(value) {
       this.loginInfo.usernameOrEmail = value || "";
