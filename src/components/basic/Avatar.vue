@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="circle">R</div>
+    <div class="circle" v-if="username">{{ username[0].toUpperCase() }}</div>
     <div class="user">
-      <p class="name">Riccardo</p>
+      <p class="name">{{ username }}</p>
       <div class="points">
         <svg-icon icon-class="leaf" style="vertical-align: middle"></svg-icon>
         <span class="leavesNum">50</span>
@@ -14,6 +14,15 @@
 <script>
 export default {
   name: "Avatar",
+  data() {
+    return {
+      username: "",
+    };
+  },
+  mounted() {
+    const userInfo = JSON.parse(window.sessionStorage.getItem("user"));
+    this.username = userInfo["username"];
+  },
 };
 </script>
 
