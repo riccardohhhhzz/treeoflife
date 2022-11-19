@@ -99,6 +99,7 @@ export default {
           }
           if (data.state === 200) {
             alert("修改密码成功！");
+            window.sessionStorage.removeItem("user");
             this.$router.push("/login");
           }
         });
