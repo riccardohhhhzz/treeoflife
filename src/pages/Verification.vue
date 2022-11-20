@@ -120,11 +120,9 @@ export default {
             }
             if (this.from === "register") {
               alert("注册成功！欢迎加入Treeoflife");
+              window.sessionStorage.setItem("user", JSON.stringify(data.data));
               this.$router.push({
                 name: "homepage",
-                params: {
-                  email: this.userEmail,
-                },
               });
             }
           }
