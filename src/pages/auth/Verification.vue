@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import VerificationCode from "../components/complex/VerificationCode.vue";
-import MyButton from "../components/basic/MyButton.vue";
-import LinkText from "../components/text/LinkText.vue";
+import VerificationCode from "../../components/complex/VerificationCode.vue";
+import MyButton from "../../components/basic/MyButton.vue";
+import LinkText from "../../components/text/LinkText.vue";
 import axios from "axios";
 export default {
   name: "Verification",

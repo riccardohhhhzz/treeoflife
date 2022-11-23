@@ -33,10 +33,10 @@
 
 <script>
 import axios from "axios";
-import LifeTitle from "../components/text/LifeTitle.vue";
-import MyButton from "../components/basic/MyButton.vue";
-import LinkText from "../components/text/LinkText.vue";
-import UserInfoInputItem from "../components/complex/UserInfoInputItem.vue";
+import LifeTitle from "../../components/text/LifeTitle.vue";
+import MyButton from "../../components/basic/MyButton.vue";
+import LinkText from "../../components/text/LinkText.vue";
+import UserInfoInputItem from "../../components/complex/UserInfoInputItem.vue";
 export default {
   name: "Login",
   components: { LifeTitle, MyButton, LinkText, UserInfoInputItem },

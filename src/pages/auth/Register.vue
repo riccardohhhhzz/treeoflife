@@ -47,10 +47,10 @@
 </template>
 
 <script>
-import LifeTitle from "../components/text/LifeTitle.vue";
-import MyButton from "../components/basic/MyButton.vue";
-import LinkText from "../components/text/LinkText.vue";
-import UserInfoInputItem from "../components/complex/UserInfoInputItem.vue";
+import LifeTitle from "../../components/text/LifeTitle.vue";
+import MyButton from "../../components/basic/MyButton.vue";
+import LinkText from "../../components/text/LinkText.vue";
+import UserInfoInputItem from "../../components/complex/UserInfoInputItem.vue";
 import axios from "axios";
 
 export default {

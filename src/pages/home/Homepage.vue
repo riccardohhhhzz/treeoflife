@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Topbar from "../components/homepage/Topbar.vue";
-import Leftbar from "../components/homepage/Leftbar.vue";
+import Topbar from "../../components/homepage/Topbar.vue";
+import Leftbar from "../../components/homepage/Leftbar.vue";
 export default {
   name: "Homepage",
   components: { Topbar, Leftbar },

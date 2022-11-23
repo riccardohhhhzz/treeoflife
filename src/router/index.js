@@ -1,11 +1,11 @@
 import VueRouter from "vue-router";
 
 //引入路由组件
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import SetNewPsw from "../pages/SetNewPsw";
-import Verification from "../pages/Verification"
-import Homepage from "../pages/Homepage"
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
+import SetNewPsw from "../pages/auth/SetNewPsw";
+import Verification from "../pages/auth/Verification"
+import Homepage from "../pages/home/Homepage"
 import Notfound from "../pages/error/Notfound";
 
 //创建router实例对象

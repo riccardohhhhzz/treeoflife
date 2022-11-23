@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import MyButton from "../components/basic/MyButton.vue";
-import TextInput from "../components/basic/TextInput.vue";
+import MyButton from "../../components/basic/MyButton.vue";
+import TextInput from "../../components/basic/TextInput.vue";
 import axios from "axios";
 export default {
   name: "SetNewPsw",
