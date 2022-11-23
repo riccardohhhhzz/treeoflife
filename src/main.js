@@ -5,7 +5,7 @@ import router from './router';
 import "@/assets/imgs/index.js";
 import global from "./global/globalApi";
 import axios from "axios";
-
+import store from "./store";
 //关闭Vue的生产提醒
 Vue.config.productionTip = false
 
@@ -18,5 +18,6 @@ axios.defaults.baseURL = global.baseURL;
 Vue.use(VueRouter);
 new Vue({
   render: h => h(App),
-  router: router
+  router: router,
+  store: store
 }).$mount('#app')
