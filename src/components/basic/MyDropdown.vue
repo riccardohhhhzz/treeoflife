@@ -1,15 +1,19 @@
 <template>
   <div id="mydropdown">
     <button class="dropbtn" @click="showContent = !showContent">
-      <p class="droptitle">创建新的</p>
+      <p class="droptitle">{{ title }}</p>
       <svg-icon
         icon-class="dropdown_white"
         style="vertical-align: middle"
       ></svg-icon>
     </button>
     <div class="dropdown-content" v-if="showContent">
-      <a @click="clickItem">日记</a>
-      <a @click="clickItem">用药计划</a>
+      <a
+        v-for="(item, index) in itemList"
+        :key="index"
+        @click="clickItemList[index]"
+        >{{ item }}</a
+      >
     </div>
   </div>
 </template>
@@ -17,6 +21,17 @@
 <script>
 export default {
   name: "MySelect",
+  props: {
+    title: {
+      type: String,
+    },
+    itemList: {
+      type: Array,
+    },
+    clickItemList: {
+      type: Array,
+    },
+  },
   data() {
     return {
       showContent: false,
@@ -24,7 +39,7 @@ export default {
   },
   methods: {
     clickItem() {
-      console.log("clickme");
+      console.log("asdasd");
       this.showContent = false;
     },
   },

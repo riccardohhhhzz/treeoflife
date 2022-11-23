@@ -5,9 +5,16 @@
     </div>
     <div class="nav">
       <SearchInput class="search"></SearchInput>
-      <MyDropdown class="createNew"></MyDropdown>
+      <MyDropdown
+        class="createNew"
+        title="创建新的"
+        :itemList="['日记', '用药计划']"
+        :clickItemList="[openDiaryDialog, openMedicinePlanDialog]"
+        ref="createNew"
+      ></MyDropdown>
       <Avatar class="avatar"></Avatar>
     </div>
+    <MyForm ref="diaryForm"></MyForm>
   </div>
 </template>
 
@@ -15,13 +22,20 @@
 import SearchInput from "../complex/SearchInput.vue";
 import MyDropdown from "../basic/MyDropdown.vue";
 import Avatar from "../basic/Avatar.vue";
+import MyForm from "../basic/MyForm.vue";
 export default {
   name: "Topbar",
-  components: { SearchInput, MyDropdown, Avatar },
+  components: { SearchInput, MyDropdown, Avatar, MyForm },
   methods: {
     openLeftbar() {
-      console.log("clicked");
       document.getElementById("leftbar").style.width = "15rem";
+    },
+    openDiaryDialog() {
+      this.$refs["createNew"].showContent = false;
+      this.$refs["diaryForm"].showDialog = true;
+    },
+    openMedicinePlanDialog() {
+      this.$refs["createNew"].showContent = false;
     },
   },
 };

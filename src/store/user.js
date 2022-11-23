@@ -13,8 +13,7 @@ const userAbout = {
         },
     },
     getters: {},
-    actions: {
-    },
+    actions: {},
     mutations: {},
 }
 export default userAbout
