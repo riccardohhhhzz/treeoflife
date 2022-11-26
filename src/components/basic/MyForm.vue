@@ -21,13 +21,19 @@ export default {
   name: "MyForm",
   data() {
     return {
-      showDialog: false,
+      showDialog: true,
     };
   },
   methods: {
+    openDialog() {
+      this.showDialog = true;
+    },
     closeDialog() {
       this.showDialog = false;
     },
+  },
+  mounted() {
+    this.$bus.$on("openDialog", this.openDialog);
   },
 };
 </script>
@@ -45,9 +51,10 @@ export default {
 }
 .form-body {
   position: fixed;
-  width: 600px;
-  height: 400px;
-  top: 76px;
+  width: 700px;
+  min-height: 400px;
+  max-height: 500px;
+  top: 40px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -63,8 +70,13 @@ export default {
 }
 .form-body .close-btn {
   position: absolute;
+  width: 1.6rem;
+  height: 1.6rem;
   top: 12px;
   right: 5px;
+}
+.form-body .close-btn:hover {
+  cursor: pointer;
 }
 /* 表单出现动画 */
 .form-body-enter,

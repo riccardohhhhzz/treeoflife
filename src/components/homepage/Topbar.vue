@@ -14,7 +14,7 @@
       ></MyDropdown>
       <Avatar class="avatar"></Avatar>
     </div>
-    <MyForm ref="diaryForm"></MyForm>
+    <DiaryForm ref="diaryForm"></DiaryForm>
   </div>
 </template>
 
@@ -22,17 +22,17 @@
 import SearchInput from "../complex/SearchInput.vue";
 import MyDropdown from "../basic/MyDropdown.vue";
 import Avatar from "../basic/Avatar.vue";
-import MyForm from "../basic/MyForm.vue";
+import DiaryForm from "../form/DiaryForm.vue";
 export default {
   name: "Topbar",
-  components: { SearchInput, MyDropdown, Avatar, MyForm },
+  components: { SearchInput, MyDropdown, Avatar, DiaryForm },
   methods: {
     openLeftbar() {
       document.getElementById("leftbar").style.width = "15rem";
     },
     openDiaryDialog() {
       this.$refs["createNew"].showContent = false;
-      this.$refs["diaryForm"].showDialog = true;
+      this.$bus.$emit("openDialog");
     },
     openMedicinePlanDialog() {
       this.$refs["createNew"].showContent = false;
