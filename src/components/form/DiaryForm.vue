@@ -1,24 +1,39 @@
 <template>
-  <div id="diaryForm">
-    <MyForm>
-      <template slot="title">
-        <h2 class="title">发布日记</h2>
-      </template>
-      <template slot="content">
-        <div class="content">
-          <MyTextEditor></MyTextEditor>
-        </div>
-      </template>
-    </MyForm>
-  </div>
+  <MyForm id="diary-form">
+    <template slot="title">
+      <h2 class="title">发布日记</h2>
+    </template>
+    <template slot="content">
+      <div class="content">
+        <SelectMood></SelectMood>
+        <QuillEditor></QuillEditor>
+      </div>
+      <p class="attention">*您的日记仅自己可见</p>
+      <MyButton :width="80" :height="40" class="btn-publish" :clickable="false"
+        >发布</MyButton
+      >
+      <MyButton
+        :width="80"
+        :height="40"
+        class="btn-cancel"
+        borderColor="#404040"
+        bgColor="#fff"
+        color="#333333"
+        hoverColor="#f7f7f7"
+        >取消</MyButton
+      >
+    </template>
+  </MyForm>
 </template>
 
 <script>
 import MyForm from "../basic/MyForm.vue";
-import MyTextEditor from "../complex/MyTextEditor.vue";
+import QuillEditor from "../complex/QuillEditor.vue";
+import SelectMood from "../complex/SelectMood.vue";
+import MyButton from "../basic/MyButton.vue";
 export default {
   name: "DiaryForm",
-  components: { MyForm, MyTextEditor },
+  components: { MyForm, QuillEditor, SelectMood, MyButton },
 };
 </script>
 
@@ -31,9 +46,26 @@ export default {
   margin-left: 25px;
 }
 .content {
-  margin: 20px 25px;
+  margin: 0px 25px;
+  margin-top: 20px;
   border: 1px solid #979797;
   min-height: 200px;
   max-height: 300px;
+}
+.attention {
+  font-size: 14px;
+  color: #888888;
+  margin: 10px 0px;
+  margin-left: 25px;
+}
+.btn-publish {
+  float: right;
+  margin-right: 25px;
+  margin-bottom: 20px;
+}
+.btn-cancel {
+  float: right;
+  margin-right: 10px;
+  margin-bottom: 20px;
 }
 </style>

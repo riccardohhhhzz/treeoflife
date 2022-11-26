@@ -43,6 +43,9 @@ export default {
       type: String,
       default: "#59d79a",
     },
+    borderColor: {
+      type: String,
+    },
     paddingHorizon: {
       type: Number,
       default: 10,
@@ -61,6 +64,7 @@ export default {
         "--color": this.color,
         "--bgColor": this.clickable ? this.bgColor : "#E5E5E5",
         "--hoverColor": this.clickable ? this.hoverColor : "#E5E5E5",
+        "--borderColor": this.borderColor,
         "--paddingHorizon": this.paddingHorizon + "px",
         "--cursor": this.clickable ? "pointer" : "default",
       };
@@ -78,7 +82,7 @@ button {
   font-size: var(--fontSize);
   background-color: var(--bgColor);
   color: var(--color);
-  border: 0px;
+  border: 1px solid var(--borderColor);
   border-radius: 6px;
 }
 button:hover {

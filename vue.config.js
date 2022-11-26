@@ -1,10 +1,19 @@
 const path = require("path");
+const webpack = require('webpack')
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 module.exports = {
   lintOnSave: false,
   transpileDependencies: ["vuetify"],
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        'window.Quill': 'quill/dist/quill.js',
+        'Quill': 'quill/dist/quill.js'
+      })
+    ]
+  },
   chainWebpack(config) {
     // set svg-sprite-loader
     // 第一步：让其他svg loader不要对src/assets/imgs/svgs进行操作

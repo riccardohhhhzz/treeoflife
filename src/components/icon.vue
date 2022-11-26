@@ -32,7 +32,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .svg-icon {
   width: 1.2rem;
   height: 1.2rem;
