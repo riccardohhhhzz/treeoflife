@@ -7,6 +7,7 @@ import global from "./global/globalApi";
 import axios from "axios";
 import store from "./store";
 import VueQuillEditor from "vue-quill-editor"
+
 Vue.use(VueQuillEditor)
 //关闭Vue的生产提醒
 Vue.config.productionTip = false

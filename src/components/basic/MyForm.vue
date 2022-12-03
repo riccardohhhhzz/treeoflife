@@ -21,7 +21,7 @@ export default {
   name: "MyForm",
   data() {
     return {
-      showDialog: true,
+      showDialog: false,
     };
   },
   methods: {
