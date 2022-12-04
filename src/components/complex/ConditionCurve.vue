@@ -35,6 +35,7 @@
           <Mood
             class="mood-icon"
             :type="mood"
+            :date="datelist[idx]"
             v-show="showMoodIcon"
             :style="{ top: topOfMood[mood] }"
           ></Mood>
@@ -108,6 +109,7 @@ export default {
     },
   },
   methods: {
+    // 计算出过去days天的星期
     getDaylist(days) {
       var pastDays = [];
       var myDate = new Date();
@@ -131,8 +133,24 @@ export default {
       }
       return pastDays;
     },
+    // 计算出过去days天的日期，形式为 "月/日，年"
+    getDateList(days) {
+      var pastDates = [];
+      for (var day = 0; day < days; day++) {
+        var today = new Date();
+        var lastDate = today.getTime() - 1000 * 60 * 60 * 24 * day;
+        today.setTime(lastDate);
+        var year = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var date = today.getDate();
+        month = month < 10 ? "0" + month : month;
+        date = date < 10 ? "0" + date : date;
+        pastDates.unshift(month + "/" + date + "," + year);
+      }
+      return pastDates;
+    },
+    // 根据当前的宽高以及起始心情类别计算线的角度以及长度
     calLineAngleAndWidth(curMood, nextMood) {
-      // 根据当前的宽高以及起始心情类别计算线的角度以及长度
       let rec = document.getElementById("rectangle");
       let unitWidth = rec.offsetWidth;
       let unitHeight = rec.offsetHeight / 5;
@@ -188,6 +206,7 @@ export default {
   },
   created() {
     this.daylist = this.getDaylist(this.pastDaysNum);
+    this.datelist = this.getDateList(this.pastDaysNum);
     this.pastMoods = Array.from(
       { length: this.pastDaysNum },
       (v) => this.moodType[Math.floor(Math.random() * this.moodType.length)]
