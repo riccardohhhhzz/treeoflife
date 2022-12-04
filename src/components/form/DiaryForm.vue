@@ -5,11 +5,16 @@
     </template>
     <template slot="content">
       <div class="content">
-        <SelectMood></SelectMood>
+        <SelectMood ref="mood-select"></SelectMood>
         <QuillEditor></QuillEditor>
       </div>
       <p class="attention">*您的日记仅自己可见</p>
-      <MyButton :width="80" :height="40" class="btn-publish" :clickable="false"
+      <MyButton
+        :width="80"
+        :height="40"
+        class="btn-publish"
+        :clickable="publishable"
+        @click.native="publishDiary"
         >发布</MyButton
       >
       <MyButton
@@ -20,6 +25,7 @@
         bgColor="#fff"
         color="#333333"
         hoverColor="#f7f7f7"
+        @click.native="closeDiaryForm"
         >取消</MyButton
       >
     </template>
@@ -31,15 +37,27 @@ import MyForm from "../basic/MyForm.vue";
 import QuillEditor from "../complex/QuillEditor.vue";
 import SelectMood from "../complex/SelectMood.vue";
 import MyButton from "../basic/MyButton.vue";
+import { mapActions } from "vuex";
 export default {
   name: "DiaryForm",
   components: { MyForm, QuillEditor, SelectMood, MyButton },
   data() {
     return {
       showDiaryForm: false,
+      publishable: false,
+      selectedMood: "default",
     };
   },
   methods: {
+    ...mapActions("diaryAbout", { updateCondition: "updateTodayCondition" }),
+    publishDiary() {
+      this.updateCondition(this.selectedMood);
+      this.$bus.$emit("conditionsUpdated");
+    },
+    updateSelectedMood(data) {
+      this.selectedMood = data;
+      this.publishable = true;
+    },
     openDiaryForm() {
       this.showDiaryForm = true;
       this.$refs["form"].openDialog();
@@ -51,6 +69,11 @@ export default {
   },
   mounted() {
     this.$bus.$on("openDiaryForm", this.openDiaryForm);
+    this.$bus.$on("selectMood", this.updateSelectedMood);
+  },
+  beforeDestroy() {
+    this.$bus.$off("openDiaryForm");
+    this.$bus.$off("selectMood");
   },
 };
 </script>

@@ -58,6 +58,7 @@
 import Mood from "../basic/Mood.vue";
 import Velocity from "velocity-animate";
 import AddButton from "../basic/AddButton.vue";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "ConditionCurve",
   components: { Mood, AddButton },
@@ -112,7 +113,14 @@ export default {
       },
     },
   },
+  computed: {
+    ...mapState("diaryAbout", { pastMoods: "pastDaysCondition" }),
+  },
   methods: {
+    ...mapActions("diaryAbout", { initCondition: "initPastDaysCondition" }),
+    updateTodayMood() {
+      this.updateLineAngleAndWidth();
+    },
     openDiaryForm() {
       this.$bus.$emit("openDiaryForm");
     },
@@ -211,13 +219,16 @@ export default {
       }
     },
   },
-  created() {
+  beforeMount() {
+    // pastMoods以及lineAngleAndWidth都没有放在data中，可以选择在beforeMount时进行声明，
+    // 此时并没有将编译好的HTML挂载到el所指的DOM上
     this.daylist = this.getDaylist(this.pastDaysNum);
     this.datelist = this.getDateList(this.pastDaysNum);
-    this.pastMoods = Array.from(
+    var fakePastDaysConditions = Array.from(
       { length: this.pastDaysNum },
       (v) => this.moodType[Math.floor(Math.random() * this.moodType.length)]
     );
+    this.initCondition(fakePastDaysConditions);
     this.lineAngleAndWidth = Array.from({ length: this.pastDaysNum }, (v) => {
       return { angle: "0deg", width: "0px" };
     });
@@ -230,6 +241,10 @@ export default {
       })();
     };
     this.showRectangle = true;
+    this.$bus.$on("conditionsUpdated", this.updateTodayMood);
+  },
+  beforeDestroy() {
+    this.$bus.$off("conditionUpdated");
   },
 };
 </script>

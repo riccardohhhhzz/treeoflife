@@ -36,6 +36,7 @@ export default {
         } else {
           m["selected"] = true;
           m["opacity"] = 1;
+          this.$bus.$emit("selectMood", m["icon"]);
         }
       }
     },

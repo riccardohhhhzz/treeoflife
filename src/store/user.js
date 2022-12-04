@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const userAbout = {
+export default {
     namespaced: true,
     state: {
         username: '',
@@ -16,4 +16,3 @@ const userAbout = {
     actions: {},
     mutations: {},
 }
-export default userAbout
