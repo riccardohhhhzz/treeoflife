@@ -1,5 +1,5 @@
 <template>
-  <MyForm id="diary-form">
+  <MyForm id="diary-form" v-show="showDiaryForm" ref="form">
     <template slot="title">
       <h2 class="title">发布日记</h2>
     </template>
@@ -34,6 +34,24 @@ import MyButton from "../basic/MyButton.vue";
 export default {
   name: "DiaryForm",
   components: { MyForm, QuillEditor, SelectMood, MyButton },
+  data() {
+    return {
+      showDiaryForm: false,
+    };
+  },
+  methods: {
+    openDiaryForm() {
+      this.showDiaryForm = true;
+      this.$refs["form"].openDialog();
+    },
+    closeDiaryForm() {
+      this.showDiaryForm = false;
+      this.$refs["form"].closeDialog();
+    },
+  },
+  mounted() {
+    this.$bus.$on("openDiaryForm", this.openDiaryForm);
+  },
 };
 </script>
 

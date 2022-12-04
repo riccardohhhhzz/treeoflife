@@ -32,7 +32,7 @@ export default {
     },
     openDiaryDialog() {
       this.$refs["createNew"].showContent = false;
-      this.$bus.$emit("openDialog");
+      this.$bus.$emit("openDiaryForm");
     },
     openMedicinePlanDialog() {
       this.$refs["createNew"].showContent = false;

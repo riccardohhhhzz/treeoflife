@@ -41,6 +41,9 @@
           ></Mood>
         </li>
       </transition-group>
+      <div class="add">
+        <AddButton @click.native="openDiaryForm"></AddButton>
+      </div>
     </div>
     <div class="days">
       <span class="past-days">
@@ -54,9 +57,10 @@
 <script>
 import Mood from "../basic/Mood.vue";
 import Velocity from "velocity-animate";
+import AddButton from "../basic/AddButton.vue";
 export default {
   name: "ConditionCurve",
-  components: { Mood },
+  components: { Mood, AddButton },
   data() {
     return {
       moodType: [
@@ -109,6 +113,9 @@ export default {
     },
   },
   methods: {
+    openDiaryForm() {
+      this.$bus.$emit("openDiaryForm");
+    },
     // 计算出过去days天的星期
     getDaylist(days) {
       var pastDays = [];
@@ -268,6 +275,12 @@ export default {
   left: 0;
   width: 85%;
   height: 100%;
+}
+.add {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 15%;
 }
 .mood-rectangle {
   position: relative;

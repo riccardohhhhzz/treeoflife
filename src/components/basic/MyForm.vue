@@ -32,9 +32,6 @@ export default {
       this.showDialog = false;
     },
   },
-  mounted() {
-    this.$bus.$on("openDialog", this.openDialog);
-  },
 };
 </script>
 
