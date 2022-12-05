@@ -5,10 +5,15 @@
       @mouseover="hover = true"
       @mouseleave="hover = false"
     >
-      <svg-icon :icon-class="type" class="icon" v-if="!showDefault"></svg-icon>
+      <svg-icon
+        :icon-class="type"
+        class="icon"
+        v-if="!showDefault"
+        :style="iconStyleVar"
+      ></svg-icon>
       <div class="default" v-if="showDefault"></div>
     </div>
-    <div class="hover-hint" v-show="hover">
+    <div class="hover-hint" v-show="hover && showHoverHint">
       <p class="hint-content">日期: {{ date }}</p>
       <p class="hint-content">状态: {{ condition }}</p>
     </div>
@@ -26,7 +31,23 @@ var conditionMap = {
 };
 export default {
   name: "Mood",
-  props: ["type", "date"],
+  props: {
+    type: {
+      type: String,
+      default: "default",
+    },
+    date: {
+      type: String,
+    },
+    width: {
+      type: String,
+      default: "1.4rem",
+    },
+    showHoverHint: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       hover: false,
@@ -39,14 +60,19 @@ export default {
     condition() {
       return conditionMap[this.type];
     },
+    iconStyleVar() {
+      return {
+        "--width": this.width,
+      };
+    },
   },
 };
 </script>
 
 <style scoped>
 .icon {
-  width: 1.4rem;
-  height: 1.4rem;
+  width: var(--width);
+  height: var(--width);
 }
 .default {
   width: 1rem;

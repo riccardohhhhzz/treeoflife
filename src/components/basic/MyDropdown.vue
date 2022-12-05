@@ -1,13 +1,17 @@
 <template>
   <div id="mydropdown">
-    <button class="dropbtn" @click="showContent = !showContent">
+    <button
+      class="dropbtn"
+      @click="showContent = !showContent"
+      :style="btnStyleVar"
+    >
       <p class="droptitle">{{ title }}</p>
       <svg-icon
         icon-class="dropdown_white"
         style="vertical-align: middle"
       ></svg-icon>
     </button>
-    <div class="dropdown-content" v-if="showContent">
+    <div class="dropdown-content" v-show="showContent">
       <a
         v-for="(item, index) in itemList"
         :key="index"
@@ -15,6 +19,7 @@
         >{{ item }}</a
       >
     </div>
+    <div class="mask" v-show="showContent" @click="clickOutSide"></div>
   </div>
 </template>
 
@@ -37,9 +42,18 @@ export default {
       showContent: false,
     };
   },
+  computed: {
+    btnStyleVar() {
+      return {
+        "--bgColor": this.showContent ? "#d05042" : "#df6153",
+      };
+    },
+  },
   methods: {
     clickItem() {
-      console.log("asdasd");
+      this.showContent = false;
+    },
+    clickOutSide() {
       this.showContent = false;
     },
   },
@@ -54,7 +68,7 @@ export default {
 .dropbtn {
   height: 2.4rem;
   width: 6.8rem;
-  background-color: #df6153;
+  background-color: var(--bgColor);
   border: none;
   color: #fff;
   font-size: 14px;
@@ -73,6 +87,7 @@ export default {
 .dropdown-content {
   display: block;
   position: absolute;
+  z-index: 3;
   top: 3.6rem;
   right: 0;
   width: 8rem;
@@ -93,5 +108,14 @@ export default {
 .dropdown-content a:hover {
   background-color: #53cf91;
   color: #fff;
+}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  background-color: transparent;
 }
 </style>

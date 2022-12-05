@@ -12,7 +12,7 @@
         :clickItemList="[openDiaryDialog, openMedicinePlanDialog]"
         ref="createNew"
       ></MyDropdown>
-      <Avatar class="avatar"></Avatar>
+      <Avatar class="avatar" type="topbar"></Avatar>
     </div>
     <DiaryForm ref="diaryForm"></DiaryForm>
   </div>

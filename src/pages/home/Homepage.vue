@@ -1,5 +1,5 @@
 <template>
-  <div class="homepage">
+  <div id="homepage">
     <Topbar></Topbar>
     <Leftbar></Leftbar>
     <Center></Center>
@@ -17,8 +17,8 @@ export default {
 </script>
 
 <style>
-.homepage {
-  width: 100vw;
-  height: 100vh;
+#homepage {
+  /* width: 100vw;
+  height: 100vh; */
 }
 </style>

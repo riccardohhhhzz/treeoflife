@@ -53,6 +53,7 @@ export default {
     publishDiary() {
       this.updateCondition(this.selectedMood);
       this.$bus.$emit("conditionsUpdated");
+      this.closeDiaryForm();
     },
     updateSelectedMood(data) {
       this.selectedMood = data;

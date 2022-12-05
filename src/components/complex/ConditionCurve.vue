@@ -240,7 +240,7 @@ export default {
         this.screenWidth = document.body.clientWidth;
       })();
     };
-    this.showRectangle = true;
+    this.showRectangle = true; //进场动画触发
     this.$bus.$on("conditionsUpdated", this.updateTodayMood);
   },
   beforeDestroy() {
