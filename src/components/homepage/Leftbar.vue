@@ -27,6 +27,8 @@ export default {
 <style>
 #leftbar {
   position: fixed;
+  top: 4.8rem;
+  left: 0;
   width: 15rem;
   height: calc(100% - 4.8rem);
   overflow-x: hidden;

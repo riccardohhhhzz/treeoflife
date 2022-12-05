@@ -1,5 +1,6 @@
 <template>
   <div id="main-content">
+    <div class="topbar-area"></div>
     <ConditionCurve></ConditionCurve>
     <DiaryDisplayZone class="mydiary"></DiaryDisplayZone>
   </div>
@@ -17,8 +18,10 @@ export default {
 <style scoped>
 #main-content {
   margin: 0rem 15rem;
-  padding: 0px 40px;
-  padding-top: 40px;
+  padding: 40px;
+}
+.topbar-area {
+  height: 4.8rem;
 }
 .mydiary {
   width: 100%;
