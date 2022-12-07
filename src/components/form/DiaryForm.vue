@@ -6,7 +6,7 @@
     <template slot="content">
       <div class="content">
         <SelectMood ref="mood-select"></SelectMood>
-        <QuillEditor></QuillEditor>
+        <QuillEditor ref="quill-editor"></QuillEditor>
       </div>
       <p class="attention">*您的日记仅自己可见</p>
       <MyButton
@@ -53,6 +53,7 @@ export default {
     publishDiary() {
       this.updateCondition(this.selectedMood);
       this.$bus.$emit("conditionsUpdated");
+      this.$bus.$emit("publishNewDiary", this.$refs["quill-editor"].content);
       this.closeDiaryForm();
     },
     updateSelectedMood(data) {
