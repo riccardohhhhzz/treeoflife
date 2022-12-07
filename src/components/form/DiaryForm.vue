@@ -53,7 +53,10 @@ export default {
     publishDiary() {
       this.updateCondition(this.selectedMood);
       this.$bus.$emit("conditionsUpdated");
-      this.$bus.$emit("publishNewDiary", this.$refs["quill-editor"].content);
+      this.$bus.$emit("publishNewDiary", {
+        mood: this.selectedMood,
+        content: this.$refs["quill-editor"].content,
+      });
       this.closeDiaryForm();
     },
     updateSelectedMood(data) {

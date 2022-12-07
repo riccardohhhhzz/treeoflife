@@ -9,14 +9,21 @@
       ></MoreBtn>
     </div>
     <div class="diary-daily-condition">
-      <p>今天我感到开心</p>
-      <svg-icon icon-class="happy" class="mood-icon"></svg-icon>
+      <p v-if="mood != ''">今天我感到{{ this.moodText }}</p>
+      <svg-icon :icon-class="mood" class="mood-icon"></svg-icon>
     </div>
     <div class="diary-content" v-if="content != ''" v-html="content"></div>
   </div>
 </template>
 
 <script>
+var conditionMap = {
+  "very-happy": "愉悦",
+  happy: "开心",
+  netural: "平静",
+  bad: "郁闷",
+  "very-bad": "难受",
+};
 import Avatar from "../basic/Avatar.vue";
 import Mood from "../basic/Mood.vue";
 import MoreBtn from "../basic/MoreBtn.vue";
@@ -25,12 +32,19 @@ export default {
   components: { Avatar, Mood, MoreBtn },
   data() {
     return {
+      mood: "",
       content: "",
     };
   },
+  computed: {
+    moodText() {
+      return conditionMap[this.mood];
+    },
+  },
   methods: {
     showDiary(data) {
-      this.content = data;
+      this.mood = data["mood"];
+      this.content = data["content"];
     },
     delDiary() {
       console.log("删除日记");
