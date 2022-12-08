@@ -76,6 +76,7 @@ export default {
     },
     clearCondition() {
       this.componentKey += 1;
+      this.publishable = false;
     },
   },
   mounted() {
