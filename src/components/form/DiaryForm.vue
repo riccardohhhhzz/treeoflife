@@ -1,5 +1,5 @@
 <template>
-  <MyForm id="diary-form" v-show="showDiaryForm" ref="form">
+  <MyForm id="diary-form" v-show="showDiaryForm" ref="form" :key="componentKey">
     <template slot="title">
       <h2 class="title">发布日记</h2>
     </template>
@@ -46,18 +46,21 @@ export default {
       showDiaryForm: false,
       publishable: false,
       selectedMood: "default",
+      componentKey: 0,
     };
   },
   methods: {
     ...mapActions("diaryAbout", { updateCondition: "updateTodayCondition" }),
     publishDiary() {
+      var myDate = new Date();
       this.updateCondition(this.selectedMood);
       this.$bus.$emit("conditionsUpdated");
       this.$bus.$emit("publishNewDiary", {
         mood: this.selectedMood,
+        publishTime: myDate.getTime(),
         content: this.$refs["quill-editor"].content,
       });
-      this.closeDiaryForm();
+      this.clearCondition();
     },
     updateSelectedMood(data) {
       this.selectedMood = data;
@@ -70,6 +73,9 @@ export default {
     closeDiaryForm() {
       this.showDiaryForm = false;
       this.$refs["form"].closeDialog();
+    },
+    clearCondition() {
+      this.componentKey += 1;
     },
   },
   mounted() {

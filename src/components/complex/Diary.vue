@@ -1,16 +1,17 @@
 <template>
   <div id="diary">
     <div class="diary-top">
-      <Avatar type="diary"></Avatar>
+      <Avatar type="diary" :publishTime="publishTime"></Avatar>
       <MoreBtn
         :itemIconList="['delete']"
         :itemTitleList="['删除日记']"
         :clickItemList="[delDiary]"
+        ref="moreBtn"
       ></MoreBtn>
     </div>
     <div class="diary-daily-condition">
       <p v-if="mood != ''">今天我感到{{ this.moodText }}</p>
-      <svg-icon :icon-class="mood" class="mood-icon"></svg-icon>
+      <svg-icon :icon-class="mood" class="display-mood-icon"></svg-icon>
     </div>
     <div class="diary-content" v-if="content != ''" v-html="content"></div>
   </div>
@@ -30,11 +31,18 @@ import MoreBtn from "../basic/MoreBtn.vue";
 export default {
   name: "Diary",
   components: { Avatar, Mood, MoreBtn },
-  data() {
-    return {
-      mood: "",
-      content: "",
-    };
+  props: {
+    mood: {
+      type: String,
+      default: "",
+    },
+    publishTime: {
+      type: Number,
+    },
+    content: {
+      type: String,
+      default: "",
+    },
   },
   computed: {
     moodText() {
@@ -42,19 +50,10 @@ export default {
     },
   },
   methods: {
-    showDiary(data) {
-      this.mood = data["mood"];
-      this.content = data["content"];
-    },
     delDiary() {
-      console.log("删除日记");
+      this.$bus.$emit("deleteDiary", this.publishTime);
+      this.$refs["moreBtn"].showContext = false;
     },
-  },
-  mounted() {
-    this.$bus.$on("publishNewDiary", this.showDiary);
-  },
-  beforeDestroy() {
-    this.$bus.$off("publishNewDiary");
   },
 };
 </script>
@@ -63,7 +62,6 @@ export default {
 #diary {
   position: relative;
   display: inline-block;
-  width: 45%;
   border: 1px solid #cccccc;
   border-radius: 6px;
   padding: 1rem;
@@ -79,7 +77,7 @@ export default {
   margin-left: 3.6rem;
   margin-top: 1rem;
 }
-.mood-icon {
+.display-mood-icon {
   width: 1.5rem;
   height: 1.5rem;
   margin-left: 4px;
@@ -87,8 +85,12 @@ export default {
 .diary-content {
   margin-top: 1rem;
   color: #999999;
+  word-break: break-all;
 }
 .diary-content li {
   list-style-position: inside;
+}
+.diary-content img {
+  max-width: 100%;
 }
 </style>
