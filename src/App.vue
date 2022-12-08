@@ -21,6 +21,10 @@ body {
   font-family: "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB";
   font-size: 16px;
 }
+body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 a {
   text-decoration: none;
 }

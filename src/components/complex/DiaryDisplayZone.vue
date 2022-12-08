@@ -2,26 +2,24 @@
   <div id="diaryDisplayZone">
     <h2 class="title">我的日记</h2>
     <div class="diaries" v-if="diaries.length != 0">
-      <div class="evenIdx-diaries">
+      <transition-group appear name="list" tag="div" class="evenIdx-diaries">
         <Diary
-          v-for="(diary, idx) in diaries"
-          v-if="idx % 2 === 0"
-          :key="diary.time"
+          v-for="(diary, idx) in evenIdxDiaries"
+          :key="diary.publishTime"
           :mood="diary.mood"
           :publishTime="diary.publishTime"
           :content="diary.content"
         ></Diary>
-      </div>
-      <div class="oddIdx-diaries">
+      </transition-group>
+      <transition-group name="list" tag="div" class="oddIdx-diaries">
         <Diary
-          v-for="(diary, idx) in diaries"
-          v-if="idx % 2 === 1"
-          :key="diary.time"
+          v-for="(diary, idx) in oddIdxDiaries"
+          :key="diary.publishTime"
           :mood="diary.mood"
           :publishTime="diary.publishTime"
           :content="diary.content"
         ></Diary>
-      </div>
+      </transition-group>
     </div>
     <div class="placeholder" v-if="diaries.length === 0">
       <svg-icon
@@ -46,6 +44,18 @@ export default {
     return {
       diaries: [],
     };
+  },
+  computed: {
+    evenIdxDiaries() {
+      return this.diaries.filter(function (diary, idx) {
+        return idx % 2 === 0;
+      });
+    },
+    oddIdxDiaries() {
+      return this.diaries.filter(function (diary, idx) {
+        return idx % 2 === 1;
+      });
+    },
   },
   methods: {
     addNewDiary(data) {
@@ -116,5 +126,18 @@ export default {
   right: 0;
   top: 18rem;
   margin: 0 auto;
+}
+.list-enter,
+.list-leave-to {
+  transform: scale(0);
+  opacity: 0;
+}
+.list-leave,
+.list-enter-to {
+  transform: scale(1);
+  opacity: 1;
+}
+.list-enter-active {
+  transition: all 0.6s ease;
 }
 </style>
