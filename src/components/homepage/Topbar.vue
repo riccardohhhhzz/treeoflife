@@ -1,6 +1,6 @@
 <template>
   <div id="topbar">
-    <div class="logo" @click="openLeftbar">
+    <div class="logo" @click="openBar">
       <h1>TREEOFLIFE</h1>
     </div>
     <div class="nav">
@@ -27,8 +27,9 @@ export default {
   name: "Topbar",
   components: { SearchInput, MyDropdown, Avatar, DiaryForm },
   methods: {
-    openLeftbar() {
+    openBar() {
       document.getElementById("leftbar").style.width = "15rem";
+      document.getElementById("rightbar").style.width = "15rem";
     },
     openDiaryDialog() {
       this.$refs["createNew"].showContent = false;

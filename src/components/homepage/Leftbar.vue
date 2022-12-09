@@ -1,6 +1,6 @@
 <template>
   <div id="leftbar">
-    <ExpandBtn icon="arrow-left" @click.native="closeLeftbar"></ExpandBtn>
+    <ExpandBtn direction="left" @click.native="closeLeftbar"></ExpandBtn>
     <NavItem icon="home">首页</NavItem>
     <NavItem icon="health">我的健康</NavItem>
     <NavItem icon="user">个人中心</NavItem>
@@ -21,6 +21,13 @@ export default {
       document.getElementById("leftbar").style.width = "0";
     },
   },
+  mounted() {
+    document.getElementById("leftbar").style.transition = "1s";
+    document.getElementById("leftbar").style.width = "15rem";
+    this.$nextTick(() => {
+      document.getElementById("leftbar").style.transition = "0.3s";
+    });
+  },
 };
 </script>
 
@@ -29,7 +36,7 @@ export default {
   position: fixed;
   top: 4.8rem;
   left: 0;
-  width: 15rem;
+  width: 0;
   height: calc(100% - 4.8rem);
   overflow-x: hidden;
   background-color: #2b2d34;

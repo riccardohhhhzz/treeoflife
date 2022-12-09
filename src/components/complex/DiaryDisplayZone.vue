@@ -2,7 +2,12 @@
   <div id="diaryDisplayZone">
     <h2 class="title">我的日记</h2>
     <div class="diaries" v-if="diaries.length != 0">
-      <transition-group appear name="list" tag="div" class="evenIdx-diaries">
+      <transition-group
+        appear
+        name="scale-in"
+        tag="div"
+        class="evenIdx-diaries"
+      >
         <Diary
           v-for="(diary, idx) in evenIdxDiaries"
           :key="diary.publishTime"
@@ -11,7 +16,7 @@
           :content="diary.content"
         ></Diary>
       </transition-group>
-      <transition-group name="list" tag="div" class="oddIdx-diaries">
+      <transition-group name="scale-in" tag="div" class="oddIdx-diaries">
         <Diary
           v-for="(diary, idx) in oddIdxDiaries"
           :key="diary.publishTime"
@@ -127,17 +132,17 @@ export default {
   top: 18rem;
   margin: 0 auto;
 }
-.list-enter,
-.list-leave-to {
+.scale-in-enter,
+.scale-in-leave-to {
   transform: scale(0);
   opacity: 0;
 }
-.list-leave,
-.list-enter-to {
+.scale-in-leave,
+.scale-in-enter-to {
   transform: scale(1);
   opacity: 1;
 }
-.list-enter-active {
+.scale-in-enter-active {
   transition: all 0.6s ease;
 }
 </style>
