@@ -1,18 +1,16 @@
 import axios from "axios"
+import { SessionUtils } from "@/utils";
 
 export default {
     namespaced: true,
     state: {
-        username: '',
-        password: '',
-        email: '',
-        birthday: {
-            year: '',
-            month: '',
-            day: '',
-        },
+        userInfo: SessionUtils.get('user'),
     },
-    getters: {},
-    actions: {},
-    mutations: {},
+    actions: {
+    },
+    mutations: {
+        INITUSERINFO(state, value) {
+            state.userInfo = value;
+        }
+    },
 }

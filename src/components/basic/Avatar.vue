@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Avatar",
   props: {
@@ -84,8 +85,7 @@ export default {
     },
   },
   mounted() {
-    const userInfo = JSON.parse(window.sessionStorage.getItem("user"));
-    this.username = userInfo["username"];
+    this.username = this.$store.state.userAbout.userInfo.username;
   },
 };
 </script>

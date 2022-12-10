@@ -38,6 +38,7 @@ import QuillEditor from "../complex/QuillEditor.vue";
 import SelectMood from "../complex/SelectMood.vue";
 import MyButton from "../basic/MyButton.vue";
 import { mapActions } from "vuex";
+import axios from "axios";
 export default {
   name: "DiaryForm",
   components: { MyForm, QuillEditor, SelectMood, MyButton },
@@ -50,17 +51,34 @@ export default {
     };
   },
   methods: {
-    ...mapActions("diaryAbout", { updateCondition: "updateTodayCondition" }),
+    ...mapActions("diaryAbout", ["updateCondition"]),
     publishDiary() {
       var myDate = new Date();
-      this.updateCondition(this.selectedMood);
-      this.$bus.$emit("conditionsUpdated");
-      this.$bus.$emit("publishNewDiary", {
+      let diary = {
         mood: this.selectedMood,
         publishTime: myDate.getTime(),
         content: this.$refs["quill-editor"].content,
+      };
+      axios({
+        url: "/diary/add",
+        headers: { "Content-Type": "application/json" },
+        method: "post",
+        data: {
+          username: this.$store.state.userAbout.userInfo.username,
+          emotion: diary.mood,
+          content: diary.content,
+        },
+      }).then((res) => {
+        var data = res.data;
+        if (data.state === 200) {
+          this.updateCondition(this.selectedMood);
+          this.$bus.$emit("conditionsUpdated");
+          this.$bus.$emit("publishNewDiary", data.data);
+          this.clearCondition();
+        } else {
+          console.log("发布失败");
+        }
       });
-      this.clearCondition();
     },
     updateSelectedMood(data) {
       this.selectedMood = data;

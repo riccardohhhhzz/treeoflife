@@ -83,6 +83,7 @@ export default {
           if (data.state === 200) {
             if (data.data.state === "active") {
               window.sessionStorage.setItem("user", JSON.stringify(data.data));
+              this.$store.commit("userAbout/INITUSERINFO", data.data);
               this.$router.push({
                 name: "homepage",
               });

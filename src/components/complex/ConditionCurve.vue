@@ -257,7 +257,7 @@ export default {
 }
 .condition-table {
   position: relative;
-  width: 65%;
+  width: 100%;
   height: 200px;
   border-left: 2px solid #333333;
   border-bottom: 2px solid #333333;
@@ -317,7 +317,7 @@ export default {
   transform-origin: left top;
 }
 .days {
-  width: 65%;
+  width: 100%;
   margin-top: 10px;
   margin-left: 2px;
   display: flex;

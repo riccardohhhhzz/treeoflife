@@ -1,7 +1,7 @@
 <template>
   <div id="diary">
     <div class="diary-top">
-      <Avatar type="diary" :publishTime="publishTime"></Avatar>
+      <Avatar type="diary" :publishTime="diary.publishTime"></Avatar>
       <MoreBtn
         :itemIconList="['delete']"
         :itemTitleList="['删除日记']"
@@ -10,10 +10,14 @@
       ></MoreBtn>
     </div>
     <div class="diary-daily-condition">
-      <p v-if="mood != ''">今天我感到{{ this.moodText }}</p>
-      <svg-icon :icon-class="mood" class="display-mood-icon"></svg-icon>
+      <p v-if="diary.mood != ''">今天我感到{{ this.moodText }}</p>
+      <svg-icon :icon-class="diary.mood" class="display-mood-icon"></svg-icon>
     </div>
-    <div class="diary-content" v-if="content != ''" v-html="content"></div>
+    <div
+      class="diary-content"
+      v-if="diary.content != ''"
+      v-html="diary.content"
+    ></div>
   </div>
 </template>
 
@@ -31,27 +35,15 @@ import MoreBtn from "../basic/MoreBtn.vue";
 export default {
   name: "Diary",
   components: { Avatar, Mood, MoreBtn },
-  props: {
-    mood: {
-      type: String,
-      default: "",
-    },
-    publishTime: {
-      type: Number,
-    },
-    content: {
-      type: String,
-      default: "",
-    },
-  },
+  props: ["diary"],
   computed: {
     moodText() {
-      return conditionMap[this.mood];
+      return conditionMap[this.diary.mood];
     },
   },
   methods: {
     delDiary() {
-      this.$bus.$emit("deleteDiary", this.publishTime);
+      this.$bus.$emit("deleteDiary", this.diary.id);
       this.$refs["moreBtn"].showContext = false;
     },
   },

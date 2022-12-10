@@ -3,15 +3,15 @@ import axios from "axios";
 export default {
     namespaced: true,
     state: {
-        pastDaysCondition: null
+        pastDaysCondition: null,
     },
     actions: {
         initPastDaysCondition(context, value) {
             context.commit('INITPASTDAYSCONDITION', value)
         },
-        updateTodayCondition(context, value) {
+        updateCondition(context, value) {
             context.commit('UPDATETODAYCONDITION', value)
-        }
+        },
     },
     mutations: {
         INITPASTDAYSCONDITION(state, value) {
