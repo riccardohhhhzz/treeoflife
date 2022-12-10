@@ -76,7 +76,7 @@ export default {
 }
 .diary-content {
   margin-top: 1rem;
-  color: #999999;
+  color: #333333;
   word-break: break-all;
 }
 .diary-content li {

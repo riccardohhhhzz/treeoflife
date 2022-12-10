@@ -59,6 +59,7 @@ import Mood from "../basic/Mood.vue";
 import Velocity from "velocity-animate";
 import AddButton from "../basic/AddButton.vue";
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
+import axios from "axios";
 export default {
   name: "ConditionCurve",
   components: { Mood, AddButton },
@@ -118,6 +119,23 @@ export default {
   },
   methods: {
     ...mapActions("diaryAbout", { initCondition: "initPastDaysCondition" }),
+    getPastMoods() {
+      axios({
+        url: "/diary/selectEmotion",
+        headers: { "Content-Type": "application/json" },
+        method: "post",
+        params: {
+          username: this.$store.state.userAbout.userInfo.username,
+          days: this.pastDaysNum,
+        },
+      }).then((res) => {
+        var data = res.data;
+        if (data.state === 200) {
+          this.initCondition(data.data);
+          this.$nextTick(this.updateTodayMood);
+        }
+      });
+    },
     updateTodayMood() {
       this.updateLineAngleAndWidth();
     },
@@ -179,6 +197,9 @@ export default {
       };
     },
     updateLineAngleAndWidth() {
+      if (this.pastMoods === null) {
+        return;
+      }
       this.lineAngleAndWidth = Array.from(
         { length: this.pastDaysNum - 1 },
         (v, k) => {
@@ -224,11 +245,6 @@ export default {
     // 此时并没有将编译好的HTML挂载到el所指的DOM上
     this.daylist = this.getDaylist(this.pastDaysNum);
     this.datelist = this.getDateList(this.pastDaysNum);
-    var fakePastDaysConditions = Array.from(
-      { length: this.pastDaysNum },
-      (v) => this.moodType[Math.floor(Math.random() * this.moodType.length)]
-    );
-    this.initCondition(fakePastDaysConditions);
     this.lineAngleAndWidth = Array.from({ length: this.pastDaysNum }, (v) => {
       return { angle: "0deg", width: "0px" };
     });
@@ -240,11 +256,14 @@ export default {
         this.screenWidth = document.body.clientWidth;
       })();
     };
+    this.getPastMoods();
     this.showRectangle = true; //进场动画触发
     this.$bus.$on("conditionsUpdated", this.updateTodayMood);
+    this.$bus.$on("getPastMoods", this.getPastMoods);
   },
   beforeDestroy() {
     this.$bus.$off("conditionUpdated");
+    this.$bus.$off("getPastMoods");
   },
 };
 </script>

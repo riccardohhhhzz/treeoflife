@@ -83,6 +83,7 @@ export default {
           this.diaries = this.diaries.filter(function (diary, idx) {
             return diary.id != id;
           });
+          this.$bus.$emit("getPastMoods");
         } else {
           alert("操作失败，请重试");
         }
