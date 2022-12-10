@@ -1,5 +1,5 @@
 <template>
-  <div id="main-content">
+  <div id="myhealth">
     <div class="topbar-area"></div>
     <div class="first-line">
       <ConditionCurve class="condition-curve"></ConditionCurve>
@@ -20,16 +20,12 @@ import ConditionCurve from "../complex/ConditionCurve.vue";
 import DiaryDisplayZone from "../complex/DiaryDisplayZone.vue";
 import MyButton from "../basic/MyButton.vue";
 export default {
-  name: "Center",
+  name: "MyHealth",
   components: { ConditionCurve, DiaryDisplayZone, MyButton },
 };
 </script>
 
 <style scoped>
-#main-content {
-  margin: 0rem 15rem;
-  padding: 40px;
-}
 .topbar-area {
   height: 4.8rem;
 }
