@@ -85,7 +85,7 @@ export default {
               window.sessionStorage.setItem("user", JSON.stringify(data.data));
               this.$store.commit("userAbout/INITUSERINFO", data.data);
               this.$router.push({
-                name: "homepage",
+                path: "/e",
               });
             }
             if (data.data.state === "inactive") {

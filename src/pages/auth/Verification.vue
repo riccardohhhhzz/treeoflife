@@ -122,7 +122,7 @@ export default {
               alert("注册成功！欢迎加入Treeoflife");
               window.sessionStorage.setItem("user", JSON.stringify(data.data));
               this.$router.push({
-                name: "homepage",
+                path: "/e",
               });
             }
           }

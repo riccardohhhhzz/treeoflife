@@ -7,6 +7,11 @@ import SetNewPsw from "../pages/auth/SetNewPsw";
 import Verification from "../pages/auth/Verification"
 import Homepage from "../pages/home/Homepage"
 import Notfound from "../pages/error/Notfound";
+import SmallHomepage from "../components/homepage/SmallHomepage";
+import MyHealth from "../components/homepage/MyHealth";
+import PersonalCenter from "../components/homepage/PersonalCenter";
+import HelpPage from "../components/homepage/HelpPage";
+import SettingPage from "../components/homepage/SettingPage";
 
 //创建router实例对象
 const router = new VueRouter({
@@ -52,12 +57,35 @@ const router = new VueRouter({
             }
         },
         {
-            name: "homepage",
-            path: "/home",
+            path: "/e",
             component: Homepage,
             meta: {
                 isAuth: true
-            }
+            },
+            // 默认重定向到我的健康
+            redirect: "/e/myhealth",
+            children: [
+                {
+                    path: "homepage",
+                    component: SmallHomepage
+                },
+                {
+                    path: "myhealth",
+                    component: MyHealth
+                },
+                {
+                    path: "personalcenter",
+                    component: PersonalCenter,
+                },
+                {
+                    path: "help",
+                    component: HelpPage,
+                },
+                {
+                    path: "setting",
+                    component: SettingPage
+                }
+            ]
         },
         {
             name: "notfound",
@@ -75,7 +103,7 @@ router.beforeEach((to, from, next) => {
     if (!to.meta) return next('/404')
     if (!to.meta.isAuth) return next()
     const user = window.sessionStorage.getItem('user')
-    if (to.path === "/home") {
+    if (to.path === "/e") {
         if (!user) {
             return next('/404')
         }

@@ -16,15 +16,13 @@ export default {
   components: { ExpandBtn },
   methods: {
     closeRightbar() {
+      document.getElementById("rightbar").style.transition = "0.3s";
       document.getElementById("rightbar").style.width = 0;
     },
   },
   mounted() {
     document.getElementById("rightbar").style.transition = "1s";
     document.getElementById("rightbar").style.width = "15rem";
-    this.$nextTick(() => {
-      document.getElementById("rightbar").style.transition = "0.3s";
-    });
   },
 };
 </script>

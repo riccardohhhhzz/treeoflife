@@ -3,7 +3,10 @@
     <Topbar></Topbar>
     <Leftbar></Leftbar>
     <div id="homepage-center">
-      <MyHealth></MyHealth>
+      <div class="topbar-area"></div>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
     <Rightbar></Rightbar>
   </div>
@@ -24,5 +27,8 @@ export default {
 #homepage-center {
   margin: 0rem 15rem;
   padding: 40px;
+}
+.topbar-area {
+  height: 4.8rem;
 }
 </style>

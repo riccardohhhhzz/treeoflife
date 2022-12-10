@@ -6,7 +6,7 @@
       :icon="item.icon"
       :key="item.text"
       :focused="item.focused"
-      @click.native="toggleNav(item.text)"
+      @click.native="toggleNav(item)"
       >{{ item.text }}</NavItem
     >
     <NavItem icon="logout" class="nav-logout">退出登录</NavItem>
@@ -22,11 +22,21 @@ export default {
   data() {
     return {
       navItemList: [
-        { icon: "home", text: "首页", focused: false },
-        { icon: "health", text: "我的健康", focused: true },
-        { icon: "user", text: "个人中心", focused: false },
-        { icon: "help", text: "帮助", focused: false },
-        { icon: "setting", text: "设置", focused: false },
+        { icon: "home", text: "首页", focused: false, path: "/e/homepage" },
+        {
+          icon: "health",
+          text: "我的健康",
+          focused: true,
+          path: "/e/myhealth",
+        },
+        {
+          icon: "user",
+          text: "个人中心",
+          focused: false,
+          path: "/e/personalCenter",
+        },
+        { icon: "help", text: "帮助", focused: false, path: "/e/help" },
+        { icon: "setting", text: "设置", focused: false, path: "/e/setting" },
       ],
     };
   },
@@ -36,13 +46,16 @@ export default {
     },
   },
   methods: {
-    toggleNav(navName) {
+    toggleNav(nav) {
       // 防止点击相同路由时进行某些不必要的操作
-      if (navName === this.currrentNavName) {
+      if (nav.text === this.currrentNavName) {
         return;
       }
+      this.$router.replace({
+        path: nav.path,
+      });
       for (var item of this.navItemList) {
-        if (item.text != navName) {
+        if (item.text != nav.text) {
           item.focused = false;
         } else {
           item.focused = true;
@@ -50,15 +63,23 @@ export default {
       }
     },
     closeLeftbar() {
+      document.getElementById("leftbar").style.transition = "0.3s";
       document.getElementById("leftbar").style.width = "0";
     },
+  },
+  beforeMount() {
+    var currentPath = this.$router.history.current.path;
+    for (var item of this.navItemList) {
+      if (item.path != currentPath) {
+        item.focused = false;
+      } else {
+        item.focused = true;
+      }
+    }
   },
   mounted() {
     document.getElementById("leftbar").style.transition = "1s";
     document.getElementById("leftbar").style.width = "15rem";
-    this.$nextTick(() => {
-      document.getElementById("leftbar").style.transition = "0.3s";
-    });
   },
 };
 </script>

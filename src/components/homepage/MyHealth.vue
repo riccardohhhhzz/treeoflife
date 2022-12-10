@@ -1,6 +1,5 @@
 <template>
   <div id="myhealth">
-    <div class="topbar-area"></div>
     <div class="first-line">
       <ConditionCurve class="condition-curve"></ConditionCurve>
       <div class="complete-profile">
@@ -26,9 +25,6 @@ export default {
 </script>
 
 <style scoped>
-.topbar-area {
-  height: 4.8rem;
-}
 .first-line {
   display: flex;
   justify-content: space-between;
