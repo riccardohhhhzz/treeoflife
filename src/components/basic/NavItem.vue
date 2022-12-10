@@ -1,18 +1,32 @@
 <template>
-  <div id="navItem">
-    <svg-icon
-      :icon-class="icon"
-      class="navIcon"
-      class-name="navIcon"
-    ></svg-icon>
-    <span class="navName"><slot></slot></span>
+  <div id="navItem" :style="styleVar">
+    <svg-icon :icon-class="icon" class="navIcon" :style="styleVar"></svg-icon>
+    <span class="navName" :style="styleVar"><slot></slot></span>
   </div>
 </template>
 
 <script>
 export default {
   name: "NavItem",
-  props: ["icon"],
+  props: {
+    icon: {
+      type: String,
+    },
+    focused: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    styleVar() {
+      return {
+        "--bgColor": this.focused ? "#F9F9F9" : "transparent",
+        "--hoverBgColor": this.focused ? "#F9F9F9" : "#676c7d",
+        "--hoverItemColor": this.focused ? "#64666d" : "#cccccc",
+        "--cursor": this.focused ? "default" : "pointer",
+      };
+    },
+  },
 };
 </script>
 
@@ -21,7 +35,7 @@ export default {
   display: flex;
   width: 15rem;
   height: 4rem;
-  background-color: transparent;
+  background-color: var(--bgColor);
   align-items: center;
   transition: 0.2s;
 }
@@ -40,13 +54,13 @@ export default {
   vertical-align: middle;
 }
 #navItem:hover {
-  background-color: #676c7d;
-  cursor: pointer;
+  background-color: var(--hoverBgColor);
+  cursor: var(--cursor);
 }
 #navItem:hover .navIcon {
-  color: #cccccc;
+  color: var(--hoverItemColor);
 }
 #navItem:hover .navName {
-  color: #cccccc;
+  color: var(--hoverItemColor);
 }
 </style>

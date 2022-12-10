@@ -1,11 +1,14 @@
 <template>
   <div id="leftbar">
     <ExpandBtn direction="left" @click.native="closeLeftbar"></ExpandBtn>
-    <NavItem icon="home">首页</NavItem>
-    <NavItem icon="health">我的健康</NavItem>
-    <NavItem icon="user">个人中心</NavItem>
-    <NavItem icon="help">帮助</NavItem>
-    <NavItem icon="setting">设置</NavItem>
+    <NavItem
+      v-for="(item, idx) in navItemList"
+      :icon="item.icon"
+      :key="item.text"
+      :focused="item.focused"
+      @click.native="toggleNav(item.text)"
+      >{{ item.text }}</NavItem
+    >
     <NavItem icon="logout" class="nav-logout">退出登录</NavItem>
   </div>
 </template>
@@ -16,7 +19,36 @@ import ExpandBtn from "../basic/ExpandBtn.vue";
 export default {
   name: "Leftbar",
   components: { NavItem, ExpandBtn },
+  data() {
+    return {
+      navItemList: [
+        { icon: "home", text: "首页", focused: false },
+        { icon: "health", text: "我的健康", focused: true },
+        { icon: "user", text: "个人中心", focused: false },
+        { icon: "help", text: "帮助", focused: false },
+        { icon: "setting", text: "设置", focused: false },
+      ],
+    };
+  },
+  computed: {
+    currrentNavName() {
+      return this.navItemList.filter((item, idx) => item.focused)[0].text;
+    },
+  },
   methods: {
+    toggleNav(navName) {
+      // 防止点击相同路由时进行某些不必要的操作
+      if (navName === this.currrentNavName) {
+        return;
+      }
+      for (var item of this.navItemList) {
+        if (item.text != navName) {
+          item.focused = false;
+        } else {
+          item.focused = true;
+        }
+      }
+    },
     closeLeftbar() {
       document.getElementById("leftbar").style.width = "0";
     },
