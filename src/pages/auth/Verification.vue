@@ -35,10 +35,8 @@
       <LinkText
         content="重新获取验证码"
         :fontSize="14"
-        :showUnderline="false"
         v-if="second <= 0"
         @click.native="reGetVerifyCode"
-        :enableChangeRoute="false"
       ></LinkText>
     </div>
     <MyButton

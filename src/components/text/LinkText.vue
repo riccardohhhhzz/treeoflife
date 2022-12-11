@@ -1,15 +1,6 @@
 <template>
   <div>
-    <a
-      @mouseover="hover = true"
-      @mouseleave="hover = false"
-      @click="changeRoute"
-      :style="styleVar"
-      >{{ content }}</a
-    >
-    <transition name="expand" v-if="showUnderline">
-      <div class="underline" :style="styleVar" v-if="hover"></div>
-    </transition>
+    <a @click="changeRoute" :style="styleVar">{{ content }}</a>
   </div>
 </template>
 
@@ -17,9 +8,6 @@
 export default {
   name: "LinkText",
   props: {
-    routeName: {
-      type: String,
-    },
     content: {
       type: String,
     },
@@ -27,24 +15,10 @@ export default {
       type: Number,
       default: 16,
     },
-    showUnderline: {
-      type: Boolean,
-      default: true,
-    },
-    enableChangeRoute: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  data() {
-    return {
-      hover: false,
-    };
   },
   computed: {
     styleVar() {
       return {
-        "--width": this.content.length * this.fontSize + "px",
         "--fontSize": this.fontSize + "px",
       };
     },
@@ -59,28 +33,27 @@ export default {
 
 <style scoped>
 a {
+  position: relative;
   color: #3a62ca;
   font-size: var(--fontSize);
+}
+a::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  height: 1.5px;
+  background-color: #3a62ca;
+  transform: scaleX(0);
+  transition: all 0.3s;
+}
+a::before {
+  left: 0;
 }
 a:hover {
   cursor: pointer;
 }
-.underline {
-  height: 1.5px;
-  width: var(--width);
-  margin-top: 2px;
-  background-color: #3a62ca;
-}
-.expand-enter,
-.expand-leave-to {
-  width: 0;
-}
-.expand-leave,
-.expand-enter-to {
-  width: var(--width);
-}
-.expand-enter-active,
-.expand-leave-active {
-  transition: 0.3s ease;
+a:hover::before {
+  transform: scaleX(1);
 }
 </style>
