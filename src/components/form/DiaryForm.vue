@@ -53,6 +53,10 @@ export default {
   methods: {
     ...mapActions("diaryAbout", ["updateCondition"]),
     publishDiary() {
+      if (!this.publishable) {
+        alert("请选择今日状态");
+        return;
+      }
       var myDate = new Date();
       let diary = {
         mood: this.selectedMood,
