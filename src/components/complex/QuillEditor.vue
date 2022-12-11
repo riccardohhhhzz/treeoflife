@@ -10,6 +10,8 @@ import { quillEditor, Quill } from "vue-quill-editor";
 import { container, ImageExtend, QuillWatch } from "quill-image-extend-module";
 import { ImageDrop } from "quill-image-drop-module";
 import ImageResize from "quill-image-resize-module";
+import quillEmoji from "quill-emoji";
+import "quill-emoji/dist/quill-emoji.css";
 Quill.register("modules/imageExtend", ImageExtend);
 Quill.register("modules/imageDrop", ImageDrop);
 Quill.register("modules/imageResize", ImageResize);
@@ -19,7 +21,7 @@ const toolbarOptions = [
   ["bold", "italic", "underline"], // 加粗 斜体 下划线 删除线 -----['bold', 'italic', 'underline', 'strike']
   [{ list: "ordered" }, { list: "bullet" }], // 有序、无序列表-----[{ list: 'ordered' }, { list: 'bullet' }]
   [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题-----[{ header: [1, 2, 3, 4, 5, 6, false] }]
-  ["link", "image"], // 链接、图片、视频-----['link', 'image', 'video']
+  ["link", "emoji"], // 链接、表情包、图片、视频-----['link', 'image', 'video']
 ];
 export default {
   name: "QuillEditor",
@@ -31,6 +33,8 @@ export default {
         theme: "snow",
         placeholder: "输入你想说的话...",
         modules: {
+          "emoji-toolbar": true,
+          "emoji-shortname": true,
           toolbar: {
             //工具栏配置
             container: toolbarOptions,
