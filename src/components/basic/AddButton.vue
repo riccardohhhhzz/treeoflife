@@ -3,13 +3,19 @@
     <div class="add-circle">
       <svg-icon icon-class="plus" class="plus-icon"></svg-icon>
     </div>
-    <h4 class="hint">新增</h4>
+    <h4 class="hint" v-if="showHint">新增</h4>
   </div>
 </template>
 
 <script>
 export default {
   name: "AddButton",
+  props: {
+    showHint: {
+      type: Boolean,
+      default: true,
+    },
+  },
 };
 </script>
 

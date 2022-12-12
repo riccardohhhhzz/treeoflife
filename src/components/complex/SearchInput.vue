@@ -76,5 +76,6 @@ button:hover {
   position: absolute;
   right: 3%;
   top: 10%;
+  color: #aaaaaa;
 }
 </style>

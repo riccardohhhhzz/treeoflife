@@ -2,16 +2,21 @@
   <div id="info-form">
     <h2 v-if="title" class="title">{{ title }}</h2>
     <h4 v-if="subtitle" class="subtitle">{{ subtitle }}</h4>
-    <EditBtn v-if="showEditBtn" class="edit-btn"></EditBtn>
+    <IconBtn
+      v-if="showEditBtn"
+      class="edit-btn"
+      icon="edit"
+      iconWidth="24px"
+    ></IconBtn>
     <slot></slot>
   </div>
 </template>
 
 <script>
-import EditBtn from "../basic/EditBtn.vue";
+import IconBtn from "../basic/IconBtn.vue";
 export default {
   name: "InfoForm",
-  components: { EditBtn },
+  components: { IconBtn },
   props: {
     title: {
       type: String,
@@ -49,5 +54,11 @@ export default {
   position: absolute;
   top: 22px;
   right: 25px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #999999;
+}
+.edit-btn:hover {
+  background-color: #e6e6e6;
 }
 </style>
