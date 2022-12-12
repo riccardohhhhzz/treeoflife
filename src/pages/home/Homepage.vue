@@ -4,7 +4,7 @@
     <Leftbar></Leftbar>
     <div id="homepage-center">
       <div class="topbar-area"></div>
-      <keep-alive>
+      <keep-alive :exclude="['MyHealth']">
         <router-view></router-view>
       </keep-alive>
     </div>
