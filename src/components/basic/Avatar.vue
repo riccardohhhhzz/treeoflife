@@ -1,8 +1,10 @@
 <template>
   <div>
-    <div class="circle" v-if="username">{{ username[0].toUpperCase() }}</div>
+    <div class="circle" v-if="username" :style="styleVar">
+      {{ username[0].toUpperCase() }}
+    </div>
     <div class="user">
-      <p class="name">{{ username }}</p>
+      <p class="name" v-if="type != 'info'">{{ username }}</p>
       <div class="points" v-if="showPoints">
         <svg-icon icon-class="leaf" style="vertical-align: middle"></svg-icon>
         <span class="leavesNum">50</span>
@@ -23,6 +25,14 @@ export default {
     publishTime: {
       type: Number,
     },
+    avatarWidth: {
+      type: String,
+      default: "3rem",
+    },
+    fontSize: {
+      type: String,
+      default: "24px",
+    },
   },
   data() {
     return {
@@ -30,6 +40,12 @@ export default {
     };
   },
   computed: {
+    styleVar() {
+      return {
+        "--avatarWidth": this.avatarWidth,
+        "--fontSize": this.fontSize,
+      };
+    },
     /*
     按照以下规则，渲染发布时间:
       如果不满一分钟的，用【刚刚】表示
@@ -87,6 +103,9 @@ export default {
     showTime() {
       return this.type === "diary";
     },
+    onlyShowAvatar() {
+      return this.type === "info";
+    },
   },
   mounted() {
     this.username = this.$store.state.userAbout.userInfo.username;
@@ -98,12 +117,12 @@ export default {
 .circle {
   float: left;
   display: flex;
-  height: 3rem;
-  width: 3rem;
+  height: var(--avatarWidth);
+  width: var(--avatarWidth);
   background-color: #4dcf90;
-  border-radius: 1.5rem;
+  border-radius: var(--avatarWidth);
   color: #fff;
-  font-size: 24px;
+  font-size: var(--fontSize);
   justify-content: center;
   align-items: center;
   cursor: default;

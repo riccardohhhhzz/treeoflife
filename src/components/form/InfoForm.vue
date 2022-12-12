@@ -3,9 +3,7 @@
     <h2 v-if="title" class="title">{{ title }}</h2>
     <h4 v-if="subtitle" class="subtitle">{{ subtitle }}</h4>
     <EditBtn v-if="showEditBtn" class="edit-btn"></EditBtn>
-    <div class="content">
-      <slot></slot>
-    </div>
+    <slot></slot>
   </div>
 </template>
 
@@ -51,8 +49,5 @@ export default {
   position: absolute;
   top: 22px;
   right: 25px;
-}
-.content {
-  margin-top: 20px;
 }
 </style>
