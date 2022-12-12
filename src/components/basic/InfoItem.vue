@@ -1,6 +1,6 @@
 <template>
   <div id="info-item">
-    <h3>{{ propertyName }}</h3>
+    <h3 class="property-name">{{ propertyName }}</h3>
     <h3 v-if="propertyValue">{{ propertyValue }}</h3>
     <LinkText v-if="!propertyValue" :showUnderLine="false">点击添加</LinkText>
   </div>
@@ -25,11 +25,13 @@ export default {
 <style scoped>
 #info-item {
   display: flex;
-  gap: 100px;
 }
 h3 {
   color: #333333;
   font-weight: 500;
   font-size: 16px;
+}
+.property-name {
+  width: 150px;
 }
 </style>
