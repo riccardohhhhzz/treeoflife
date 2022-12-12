@@ -33,11 +33,11 @@
         {{ second }}秒后可重新获取验证码
       </h5>
       <LinkText
-        content="重新获取验证码"
         :fontSize="14"
         v-if="second <= 0"
         @click.native="reGetVerifyCode"
-      ></LinkText>
+        >重新获取验证码</LinkText
+      >
     </div>
     <MyButton
       :width="298"

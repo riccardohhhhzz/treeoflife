@@ -4,6 +4,7 @@
     <div class="personal-info">
       <div class="left-area">
         <AvatarForm></AvatarForm>
+        <BasicInfoForm></BasicInfoForm>
       </div>
       <div class="right-area">
         <HobbyForm></HobbyForm>
@@ -14,10 +15,11 @@
 
 <script>
 import AvatarForm from "../form/AvatarForm.vue";
+import BasicInfoForm from "../form/BasicInfoForm.vue";
 import HobbyForm from "../form/HobbyForm.vue";
 export default {
   name: "PersonalCenter",
-  components: { AvatarForm, HobbyForm },
+  components: { AvatarForm, BasicInfoForm, HobbyForm },
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a @click="changeRoute" :style="styleVar">{{ content }}</a>
+    <a @click="changeRoute" :style="styleVar"><slot></slot></a>
   </div>
 </template>
 
@@ -8,18 +8,20 @@
 export default {
   name: "LinkText",
   props: {
-    content: {
-      type: String,
-    },
     fontSize: {
       type: Number,
       default: 16,
+    },
+    showUnderLine: {
+      type: Boolean,
+      default: true,
     },
   },
   computed: {
     styleVar() {
       return {
         "--fontSize": this.fontSize + "px",
+        "--underlineHeight": this.showUnderLine ? "1.5px" : null,
       };
     },
   },
@@ -42,7 +44,7 @@ a::before {
   position: absolute;
   top: 100%;
   width: 100%;
-  height: 1.5px;
+  height: var(--underlineHeight);
   background-color: #3a62ca;
   transform: scaleX(0);
   transition: all 0.3s;

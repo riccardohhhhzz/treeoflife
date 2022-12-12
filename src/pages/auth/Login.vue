@@ -17,16 +17,8 @@
     ></UserInfoInputItem>
     <MyButton class="myButton" @click.native="gotoHomepage">登录</MyButton>
     <div class="links">
-      <LinkText
-        content="创建新账号"
-        class="float-left"
-        @click="gotoRegister"
-      ></LinkText>
-      <LinkText
-        content="忘记密码？"
-        class="float-right"
-        @click="gotoSetNewPsw"
-      ></LinkText>
+      <LinkText class="float-left" @click="gotoRegister">创建新账号</LinkText>
+      <LinkText class="float-right" @click="gotoSetNewPsw">忘记密码？</LinkText>
     </div>
   </div>
 </template>

@@ -4,11 +4,9 @@
     <LifeTitle class="title"></LifeTitle>
     <div class="haveAccount">
       <h4 style="text-align: center">
-        已有帐号？<LinkText
-          content="登录"
-          style="display: inline-block"
-          @click="gotoLogin"
-        ></LinkText>
+        已有帐号？<LinkText style="display: inline-block" @click="gotoLogin"
+          >登录</LinkText
+        >
       </h4>
     </div>
     <UserInfoInputItem
