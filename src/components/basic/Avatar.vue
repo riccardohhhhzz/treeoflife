@@ -40,10 +40,18 @@ export default {
       如果是超过一年的，用【年-月-日】表示
     */
     renderTime() {
-      var myDate = new Date();
-      var curTime = myDate.getTime();
-      var curYear = myDate.getFullYear();
+      var today = new Date();
+      var curTime = today.getTime();
+      var curYear = today.getFullYear();
+      var publishDay = new Date(this.publishTime);
+      var publishYear = publishDay.getFullYear();
+      var publishMonth = publishDay.getMonth() + 1;
+      var publishDate = publishDay.getDate();
       var interval = curTime - this.publishTime;
+      var yesterday = new Date(curTime - 1000 * 60 * 60 * 24).getDate();
+      var beforeYesterday = new Date(
+        curTime - 1000 * 60 * 60 * 24 * 2
+      ).getDate();
       // 不满一分钟
       if (interval < 1000 * 60) {
         return "刚刚";
@@ -58,23 +66,19 @@ export default {
         let hours = Math.floor(interval / (1000 * 60 * 60)).toString();
         return hours + "小时前";
       }
-      // 不满48小时
-      if (interval < 1000 * 60 * 60 * 24 * 2) {
+      // 昨天
+      if (publishDate === yesterday) {
         return "昨天";
       }
-      // 不满72小时
-      if (interval < 1000 * 60 * 60 * 24 * 3) {
+      // 前天
+      if (publishDate === beforeYesterday) {
         return "前天";
       }
-      var publishDate = myDate.setTime(this.publishTime);
-      var publishYear = publishDate.getFullYear();
-      var publishMonth = publishDate.getMonth() + 1;
-      var publishDay = publishDate.getDate();
       // 如果是今年的
       if (publishYear === curYear) {
-        return publishMonth + "-" + publishDay;
+        return publishMonth + "-" + publishDate;
       } else {
-        return publishYear + "-" + publishMonth + "-" + publishDay;
+        return publishYear + "-" + publishMonth + "-" + publishDate;
       }
     },
     showPoints() {
