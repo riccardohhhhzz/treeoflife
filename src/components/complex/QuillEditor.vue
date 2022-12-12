@@ -1,5 +1,5 @@
 <template>
-  <div id="quill-editor">
+  <div id="quill-editor" :style="styleVar">
     <quill-editor v-model="content" :options="editorOption"></quill-editor>
   </div>
 </template>
@@ -26,6 +26,16 @@ const toolbarOptions = [
 export default {
   name: "QuillEditor",
   components: { quillEditor },
+  props: {
+    minHeight: {
+      type: String,
+      default: "100px",
+    },
+    maxHeight: {
+      type: String,
+      default: "150px",
+    },
+  },
   data() {
     return {
       content: "",
@@ -52,12 +62,20 @@ export default {
       },
     };
   },
+  computed: {
+    styleVar() {
+      return {
+        "--minHeight": this.minHeight,
+        "--maxHeight": this.maxHeight,
+      };
+    },
+  },
 };
 </script>
 
 <style>
 .ql-editor {
-  min-height: 100px;
-  max-height: 150px;
+  min-height: var(--minHeight);
+  max-height: var(--maxHeight);
 }
 </style>
