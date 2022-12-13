@@ -6,14 +6,16 @@
       hoverIconColor="#64666d"
       @click.native="closeRightbar"
     ></ExpandBtn>
+    <TodoList></TodoList>
   </div>
 </template>
 
 <script>
 import ExpandBtn from "../basic/ExpandBtn.vue";
+import TodoList from "../list/TodoList.vue";
 export default {
   name: "Rightbar",
-  components: { ExpandBtn },
+  components: { ExpandBtn, TodoList },
   methods: {
     closeRightbar() {
       document.getElementById("rightbar").style.transition = "0.3s";
