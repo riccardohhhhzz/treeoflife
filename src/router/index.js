@@ -67,23 +67,38 @@ const router = new VueRouter({
             children: [
                 {
                     path: "homepage",
-                    component: SmallHomepage
+                    component: SmallHomepage,
+                    meta: {
+                        isAuth: true
+                    },
                 },
                 {
                     path: "myhealth",
-                    component: MyHealth
+                    component: MyHealth,
+                    meta: {
+                        isAuth: true
+                    },
                 },
                 {
                     path: "personalcenter",
                     component: PersonalCenter,
+                    meta: {
+                        isAuth: true
+                    },
                 },
                 {
                     path: "help",
                     component: HelpPage,
+                    meta: {
+                        isAuth: true
+                    },
                 },
                 {
                     path: "setting",
-                    component: SettingPage
+                    component: SettingPage,
+                    meta: {
+                        isAuth: true
+                    },
                 }
             ]
         },
@@ -103,7 +118,7 @@ router.beforeEach((to, from, next) => {
     if (!to.meta) return next('/404')
     if (!to.meta.isAuth) return next()
     const user = window.sessionStorage.getItem('user')
-    if (to.path === "/e") {
+    if (to.path.includes("/e")) {
         if (!user) {
             return next('/404')
         }
