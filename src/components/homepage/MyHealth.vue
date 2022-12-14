@@ -7,7 +7,9 @@
         <p class="content">
           你分享的内容越多,<br />你得到的就越多。内容和联系<br />变得更加个性化和强大。
         </p>
-        <MyButton class="btn">完善我的资料</MyButton>
+        <MyButton class="btn" @click.native="gotoPersonalCenter"
+          >完善我的资料</MyButton
+        >
       </div>
     </div>
     <DiaryDisplayZone class="mydiary"></DiaryDisplayZone>
@@ -21,6 +23,16 @@ import MyButton from "../basic/MyButton.vue";
 export default {
   name: "MyHealth",
   components: { ConditionCurve, DiaryDisplayZone, MyButton },
+  methods: {
+    gotoPersonalCenter() {
+      this.$router.replace({
+        path: "/e/personalcenter",
+      });
+      this.$nextTick(() => {
+        this.$bus.$emit("navPathChanged");
+      });
+    },
+  },
 };
 </script>
 

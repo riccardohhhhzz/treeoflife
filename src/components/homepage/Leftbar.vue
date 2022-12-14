@@ -33,7 +33,7 @@ export default {
           icon: "user",
           text: "个人中心",
           focused: false,
-          path: "/e/personalCenter",
+          path: "/e/personalcenter",
         },
         { icon: "help", text: "帮助", focused: false, path: "/e/help" },
         { icon: "setting", text: "设置", focused: false, path: "/e/setting" },
@@ -46,6 +46,16 @@ export default {
     },
   },
   methods: {
+    navPathChanged() {
+      var currentPath = this.$router.history.current.path;
+      for (var item of this.navItemList) {
+        if (item.path != currentPath) {
+          item.focused = false;
+        } else {
+          item.focused = true;
+        }
+      }
+    },
     toggleNav(nav) {
       // 防止点击相同路由时进行某些不必要的操作
       if (nav.text === this.currrentNavName) {
@@ -68,18 +78,16 @@ export default {
     },
   },
   beforeMount() {
-    var currentPath = this.$router.history.current.path;
-    for (var item of this.navItemList) {
-      if (item.path != currentPath) {
-        item.focused = false;
-      } else {
-        item.focused = true;
-      }
-    }
+    console.log("123");
+    this.navPathChanged();
   },
   mounted() {
     document.getElementById("leftbar").style.transition = "1s";
     document.getElementById("leftbar").style.width = "15rem";
+    this.$bus.$on("navPathChanged", this.navPathChanged);
+  },
+  beforeDestroy() {
+    this.$bus.$off("navPathChanged");
   },
 };
 </script>
