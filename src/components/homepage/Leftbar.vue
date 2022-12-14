@@ -9,13 +9,16 @@
       @click.native="toggleNav(item)"
       >{{ item.text }}</NavItem
     >
-    <NavItem icon="logout" class="nav-logout">退出登录</NavItem>
+    <NavItem icon="logout" class="nav-logout" @click.native="gotoLogin"
+      >退出登录</NavItem
+    >
   </div>
 </template>
 
 <script>
 import NavItem from "../basic/NavItem.vue";
 import ExpandBtn from "../basic/ExpandBtn.vue";
+import { SessionUtils } from "@/utils";
 export default {
   name: "Leftbar",
   components: { NavItem, ExpandBtn },
@@ -46,6 +49,12 @@ export default {
     },
   },
   methods: {
+    gotoLogin() {
+      SessionUtils.remove("user");
+      this.$router.replace({
+        path: "/login",
+      });
+    },
     navPathChanged() {
       var currentPath = this.$router.history.current.path;
       for (var item of this.navItemList) {
@@ -78,7 +87,6 @@ export default {
     },
   },
   beforeMount() {
-    console.log("123");
     this.navPathChanged();
   },
   mounted() {
