@@ -1,7 +1,13 @@
 <template>
   <button :style="styleVar">
-    <svg-icon :icon-class="icon" v-if="showIcon" class="myIcon"></svg-icon>
-    <slot class="content">button</slot>
+    <span v-if="!loading">
+      <svg-icon :icon-class="icon" v-if="showIcon" class="myIcon"></svg-icon>
+      <slot>button</slot>
+    </span>
+    <span v-if="loading">
+      <svg-icon icon-class="loading-btn" class="loading-icon"></svg-icon>
+      <p class="content">加载中</p>
+    </span>
   </button>
 </template>
 
@@ -48,11 +54,15 @@ export default {
     },
     paddingHorizon: {
       type: Number,
-      default: 10,
+      default: 12,
     },
     clickable: {
       type: Boolean,
       default: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -63,10 +73,19 @@ export default {
         "--fontSize": this.fontSize + "px",
         "--color": this.color,
         "--bgColor": this.clickable ? this.bgColor : "#E5E5E5",
-        "--hoverColor": this.clickable ? this.hoverColor : "#E5E5E5",
+        "--hoverColor": this.loading
+          ? this.bgColor
+          : this.clickable
+          ? this.hoverColor
+          : "#E5E5E5",
         "--borderColor": this.borderColor,
         "--paddingHorizon": this.paddingHorizon + "px",
-        "--cursor": this.clickable ? "pointer" : "default",
+        "--cursor": this.loading
+          ? "default"
+          : this.clickable
+          ? "pointer"
+          : "default",
+        "--opacity": this.loading ? "0.8" : "1",
       };
     },
   },
@@ -84,10 +103,34 @@ button {
   color: var(--color);
   border: 1px solid var(--borderColor);
   border-radius: 6px;
+  opacity: var(--opacity);
 }
 button:hover {
   background-color: var(--hoverColor);
   cursor: var(--cursor);
+}
+button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+@keyframes rotateRight {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-icon {
+  color: #fff;
+  font-weight: 600;
+  animation: rotateRight 3s linear infinite;
+  vertical-align: middle;
 }
 .myIcon {
   margin-right: 2px;

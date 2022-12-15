@@ -77,5 +77,6 @@ export default {
 .ql-editor {
   min-height: var(--minHeight);
   max-height: var(--maxHeight);
+  font-size: 16px;
 }
 </style>
