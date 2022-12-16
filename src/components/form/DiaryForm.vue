@@ -1,34 +1,30 @@
 <template>
-  <MyForm id="diary-form" v-show="showDiaryForm" ref="form" :key="componentKey">
-    <template slot="title">
-      <h2 class="title">发布日记</h2>
-    </template>
-    <template slot="content">
-      <div class="content">
-        <SelectMood ref="mood-select"></SelectMood>
-        <QuillEditor ref="quill-editor"></QuillEditor>
-      </div>
-      <p class="attention">*您的日记仅自己可见</p>
-      <MyButton
-        :width="80"
-        :height="40"
-        class="btn-publish"
-        :clickable="publishable"
-        @click.native="publishDiary"
-        >发布</MyButton
-      >
-      <MyButton
-        :width="80"
-        :height="40"
-        class="btn-cancel"
-        borderColor="#404040"
-        bgColor="#fff"
-        color="#333333"
-        hoverColor="#f7f7f7"
-        @click.native="closeDiaryForm"
-        >取消</MyButton
-      >
-    </template>
+  <MyForm id="diary-form" ref="form" :key="componentKey">
+    <h2 class="title">发布日记</h2>
+    <div class="content">
+      <SelectMood ref="mood-select"></SelectMood>
+      <QuillEditor ref="quill-editor"></QuillEditor>
+    </div>
+    <p class="attention">*您的日记仅自己可见</p>
+    <MyButton
+      :width="80"
+      :height="40"
+      class="btn-publish"
+      :clickable="publishable"
+      @click.native="publishDiary"
+      >发布</MyButton
+    >
+    <MyButton
+      :width="80"
+      :height="40"
+      class="btn-cancel"
+      borderColor="#404040"
+      bgColor="#fff"
+      color="#333333"
+      hoverColor="#f7f7f7"
+      @click.native="closeDiaryForm"
+      >取消</MyButton
+    >
   </MyForm>
 </template>
 
@@ -44,7 +40,6 @@ export default {
   components: { MyForm, QuillEditor, SelectMood, MyButton },
   data() {
     return {
-      showDiaryForm: false,
       publishable: false,
       selectedMood: "default",
       componentKey: 0,
@@ -80,7 +75,7 @@ export default {
           this.$bus.$emit("publishNewDiary", data.data);
           this.clearCondition();
         } else {
-          console.log("发布失败");
+          alert("发布失败");
         }
       });
     },
@@ -89,12 +84,10 @@ export default {
       this.publishable = true;
     },
     openDiaryForm() {
-      this.showDiaryForm = true;
-      this.$refs["form"].openDialog();
+      this.$refs["form"].openForm();
     },
     closeDiaryForm() {
-      this.showDiaryForm = false;
-      this.$refs["form"].closeDialog();
+      this.$refs["form"].closeForm();
     },
     clearCondition() {
       this.componentKey += 1;

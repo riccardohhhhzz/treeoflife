@@ -1,16 +1,15 @@
 <template>
-  <div id="myForm" v-show="showDialog">
-    <div class="form-mask" v-show="showDialog"></div>
+  <div id="myForm" v-show="showForm">
+    <div class="form-mask" v-show="showForm"></div>
     <transition name="form-body">
-      <div class="form-body" v-show="showDialog">
+      <div class="form-body" v-show="showForm" :style="styleVar">
         <div class="top-bar"></div>
         <svg-icon
           icon-class="clearInput"
           class="close-btn"
-          @click.native="closeDialog"
+          @click.native="closeForm"
         ></svg-icon>
-        <slot name="title"></slot>
-        <slot name="content"></slot>
+        <slot></slot>
       </div>
     </transition>
   </div>
@@ -19,17 +18,35 @@
 <script>
 export default {
   name: "MyForm",
+  props: {
+    minHeight: {
+      type: String,
+      default: "400px",
+    },
+    maxHeight: {
+      type: String,
+      default: "500px",
+    },
+  },
   data() {
     return {
-      showDialog: false,
+      showForm: false,
     };
   },
-  methods: {
-    openDialog() {
-      this.showDialog = true;
+  computed: {
+    styleVar() {
+      return {
+        "--min-height": this.minHeight,
+        "--max-height": this.maxHeight,
+      };
     },
-    closeDialog() {
-      this.showDialog = false;
+  },
+  methods: {
+    openForm() {
+      this.showForm = true;
+    },
+    closeForm() {
+      this.showForm = false;
     },
   },
 };
@@ -49,8 +66,8 @@ export default {
 .form-body {
   position: fixed;
   width: 700px;
-  min-height: 400px;
-  max-height: 500px;
+  min-height: var(--min-height);
+  max-height: var(--max-height);
   top: 40px;
   left: 0;
   right: 0;

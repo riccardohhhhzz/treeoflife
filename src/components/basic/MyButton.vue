@@ -6,7 +6,7 @@
     </span>
     <span v-if="loading">
       <svg-icon icon-class="loading-btn" class="loading-icon"></svg-icon>
-      <p class="content">加载中</p>
+      <p class="content">{{ loadingText }}</p>
     </span>
   </button>
 </template>
@@ -63,6 +63,9 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    loadingText: {
+      type: String,
     },
   },
   computed: {
@@ -128,15 +131,13 @@ button span {
 }
 .loading-icon {
   color: #fff;
+  width: 28px;
+  height: 28px;
   font-weight: 600;
-  animation: rotateRight 3s linear infinite;
-  vertical-align: middle;
+  animation: rotateRight 1.5s linear infinite;
 }
 .myIcon {
   margin-right: 2px;
-  vertical-align: middle;
-}
-.content {
   vertical-align: middle;
 }
 </style>
