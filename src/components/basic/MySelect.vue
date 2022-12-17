@@ -87,7 +87,7 @@ select:focus {
 }
 .dropdownIcon {
   position: absolute;
-  left: 65%;
+  right: 8px;
   top: 25%;
 }
 .unit {

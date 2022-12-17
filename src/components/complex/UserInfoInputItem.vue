@@ -1,9 +1,12 @@
 <template>
   <div>
-    <h2 class="title">{{ title }}</h2>
+    <h2 class="title" :style="styleVar">{{ title }}</h2>
     <h3 class="subtitle">{{ subtitle }}</h3>
     <TextInput
       :inputType="inputType"
+      :width="inputWidth"
+      :height="inputHeight"
+      :bgColor="inputBgColor"
       v-if="showTextInput"
       class="textInput"
       @update="getValue"
@@ -13,7 +16,11 @@
       v-if="showTimeDropdown"
       @update="sendValue($event), getValue($event)"
       class="timeSelect"
+      :yearWidth="birthdayYearWidth"
+      :monthWidth="birthdayMonthWidth"
+      :dayWidth="birthdayDayWidth"
     ></TimeSelect>
+    <MyRadio v-if="showMyRadio" :optionsArr="optionsArr"></MyRadio>
     <div class="hintBox" v-if="hint.length > 0">
       <svg-icon icon-class="warn"></svg-icon>
       <h3 class="hint">{{ hint }}</h3>
@@ -24,9 +31,10 @@
 <script>
 import TimeSelect from "./TimeSelect.vue";
 import TextInput from "../basic/TextInput.vue";
+import MyRadio from "../basic/MyRadio.vue";
 export default {
   name: "UserInfoInputItem",
-  components: { TimeSelect, TextInput },
+  components: { TimeSelect, TextInput, MyRadio },
   props: {
     title: {
       type: String,
@@ -38,10 +46,45 @@ export default {
       type: String,
       default: "",
     },
-    // text,password,birthday
+    // text,password,birthday,radio,dropdown
     inputType: {
       type: String,
       default: "text",
+    },
+    optionsArr: {
+      type: Array,
+    },
+    titleFontSize: {
+      type: String,
+      default: "18px",
+    },
+    titleFontWeight: {
+      type: String,
+      default: "400",
+    },
+    inputWidth: {
+      type: String,
+      default: "100%",
+    },
+    inputHeight: {
+      type: String,
+      default: "40px",
+    },
+    inputBgColor: {
+      type: String,
+      default: "#e9f0fe",
+    },
+    birthdayYearWidth: {
+      type: Number,
+      default: 80,
+    },
+    birthdayMonthWidth: {
+      type: Number,
+      default: 70,
+    },
+    birthdayDayWidth: {
+      type: Number,
+      default: 70,
     },
   },
   data() {
@@ -50,11 +93,23 @@ export default {
     };
   },
   computed: {
+    styleVar() {
+      return {
+        "--title-font-size": this.titleFontSize,
+        "--title-font-weight": this.titleFontWeight,
+      };
+    },
     showTextInput() {
-      return this.inputType == "text" || this.inputType == "password";
+      return this.inputType === "text" || this.inputType === "password";
     },
     showTimeDropdown() {
-      return this.inputType == "birthday";
+      return this.inputType === "birthday";
+    },
+    showMyRadio() {
+      return this.inputType === "radio";
+    },
+    showNormalDropdown() {
+      return this.inputType === "dropdown";
     },
   },
   methods: {
@@ -70,8 +125,8 @@ export default {
 
 <style scoped>
 h2 {
-  font-size: 18px;
-  font-weight: 400;
+  font-size: var(--title-font-size);
+  font-weight: var(--title-font-weight);
   color: #333333;
 }
 h3 {
@@ -95,6 +150,6 @@ h3 {
 }
 .hintBox {
   padding-left: 20px;
-  width: 280px;
+  width: calc(100% - 20px);
 }
 </style>

@@ -5,7 +5,7 @@
       :arr="optionalDate.years"
       inputType="year"
       unit="年"
-      :width="80"
+      :width="yearWidth"
       :updateValue="updateSelectDate"
       @blur="sendMessage"
     ></MySelect>
@@ -14,7 +14,7 @@
       :arr="optionalDate.months"
       inputType="month"
       unit="月"
-      :width="70"
+      :width="monthWidth"
       :updateValue="updateSelectDate"
       @blur="sendMessage"
     ></MySelect>
@@ -23,7 +23,7 @@
       :arr="optionalDateDays"
       inputType="day"
       unit="日"
-      :width="70"
+      :width="dayWidth"
       :updateValue="updateSelectDate"
       @blur="sendMessage"
     ></MySelect>
@@ -35,6 +35,20 @@ import MySelect from "../basic/MySelect.vue";
 export default {
   name: "TimeSelect",
   components: { MySelect },
+  props: {
+    yearWidth: {
+      type: Number,
+      default: 80,
+    },
+    monthWidth: {
+      type: Number,
+      default: 70,
+    },
+    dayWidth: {
+      type: Number,
+      default: 70,
+    },
+  },
   data() {
     return {
       optionalDate: {

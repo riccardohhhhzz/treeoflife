@@ -1,22 +1,29 @@
 <template>
-  <InfoForm title="基本信息" :showEditBtn="true">
+  <InfoForm
+    title="基本信息"
+    :showEditBtn="true"
+    @clickEditBtn="openEditBasicInfoForm"
+  >
     <div class="edit-basic-info">
       <InfoItem
         v-for="(item, idx) in properties"
         :key="item.name"
         :propertyName="item.name"
         :propertyValue="item.value"
+        @clickAdd="openEditBasicInfoForm"
       ></InfoItem>
     </div>
+    <EditBasicInfoForm></EditBasicInfoForm>
   </InfoForm>
 </template>
 
 <script>
 import InfoForm from "./InfoForm.vue";
 import InfoItem from "../basic/InfoItem.vue";
+import EditBasicInfoForm from "./EditBasicInfoForm.vue";
 export default {
   name: "BasicInfoForm",
-  components: { InfoForm, InfoItem },
+  components: { InfoForm, InfoItem, EditBasicInfoForm },
   data() {
     return {
       properties: [
@@ -27,6 +34,11 @@ export default {
         { name: "体重", value: null },
       ],
     };
+  },
+  methods: {
+    openEditBasicInfoForm() {
+      this.$bus.$emit("openEditBasicInfoForm");
+    },
   },
 };
 </script>

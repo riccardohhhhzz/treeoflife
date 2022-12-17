@@ -2,7 +2,12 @@
   <div id="info-item">
     <h3 class="property-name">{{ propertyName }}</h3>
     <h3 v-if="propertyValue">{{ propertyValue }}</h3>
-    <LinkText v-if="!propertyValue" :showUnderLine="false">点击添加</LinkText>
+    <LinkText
+      v-if="!propertyValue"
+      :showUnderLine="false"
+      @click.native="openForm"
+      >点击添加</LinkText
+    >
   </div>
 </template>
 
@@ -17,6 +22,11 @@ export default {
     },
     propertyValue: {
       type: String,
+    },
+  },
+  methods: {
+    openForm() {
+      this.$emit("clickAdd");
     },
   },
 };

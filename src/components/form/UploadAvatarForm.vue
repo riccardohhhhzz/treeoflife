@@ -26,7 +26,6 @@
 <script>
 import MyForm from "../basic/MyForm.vue";
 import MyButton from "../basic/MyButton.vue";
-import TodoListItemVue from "../list/TodoListItem.vue";
 export default {
   name: "UploadAvatarForm",
   components: { MyForm, MyButton },

@@ -1,5 +1,5 @@
 <template>
-  <div class="myInput">
+  <div class="myInput" :style="styleVar">
     <input
       :type="localInputType"
       class="basic"
@@ -25,6 +25,14 @@ export default {
     inputType: {
       type: String,
       default: "text",
+    },
+    width: {
+      type: String,
+      default: "100%",
+    },
+    height: {
+      type: String,
+      default: "40px",
     },
     bgColor: {
       type: String,
@@ -71,6 +79,8 @@ export default {
     styleVar() {
       return {
         "--bgColor": this.bgColor,
+        "--width": this.width,
+        "--height": this.height,
         "--borderRadius": this.borderRadius + "px",
         "--focusBorderColor": this.focusBorderColor,
         "--shadow": this.showShadow ? "rbga(0, 0, 0, 0.25)" : "none",
@@ -89,6 +99,11 @@ export default {
 </script>
 
 <style scoped>
+.myInput {
+  /* padding会把盒子撑大，加上边框计算得出 */
+  width: var(--width);
+  position: relative;
+}
 input:hover {
   border: 1px solid #939597;
 }
@@ -99,8 +114,8 @@ input:focus {
   outline: none;
 }
 .basic {
-  width: 278px;
-  height: 40px;
+  width: calc(var(--width) - 22px);
+  height: var(--height);
   font-size: 16px;
   border: 1px solid #cdcdcd;
   background-color: var(--bgColor);
@@ -115,10 +130,5 @@ input:focus {
 }
 .eye:hover {
   cursor: pointer;
-}
-.myInput {
-  /* padding会把盒子撑大，加上边框计算得出 */
-  width: 302px;
-  position: relative;
 }
 </style>

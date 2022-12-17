@@ -7,6 +7,7 @@
       class="edit-btn"
       icon="edit"
       iconWidth="24px"
+      @click.native="openForm"
     ></IconBtn>
     <slot></slot>
   </div>
@@ -27,6 +28,11 @@ export default {
     showEditBtn: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    openForm() {
+      this.$emit("clickEditBtn");
     },
   },
 };
