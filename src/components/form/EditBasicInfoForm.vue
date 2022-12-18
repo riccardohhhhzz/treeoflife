@@ -12,9 +12,9 @@
           titleFontWeight="600"
           titleFontSize="16px"
           inputBgColor="#fff"
-          :birthdayYearWidth="170"
-          :birthdayMonthWidth="170"
-          :birthdayDayWidth="170"
+          birthdayYearWidth="170px"
+          birthdayMonthWidth="170px"
+          birthdayDayWidth="170px"
         ></UserInfoInputItem>
       </div>
       <MyButton :fontSize="16" :width="90" :height="40" class="save-btn"

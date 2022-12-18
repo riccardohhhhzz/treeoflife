@@ -26,8 +26,8 @@ export default {
       type: String,
     },
     width: {
-      type: Number,
-      default: 80,
+      type: String,
+      default: "80px",
     },
     // 用于与父组件TimeDropdown通信的回调函数--props通信
     updateValue: {
@@ -37,7 +37,7 @@ export default {
   computed: {
     styleVar() {
       return {
-        "--width": this.width.toString() + "px",
+        "--width": this.width,
       };
     },
   },

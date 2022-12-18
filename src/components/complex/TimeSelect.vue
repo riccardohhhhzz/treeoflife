@@ -37,16 +37,16 @@ export default {
   components: { MySelect },
   props: {
     yearWidth: {
-      type: Number,
-      default: 80,
+      type: String,
+      default: "80px",
     },
     monthWidth: {
-      type: Number,
-      default: 70,
+      type: String,
+      default: "70px",
     },
     dayWidth: {
-      type: Number,
-      default: 70,
+      type: String,
+      default: "70px",
     },
   },
   data() {

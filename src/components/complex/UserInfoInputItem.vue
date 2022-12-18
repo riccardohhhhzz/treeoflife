@@ -21,6 +21,11 @@
       :dayWidth="birthdayDayWidth"
     ></TimeSelect>
     <MyRadio v-if="showMyRadio" :optionsArr="optionsArr"></MyRadio>
+    <MySelect
+      v-if="showNormalDropdown"
+      :arr="optionsArr"
+      width="100%"
+    ></MySelect>
     <div class="hintBox" v-if="hint.length > 0">
       <svg-icon icon-class="warn"></svg-icon>
       <h3 class="hint">{{ hint }}</h3>
@@ -32,9 +37,10 @@
 import TimeSelect from "./TimeSelect.vue";
 import TextInput from "../basic/TextInput.vue";
 import MyRadio from "../basic/MyRadio.vue";
+import MySelect from "../basic/MySelect.vue";
 export default {
   name: "UserInfoInputItem",
-  components: { TimeSelect, TextInput, MyRadio },
+  components: { TimeSelect, TextInput, MyRadio, MySelect },
   props: {
     title: {
       type: String,
@@ -75,16 +81,16 @@ export default {
       default: "#e9f0fe",
     },
     birthdayYearWidth: {
-      type: Number,
-      default: 80,
+      type: String,
+      default: "80px",
     },
     birthdayMonthWidth: {
-      type: Number,
-      default: 70,
+      type: String,
+      default: "70px",
     },
     birthdayDayWidth: {
-      type: Number,
-      default: 70,
+      type: String,
+      default: "70px",
     },
   },
   data() {

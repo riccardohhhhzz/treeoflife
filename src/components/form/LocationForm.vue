@@ -1,22 +1,29 @@
 <template>
-  <InfoForm title="位置" :showEditBtn="true">
+  <InfoForm
+    title="位置"
+    :showEditBtn="true"
+    @clickEditBtn="openEditLocationForm"
+  >
     <div class="edit-location">
       <InfoItem
         v-for="(item, idx) in properties"
         :key="item.name"
         :propertyName="item.name"
         :propertyValue="item.value"
+        @clickAdd="openEditLocationForm"
       ></InfoItem>
     </div>
+    <EditLocationForm></EditLocationForm>
   </InfoForm>
 </template>
 
 <script>
 import InfoForm from "./InfoForm.vue";
 import InfoItem from "../basic/InfoItem.vue";
+import EditLocationForm from "./EditLocationForm.vue";
 export default {
   name: "LocationForm",
-  components: { InfoForm, InfoItem },
+  components: { InfoForm, InfoItem, EditLocationForm },
   data() {
     return {
       properties: [
@@ -26,6 +33,11 @@ export default {
         { name: "邮政编码", value: null },
       ],
     };
+  },
+  methods: {
+    openEditLocationForm() {
+      this.$bus.$emit("openEditLocationForm");
+    },
   },
 };
 </script>
