@@ -35,10 +35,14 @@ export default {
       type: String,
       default: "150px",
     },
+    defaultContent: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
-      content: "",
+      content: this.defaultContent,
       editorOption: {
         theme: "snow",
         placeholder: "输入你想说的话...",

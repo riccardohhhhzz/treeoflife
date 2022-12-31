@@ -26,6 +26,7 @@
 <script>
 import MyForm from "../basic/MyForm.vue";
 import MyButton from "../basic/MyButton.vue";
+import axios from "axios";
 export default {
   name: "UploadAvatarForm",
   components: { MyForm, MyButton },
@@ -54,7 +55,19 @@ export default {
         return;
       }
       if (!this.uploading && this.fileChosen) {
+        console.log(this.base64Img);
         // TODO: 衔接后端完成上传图片任务
+        axios({
+          url: "/pic/upload",
+          headers: { "Content-Type": "application/json" },
+          method: "post",
+          data: {
+            data: this.base64Img,
+            username: this.$store.state.userAbout.userInfo.username,
+          },
+        }).then((res) => {
+          var data = res.data;
+        });
         this.uploading = true;
       }
     },

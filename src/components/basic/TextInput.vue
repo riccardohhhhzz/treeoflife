@@ -50,12 +50,16 @@ export default {
       type: Boolean,
       default: true,
     },
+    defaultValue: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
       pswIsVisible: false,
       // 用户输入的String
-      str: null,
+      str: this.defaultValue,
     };
   },
   computed: {

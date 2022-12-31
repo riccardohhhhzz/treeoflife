@@ -7,6 +7,9 @@
       unit="年"
       :width="yearWidth"
       :updateValue="updateSelectDate"
+      :defaultValue="
+        defaultValue === null ? null : defaultValue['year'].toString()
+      "
       @blur="sendMessage"
     ></MySelect>
     <MySelect
@@ -16,6 +19,9 @@
       unit="月"
       :width="monthWidth"
       :updateValue="updateSelectDate"
+      :defaultValue="
+        defaultValue === null ? null : defaultValue['month'].toString()
+      "
       @blur="sendMessage"
     ></MySelect>
     <MySelect
@@ -25,6 +31,9 @@
       unit="日"
       :width="dayWidth"
       :updateValue="updateSelectDate"
+      :defaultValue="
+        defaultValue === null ? null : defaultValue['day'].toString()
+      "
       @blur="sendMessage"
     ></MySelect>
   </div>
@@ -47,6 +56,10 @@ export default {
     dayWidth: {
       type: String,
       default: "70px",
+    },
+    defaultValue: {
+      type: Object,
+      default: null,
     },
   },
   data() {

@@ -7,6 +7,7 @@
       :width="inputWidth"
       :height="inputHeight"
       :bgColor="inputBgColor"
+      :defaultValue="defaultStringValue"
       v-if="showTextInput"
       class="textInput"
       @update="getValue"
@@ -19,12 +20,18 @@
       :yearWidth="birthdayYearWidth"
       :monthWidth="birthdayMonthWidth"
       :dayWidth="birthdayDayWidth"
+      :defaultValue="defaultObjectValue"
     ></TimeSelect>
-    <MyRadio v-if="showMyRadio" :optionsArr="optionsArr"></MyRadio>
+    <MyRadio
+      v-if="showMyRadio"
+      :optionsArr="optionsArr"
+      :defaultValue="defaultStringValue"
+    ></MyRadio>
     <MySelect
       v-if="showNormalDropdown"
       :arr="optionsArr"
       width="100%"
+      :defaultValue="defaultStringValue"
     ></MySelect>
     <div class="hintBox" v-if="hint.length > 0">
       <svg-icon icon-class="warn"></svg-icon>
@@ -91,6 +98,14 @@ export default {
     birthdayDayWidth: {
       type: String,
       default: "70px",
+    },
+    defaultStringValue: {
+      type: String,
+      default: null,
+    },
+    defaultObjectValue: {
+      type: Object,
+      default: null,
     },
   },
   data() {

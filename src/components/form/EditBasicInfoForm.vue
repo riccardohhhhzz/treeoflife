@@ -15,6 +15,12 @@
           birthdayYearWidth="170px"
           birthdayMonthWidth="170px"
           birthdayDayWidth="170px"
+          :defaultObjectValue="
+            typeof item.value === 'object' ? item.value : null
+          "
+          :defaultStringValue="
+            typeof item.value === 'string' ? item.value : null
+          "
         ></UserInfoInputItem>
       </div>
       <MyButton :fontSize="16" :width="90" :height="40" class="save-btn"
@@ -34,11 +40,42 @@ export default {
   data() {
     return {
       inputItemList: [
-        { title: "昵称", inputType: "text", optionsArr: null },
-        { title: "性别", inputType: "radio", optionsArr: ["女", "男"] },
-        { title: "生日", inputType: "birthday", optionsArr: null },
-        { title: "身高(cm)", inputType: "text", optionsArr: null },
-        { title: "体重(kg)", inputType: "text", optionsArr: null },
+        {
+          title: "昵称",
+          inputType: "text",
+          optionsArr: null,
+          value: this.$store.state.userAbout.userInfo.username,
+        },
+        {
+          title: "性别",
+          inputType: "radio",
+          optionsArr: ["女", "男"],
+          value: this.$store.getters["userAbout/sex"],
+        },
+        {
+          title: "生日",
+          inputType: "birthday",
+          optionsArr: null,
+          value: this.$store.state.userAbout.userInfo.birthday,
+        },
+        {
+          title: "身高(cm)",
+          inputType: "text",
+          optionsArr: null,
+          value:
+            this.$store.state.userAbout.userInfo.height === 0
+              ? null
+              : this.$store.state.userAbout.userInfo.height.toString(),
+        },
+        {
+          title: "体重(kg)",
+          inputType: "text",
+          optionsArr: null,
+          value:
+            this.$store.state.userAbout.userInfo.weight === 0
+              ? null
+              : this.$store.state.userAbout.userInfo.weight.toString(),
+        },
       ],
     };
   },

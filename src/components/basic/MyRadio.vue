@@ -23,10 +23,14 @@ export default {
     optionsArr: {
       type: Array,
     },
+    defaultValue: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
-      radioVal: null,
+      radioVal: this.defaultValue,
     };
   },
   methods: {

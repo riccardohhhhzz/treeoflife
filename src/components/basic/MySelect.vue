@@ -33,6 +33,10 @@ export default {
     updateValue: {
       type: Function,
     },
+    defaultValue: {
+      type: String,
+      default: null,
+    },
   },
   computed: {
     styleVar() {
@@ -43,7 +47,7 @@ export default {
   },
   data() {
     return {
-      currentValue: null,
+      currentValue: this.defaultValue,
     };
   },
   watch: {

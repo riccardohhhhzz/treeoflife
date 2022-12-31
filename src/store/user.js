@@ -7,14 +7,24 @@ export default {
         userInfo: SessionUtils.get('user'),
     },
     getters: {
+        sex(state) {
+            let sex = state.userInfo.gender;
+            if (sex === 'male') {
+                return "男";
+            } else if (sex === 'female') {
+                return "女";
+            } else {
+                return null;
+            }
+        },
         birthday(state) {
-            var year = state.userInfo.birthday["year"];
-            var month = state.userInfo.birthday["month"];
-            var day = state.userInfo.birthday["day"];
+            let year = state.userInfo.birthday["year"];
+            let month = state.userInfo.birthday["month"];
+            let day = state.userInfo.birthday["day"];
             month = month < 10 ? "0" + month : month;
             day = day < 10 ? "0" + day : day;
             return month + "." + day + " ," + year;
-        }
+        },
     },
     actions: {
     },

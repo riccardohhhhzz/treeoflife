@@ -28,10 +28,22 @@ export default {
     return {
       properties: [
         { name: "昵称", value: this.$store.state.userAbout.userInfo.username },
-        { name: "性别", value: null },
+        { name: "性别", value: this.$store.state.userAbout.userInfo.gender },
         { name: "生日", value: this.$store.getters["userAbout/birthday"] },
-        { name: "身高", value: null },
-        { name: "体重", value: null },
+        {
+          name: "身高",
+          value:
+            this.$store.state.userAbout.userInfo.height === 0
+              ? null
+              : this.$store.state.userAbout.userInfo.height.toString(),
+        },
+        {
+          name: "体重",
+          value:
+            this.$store.state.userAbout.userInfo.weight === 0
+              ? null
+              : this.$store.state.userAbout.userInfo.weight.toString(),
+        },
       ],
     };
   },
