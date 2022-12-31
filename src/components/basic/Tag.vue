@@ -14,7 +14,7 @@
         icon="clearInput"
         iconWidth="14px"
         iconColor="#fff"
-        @click.native=""
+        @click.native="delTag"
       ></IconBtn>
     </div>
     <input
@@ -50,7 +50,7 @@ export default {
     keydownEvent(e) {
       // 按下回车键
       if (e.keyCode === 13) {
-        this.exitEditState();
+        this.$refs["tagTextInput"].blur();
       }
     },
     enterEditState() {
@@ -63,6 +63,14 @@ export default {
     },
     exitEditState() {
       this.editState = false;
+      this.$bus.$emit(
+        "modifyTagContent",
+        this.nonEditedContent,
+        this.editedContent
+      );
+    },
+    delTag() {
+      this.$bus.$emit("delTag", this.editedContent);
     },
   },
 };

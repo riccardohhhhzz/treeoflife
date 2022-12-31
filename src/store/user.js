@@ -31,6 +31,6 @@ export default {
     mutations: {
         INITUSERINFO(state, value) {
             state.userInfo = value;
-        }
+        },
     },
 }
