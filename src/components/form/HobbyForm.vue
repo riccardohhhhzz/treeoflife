@@ -50,7 +50,7 @@ export default {
       });
     },
     modifyTagContent(oldKey, newKey) {
-      if (!newKey || this.hobbies.indexOf(newKey) >= 0) {
+      if (!newKey || (this.hobbies.indexOf(newKey) >= 0 && oldKey != newKey)) {
         this.hobbies.splice(this.hobbies.length - 1, 1);
         return;
       }
