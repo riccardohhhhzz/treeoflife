@@ -19,6 +19,7 @@
         :finished="item.finished"
         :isFirst="item.isFirst"
         :isLast="item.isLast"
+        :clickHandler="item.clickHandler"
       ></TodoListItem>
     </div>
   </div>
@@ -40,6 +41,7 @@ export default {
           finished: false,
           isFirst: true,
           isLast: false,
+          clickHandler: this.signIn,
         },
         {
           taskName: "日记记录",
@@ -49,6 +51,7 @@ export default {
           finished: false,
           isFirst: false,
           isLast: false,
+          clickHandler: this.openDiary,
         },
         {
           taskName: "完善个人信息",
@@ -58,6 +61,7 @@ export default {
           finished: false,
           isFirst: false,
           isLast: true,
+          clickHandler: this.editPersonalInfo,
         },
       ],
     };
@@ -71,6 +75,17 @@ export default {
         }
       }
       return num;
+    },
+  },
+  methods: {
+    signIn() {
+      console.log("签到");
+    },
+    openDiary() {
+      console.log("日记记录");
+    },
+    editPersonalInfo() {
+      console.log("完善个人信息");
     },
   },
 };

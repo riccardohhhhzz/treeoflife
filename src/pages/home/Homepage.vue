@@ -9,6 +9,7 @@
       </keep-alive>
     </div>
     <Rightbar></Rightbar>
+    <MyDialog></MyDialog>
   </div>
 </template>
 
@@ -17,9 +18,10 @@ import Topbar from "../../components/homepage/Topbar.vue";
 import Leftbar from "../../components/homepage/Leftbar.vue";
 import MyHealth from "../../components/homepage/MyHealth.vue";
 import Rightbar from "../../components/homepage/Rightbar.vue";
+import MyDialog from "../../components/basic/MyDialog.vue";
 export default {
   name: "Homepage",
-  components: { Topbar, Leftbar, MyHealth, Rightbar },
+  components: { Topbar, Leftbar, MyHealth, Rightbar, MyDialog },
 };
 </script>
 

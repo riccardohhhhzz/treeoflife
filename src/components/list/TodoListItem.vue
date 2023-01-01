@@ -1,5 +1,5 @@
 <template>
-  <div id="todo-list-item" :style="styleVar">
+  <div id="todo-list-item" :style="styleVar" @click="clickItem">
     <div class="icon-box" :style="styleVar">
       <svg-icon :icon-class="icon" class="task-icon"></svg-icon>
     </div>
@@ -52,6 +52,9 @@ export default {
     isLast: {
       type: Boolean,
     },
+    clickHandler: {
+      type: Function,
+    },
   },
   computed: {
     itemBorderRadius() {
@@ -69,6 +72,11 @@ export default {
         "--border-bottom": this.isLast ? null : "1px solid #cccccc",
         "--border-radius": this.itemBorderRadius,
       };
+    },
+  },
+  methods: {
+    clickItem() {
+      this.clickHandler();
     },
   },
 };

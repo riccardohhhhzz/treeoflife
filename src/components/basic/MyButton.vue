@@ -27,9 +27,6 @@ export default {
       type: Number,
       default: 18,
     },
-    routeName: {
-      type: String,
-    },
     icon: {
       type: String,
     },

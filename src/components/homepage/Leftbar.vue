@@ -50,10 +50,20 @@ export default {
   },
   methods: {
     gotoLogin() {
-      SessionUtils.remove("user");
-      this.$router.replace({
-        path: "/login",
-      });
+      let dialogOptions = {
+        title: "提示",
+        content: "确认要退出登录吗",
+        mainBtnContent: "确认",
+        secondaryBtnContent: "取消",
+        mainBtnClickHandler: () => {
+          SessionUtils.remove("user");
+          this.$router.replace({
+            path: "/login",
+          });
+        },
+        secondaryBtnClickHandler: () => {},
+      };
+      this.$bus.$emit("openDialog", dialogOptions);
     },
     navPathChanged() {
       var currentPath = this.$router.history.current.path;
