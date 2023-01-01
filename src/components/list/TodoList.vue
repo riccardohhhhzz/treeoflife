@@ -3,7 +3,7 @@
     <div class="list-title">
       <h2>任务推荐</h2>
       <h2>
-        <font>{{ finishedTaskNum }}</font
+        <font>{{ finishedTaskName.length }}</font
         >/{{ todolist.length }}
       </h2>
     </div>
@@ -26,6 +26,19 @@
 </template>
 
 <script>
+import axios from "axios";
+var signInContents = [
+  "发光并非太阳的专利，你也可以发光。",
+  "纵有疾风起，人生不言弃。",
+  "面对光明，阴影就在我们身后。",
+  "每一个不曾起舞的日子，都是对生命的辜负。",
+  "青春是有限的，智慧是无穷的，趁短的青春，去学习无穷的智慧。",
+  "再长的路，一步步也能走完；再短的路，不迈开双脚也无法到达。",
+  "欲望以提升热忱，毅力以磨平泰山。",
+  "不怕千万人阻挡，只怕自己投降。",
+  "不同的人生，有不同的幸福。",
+  "梦想，不在于拥有，而在于追求。",
+];
 import TodoListItem from "./TodoListItem.vue";
 export default {
   name: "TodoList",
@@ -67,19 +80,40 @@ export default {
     };
   },
   computed: {
-    finishedTaskNum() {
-      var num = 0;
-      for (var todo of this.todolist) {
+    finishedTaskName() {
+      let tasks = [];
+      for (const todo of this.todolist) {
         if (todo.finished) {
-          num++;
+          tasks.push(todo.taskName);
         }
       }
-      return num;
+      return tasks;
     },
   },
   methods: {
     signIn() {
-      console.log("签到");
+      axios({
+        url: "/userinfo/credit/add",
+        headers: { "Content-Type": "application/json" },
+        method: "post",
+        params: {
+          username: this.$store.state.userAbout.userInfo.username,
+          credit: this.todolist[0].leaves,
+        },
+      }).then((res) => {
+        const data = res.data;
+        if (data.state === 200) {
+          const dialogOptions = {
+            title: "签到成功",
+            content:
+              signInContents[Math.floor(Math.random() * signInContents.length)],
+            mainBtnContent: "确认",
+            mainBtnClickHandler: () => {},
+          };
+          this.$bus.$emit("openDialog", dialogOptions);
+          this.todolist[0].finished = true;
+        }
+      });
     },
     openDiary() {
       console.log("日记记录");

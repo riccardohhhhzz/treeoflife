@@ -7,7 +7,7 @@
       <p class="name" v-if="type != 'info'">{{ username }}</p>
       <div class="points" v-if="showPoints">
         <svg-icon icon-class="leaf" style="vertical-align: middle"></svg-icon>
-        <span class="leavesNum">50</span>
+        <span class="leavesNum">{{ credit }}</span>
       </div>
       <h5 class="time" v-if="showTime">{{ renderTime }}</h5>
     </div>
@@ -36,7 +36,8 @@ export default {
   },
   data() {
     return {
-      username: "",
+      username: this.$store.state.userAbout.userInfo.username,
+      credit: this.$store.state.userAbout.userInfo.credit,
     };
   },
   computed: {
@@ -106,9 +107,6 @@ export default {
     onlyShowAvatar() {
       return this.type === "info";
     },
-  },
-  mounted() {
-    this.username = this.$store.state.userAbout.userInfo.username;
   },
 };
 </script>

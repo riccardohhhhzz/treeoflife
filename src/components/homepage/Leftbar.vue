@@ -55,6 +55,7 @@ export default {
         content: "确认要退出登录吗",
         mainBtnContent: "确认",
         secondaryBtnContent: "取消",
+        showSecondaryBtn: true,
         mainBtnClickHandler: () => {
           SessionUtils.remove("user");
           this.$router.replace({

@@ -6,6 +6,7 @@
       <p class="dialog-content">{{ options.content }}</p>
       <div class="dialog-btns">
         <MyButton
+          v-if="options.showSecondaryBtn"
           bgColor="#DC6154"
           hoverColor="#d05042"
           :width="80"
@@ -39,6 +40,7 @@ export default {
         content: "",
         mainBtnContent: "",
         secondaryBtnContent: "",
+        showSecondaryBtn: true,
         mainBtnClickHandler: () => {},
         secondaryBtnClickHandler: () => {},
       },
