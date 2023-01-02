@@ -108,7 +108,7 @@ export default {
 }
 .dialog-content {
   color: #666666;
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 35px;
 }
 .dialog-btns {

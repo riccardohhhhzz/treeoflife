@@ -39,12 +39,33 @@ export default {
           username: this.$store.state.userAbout.userInfo.username,
           hobbies: this.hobbies,
         },
-      }).then((res) => {
-        const data = res.data;
-        if (data.state === 200) {
-          SessionUtils.set("user", data.data);
-        }
-      });
+      })
+        .then((res) => {
+          const data = res.data;
+          if (data.state === 200) {
+            SessionUtils.set("user", data.data);
+            const dialogOptions = {
+              title: "提示",
+              content: "保存成功",
+              mainBtnContent: "确认",
+              showSecondaryBtn: false,
+              mainBtnClickHandler: () => {},
+            };
+            this.$bus.$emit("openDialog", dialogOptions);
+          }
+        })
+        .catch((e) => {
+          const dialogOptions = {
+            title: "提示",
+            content: "保存失败！",
+            mainBtnContent: "重试",
+            secondaryBtnContent: "取消",
+            showSecondaryBtn: true,
+            mainBtnClickHandler: this.saveHobby,
+            secondaryBtnClickHandler: () => {},
+          };
+          this.$bus.$emit("openDialog", dialogOptions);
+        });
     },
     addNewHobby() {
       this.hobbies.push("");

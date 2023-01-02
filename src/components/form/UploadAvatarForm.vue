@@ -27,6 +27,7 @@
 import MyForm from "../basic/MyForm.vue";
 import MyButton from "../basic/MyButton.vue";
 import axios from "axios";
+import { SessionUtils } from "@/utils";
 export default {
   name: "UploadAvatarForm",
   components: { MyForm, MyButton },
@@ -55,7 +56,7 @@ export default {
         return;
       }
       if (!this.uploading && this.fileChosen) {
-        console.log(this.base64Img);
+        this.uploading = true;
         // TODO: 衔接后端完成上传图片任务
         axios({
           url: "/pic/upload",
@@ -65,10 +66,42 @@ export default {
             data: this.base64Img,
             username: this.$store.state.userAbout.userInfo.username,
           },
-        }).then((res) => {
-          var data = res.data;
-        });
-        this.uploading = true;
+        })
+          .then((res) => {
+            this.uploading = false;
+            const data = res.data;
+            if (data.state === 200) {
+              const imgURL = data.url;
+              axios({
+                url: "/userinfo/icon/update",
+                headers: { "Content-Type": "application/json" },
+                method: "post",
+                data: {
+                  username: this.$store.state.userAbout.userInfo.username,
+                  url: imgURL,
+                },
+              }).then((res) => {
+                const data = res.data;
+                if (data.state === 200) {
+                  SessionUtils.set("user", data.data);
+                  this.closeUploadAvatarForm();
+                }
+              });
+            }
+          })
+          .catch((e) => {
+            this.uploading = false;
+            const dialogOptions = {
+              title: "提示",
+              content: "上传图片失败！",
+              mainBtnContent: "重试",
+              secondaryBtnContent: "取消",
+              showSecondaryBtn: true,
+              mainBtnClickHandler: this.uploadAvatar,
+              secondaryBtnClickHandler: () => {},
+            };
+            this.$bus.$emit("openDialog", dialogOptions);
+          });
       }
     },
     insertImg(e) {

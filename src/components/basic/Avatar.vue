@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="circle" v-if="username" :style="styleVar">
-      {{ username[0].toUpperCase() }}
+      <font v-if="!imgURL">{{ username[0].toUpperCase() }}</font>
+      <img v-if="imgURL" :src="imgURL" :alt="username[0].toUpperCase()" />
     </div>
     <div class="user">
       <p class="name" v-if="type != 'info'">{{ username }}</p>
@@ -38,6 +39,7 @@ export default {
     return {
       username: this.$store.state.userAbout.userInfo.username,
       credit: this.$store.state.userAbout.userInfo.credit,
+      imgURL: this.$store.state.userAbout.userInfo.iconURL,
     };
   },
   computed: {
@@ -135,6 +137,11 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: default;
+  overflow: hidden;
+}
+.circle img {
+  width: 100%;
+  height: 100%;
 }
 .user {
   float: left;
