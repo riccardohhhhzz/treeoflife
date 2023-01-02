@@ -20,6 +20,7 @@ import Tag from "../basic/Tag.vue";
 import AddButton from "../basic/AddButton.vue";
 import MyButton from "../basic/MyButton.vue";
 import axios from "axios";
+import { SessionUtils } from "@/utils";
 export default {
   name: "HobbyForm",
   components: { InfoForm, Tag, AddButton, MyButton },
@@ -39,7 +40,10 @@ export default {
           hobbies: this.hobbies,
         },
       }).then((res) => {
-        var data = res.data;
+        const data = res.data;
+        if (data.state === 200) {
+          SessionUtils.set("user", data.data);
+        }
       });
     },
     addNewHobby() {

@@ -71,12 +71,16 @@ export default {
         "--accentColor": this.accentColor,
         "--border-bottom": this.isLast ? null : "1px solid #cccccc",
         "--border-radius": this.itemBorderRadius,
+        "--hover-cursor": this.finished ? "default" : "pointer",
+        "--hover-bgColor": this.finished ? "transparent" : "#f7f7f7",
       };
     },
   },
   methods: {
     clickItem() {
-      this.clickHandler();
+      if (!this.finished) {
+        this.clickHandler();
+      }
     },
   },
 };
@@ -92,8 +96,8 @@ export default {
   border-radius: var(--border-radius);
 }
 #todo-list-item:hover {
-  cursor: pointer;
-  background-color: #f7f7f7;
+  cursor: var(--hover-cursor);
+  background-color: var(--hover-bgColor);
 }
 .icon-box {
   display: flex;

@@ -40,6 +40,7 @@ var signInContents = [
   "梦想，不在于拥有，而在于追求。",
 ];
 import TodoListItem from "./TodoListItem.vue";
+import { SessionUtils } from "@/utils";
 export default {
   name: "TodoList",
   components: { TodoListItem },
@@ -91,29 +92,67 @@ export default {
     },
   },
   methods: {
-    signIn() {
+    initTasks() {
       axios({
-        url: "/userinfo/credit/add",
+        url: "/userinfo/task/update",
         headers: { "Content-Type": "application/json" },
         method: "post",
-        params: {
+        data: {
           username: this.$store.state.userAbout.userInfo.username,
-          credit: this.todolist[0].leaves,
+          finishedTasks: [],
         },
       }).then((res) => {
         const data = res.data;
         if (data.state === 200) {
-          const dialogOptions = {
-            title: "签到成功",
-            content:
-              signInContents[Math.floor(Math.random() * signInContents.length)],
-            mainBtnContent: "确认",
-            mainBtnClickHandler: () => {},
-          };
-          this.$bus.$emit("openDialog", dialogOptions);
-          this.todolist[0].finished = true;
+          SessionUtils.set("user", data.data);
         }
       });
+    },
+    finishTask(taskName) {
+      const task = this.todolist.find((todo) => todo.taskName === taskName);
+      const credit = task.leaves;
+      const username = this.$store.state.userAbout.userInfo.username;
+      task.finished = true;
+      axios({
+        url: "/userinfo/task/update",
+        headers: { "Content-Type": "application/json" },
+        method: "post",
+        data: {
+          username: username,
+          finishedTasks: this.finishedTaskName,
+        },
+      }).then((res) => {
+        const data = res.data;
+        if (data.state === 200) {
+          axios({
+            url: "/userinfo/credit/add",
+            headers: { "Content-Type": "application/json" },
+            method: "post",
+            params: {
+              username: this.$store.state.userAbout.userInfo.username,
+              credit: credit,
+            },
+          }).then((res) => {
+            const data = res.data;
+            if (data.state === 200) {
+              SessionUtils.set("user", data.data);
+              this.$bus.$emit("updateCredit", credit);
+            }
+          });
+        }
+      });
+    },
+    signIn() {
+      const dialogOptions = {
+        title: "签到成功",
+        content:
+          signInContents[Math.floor(Math.random() * signInContents.length)],
+        mainBtnContent: "确认",
+        mainBtnClickHandler: () => {
+          this.finishTask("签到");
+        },
+      };
+      this.$bus.$emit("openDialog", dialogOptions);
     },
     openDiary() {
       console.log("日记记录");
@@ -121,6 +160,17 @@ export default {
     editPersonalInfo() {
       console.log("完善个人信息");
     },
+  },
+  mounted() {
+    const finishedTasks = this.$store.state.userAbout.userInfo.finishedTasks;
+    if (!finishedTasks || finishedTasks.length === 0) {
+      return;
+    }
+    for (const todo of this.todolist) {
+      if (finishedTasks.indexOf(todo.taskName) >= 0) {
+        todo.finished = true;
+      }
+    }
   },
 };
 </script>

@@ -108,6 +108,17 @@ export default {
       return this.type === "info";
     },
   },
+  methods: {
+    updateCredit(increment) {
+      this.credit += increment;
+    },
+  },
+  mounted() {
+    this.$bus.$on("updateCredit", this.updateCredit);
+  },
+  beforeDestroy() {
+    this.$bus.$off("updateCredit");
+  },
 };
 </script>
 
