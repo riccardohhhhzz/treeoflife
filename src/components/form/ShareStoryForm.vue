@@ -18,6 +18,7 @@ import InfoForm from "./InfoForm.vue";
 import QuillEditor from "../complex/QuillEditor.vue";
 import MyButton from "../basic/MyButton.vue";
 import axios from "axios";
+import { SessionUtils } from "@/utils";
 export default {
   name: "ShareStoryForm",
   components: { InfoForm, QuillEditor, MyButton },
@@ -28,19 +29,42 @@ export default {
   },
   methods: {
     saveStory() {
-      let newStory = this.$refs["story-editor"].content;
+      const newStory = this.$refs["story-editor"].content;
       axios({
         url: "/userinfo/story/update",
         headers: { "Content-Type": "application/json" },
         method: "post",
         data: {
           username: this.$store.state.userAbout.userInfo.username,
-          story: this.newStory,
+          story: newStory,
         },
-      }).then((res) => {
-        var data = res.data;
-        console.log(data);
-      });
+      })
+        .then((res) => {
+          const data = res.data;
+          if (data.state === 200) {
+            SessionUtils.set("user", data.data);
+            const dialogOptions = {
+              title: "提示",
+              content: "保存成功",
+              mainBtnContent: "确认",
+              showSecondaryBtn: false,
+              mainBtnClickHandler: () => {},
+            };
+            this.$bus.$emit("openDialog", dialogOptions);
+          }
+        })
+        .catch((e) => {
+          const dialogOptions = {
+            title: "提示",
+            content: "保存失败！",
+            mainBtnContent: "重试",
+            secondaryBtnContent: "取消",
+            showSecondaryBtn: true,
+            mainBtnClickHandler: this.saveStory,
+            secondaryBtnClickHandler: () => {},
+          };
+          this.$bus.$emit("openDialog", dialogOptions);
+        });
     },
   },
 };
