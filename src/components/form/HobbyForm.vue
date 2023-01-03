@@ -26,7 +26,7 @@ export default {
   components: { InfoForm, Tag, AddButton, MyButton },
   data() {
     return {
-      hobbies: this.$store.state.userAbout.userInfo.hobbies,
+      hobbies: this.$store.state.userAbout.userInfo.hobbies || [],
     };
   },
   methods: {
@@ -89,6 +89,7 @@ export default {
   },
   mounted() {
     this.hobbies = this.hobbies.filter((item) => item);
+
     this.$bus.$on("modifyTagContent", this.modifyTagContent);
     this.$bus.$on("delTag", this.delTag);
   },

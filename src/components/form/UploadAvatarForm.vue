@@ -1,5 +1,10 @@
 <template>
-  <MyForm id="upload-avatar-form" ref="form" minHeight="210px">
+  <MyForm
+    id="upload-avatar-form"
+    ref="form"
+    minHeight="210px"
+    :key="componentKey"
+  >
     <div class="form-box">
       <h2 class="title">选择一张图片，然后点击上传</h2>
       <h4 class="subtitle">选择不超过 10MB 的 JPEG、JPG 或 PNG</h4>
@@ -36,6 +41,7 @@ export default {
       fileChosen: false,
       base64Img: null,
       uploading: false,
+      componentKey: 0,
     };
   },
   watch: {
@@ -71,7 +77,7 @@ export default {
             this.uploading = false;
             const data = res.data;
             if (data.state === 200) {
-              const imgURL = data.url;
+              const imgURL = data.data.url;
               axios({
                 url: "/userinfo/icon/update",
                 headers: { "Content-Type": "application/json" },
@@ -84,6 +90,7 @@ export default {
                 const data = res.data;
                 if (data.state === 200) {
                   SessionUtils.set("user", data.data);
+                  this.$bus.$emit("updateAvatar", imgURL);
                   this.closeUploadAvatarForm();
                 }
               });
@@ -117,6 +124,7 @@ export default {
     },
     closeUploadAvatarForm() {
       this.$refs["form"].closeForm();
+      this.componentKey += 1;
     },
   },
   mounted() {

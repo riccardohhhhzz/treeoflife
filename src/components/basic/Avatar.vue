@@ -47,6 +47,7 @@ export default {
       return {
         "--avatarWidth": this.avatarWidth,
         "--fontSize": this.fontSize,
+        "--bgColor": this.imgURL ? "transparent" : "#4dcf90",
       };
     },
     /*
@@ -114,12 +115,17 @@ export default {
     updateCredit(increment) {
       this.credit += increment;
     },
+    updateAvatar(imgURL) {
+      this.imgURL = imgURL;
+    },
   },
   mounted() {
     this.$bus.$on("updateCredit", this.updateCredit);
+    this.$bus.$on("updateAvatar", this.updateAvatar);
   },
   beforeDestroy() {
     this.$bus.$off("updateCredit");
+    this.$bus.$off("updateAvatar");
   },
 };
 </script>
@@ -130,7 +136,7 @@ export default {
   display: flex;
   height: var(--avatarWidth);
   width: var(--avatarWidth);
-  background-color: #4dcf90;
+  background-color: var(--bgColor);
   border-radius: var(--avatarWidth);
   color: #fff;
   font-size: var(--fontSize);
@@ -140,7 +146,7 @@ export default {
   overflow: hidden;
 }
 .circle img {
-  width: 100%;
+  object-fit: contain;
   height: 100%;
 }
 .user {
