@@ -89,7 +89,6 @@ export default {
   },
   mounted() {
     this.hobbies = this.hobbies.filter((item) => item);
-
     this.$bus.$on("modifyTagContent", this.modifyTagContent);
     this.$bus.$on("delTag", this.delTag);
   },
