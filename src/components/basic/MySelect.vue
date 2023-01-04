@@ -20,7 +20,7 @@ export default {
       type: Array,
     },
     inputType: {
-      inputType: String,
+      type: String,
     },
     unit: {
       type: String,
@@ -53,13 +53,16 @@ export default {
   watch: {
     currentValue: {
       handler(newValue, oldValue) {
-        this.updateValue(this.inputType, newValue);
+        if (this.updateValue) {
+          this.updateValue(this.inputType, newValue);
+        }
       },
     },
   },
   methods: {
     blurEmit() {
       this.$emit("blur");
+      this.$emit("update", this.currentValue);
     },
   },
 };

@@ -9,9 +9,9 @@ export default {
     getters: {
         sex(state) {
             let sex = state.userInfo.gender;
-            if (sex === 'male') {
+            if (sex === 'male' || sex === "男") {
                 return "男";
-            } else if (sex === 'female') {
+            } else if (sex === 'female' || sex === "女") {
                 return "女";
             } else {
                 return null;

@@ -35,14 +35,14 @@ export default {
           value:
             this.$store.state.userAbout.userInfo.height === 0
               ? null
-              : this.$store.state.userAbout.userInfo.height.toString(),
+              : this.$store.state.userAbout.userInfo.height.toString() + " cm",
         },
         {
           name: "体重",
           value:
             this.$store.state.userAbout.userInfo.weight === 0
               ? null
-              : this.$store.state.userAbout.userInfo.weight.toString(),
+              : this.$store.state.userAbout.userInfo.weight.toString() + " kg",
         },
       ],
     };

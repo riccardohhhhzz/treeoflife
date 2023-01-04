@@ -7,6 +7,7 @@
       @blur="sendMessage('update')"
       @input="sendMessage('updateImmediately')"
       :style="styleVar"
+      :readonly="readOnly ? 'readonly' : null"
     />
     <svg-icon
       :icon-class="eyeIcon"
@@ -54,6 +55,10 @@ export default {
       type: String,
       default: null,
     },
+    readOnly: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -86,8 +91,11 @@ export default {
         "--width": this.width,
         "--height": this.height,
         "--borderRadius": this.borderRadius + "px",
-        "--focusBorderColor": this.focusBorderColor,
+        "--focusBorderColor": this.readOnly ? "#cdcdcd" : this.focusBorderColor,
         "--shadow": this.showShadow ? "rbga(0, 0, 0, 0.25)" : "none",
+        "--hover-border-color": this.readOnly ? "#cdcdcd" : "#939597",
+        "--hover-cursor": this.readOnly ? "default" : "text",
+        "--color": this.readOnly ? "#cdcdcd" : "#333333",
       };
     },
   },
@@ -109,7 +117,8 @@ export default {
   position: relative;
 }
 input:hover {
-  border: 1px solid #939597;
+  border: 1px solid var(--hover-border-color);
+  cursor: var(--hover-cursor);
 }
 input:focus {
   border: 1px solid var(--focusBorderColor);
@@ -124,7 +133,7 @@ input:focus {
   border: 1px solid #cdcdcd;
   background-color: var(--bgColor);
   border-radius: var(--borderRadius);
-  color: #333333;
+  color: var(--color);
   padding: 0px 10px;
 }
 .eye {

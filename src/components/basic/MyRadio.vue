@@ -36,6 +36,7 @@ export default {
   methods: {
     changeRadioVal(val) {
       this.radioVal = val;
+      this.$emit("update", val);
     },
   },
 };

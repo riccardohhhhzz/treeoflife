@@ -8,6 +8,7 @@
       :height="inputHeight"
       :bgColor="inputBgColor"
       :defaultValue="defaultStringValue"
+      :readOnly="readOnly"
       v-if="showTextInput"
       class="textInput"
       @update="getValue"
@@ -15,23 +16,25 @@
     ></TextInput>
     <TimeSelect
       v-if="showTimeDropdown"
-      @update="sendValue($event), getValue($event)"
       class="timeSelect"
       :yearWidth="birthdayYearWidth"
       :monthWidth="birthdayMonthWidth"
       :dayWidth="birthdayDayWidth"
       :defaultValue="defaultObjectValue"
+      @update="sendValue($event), getValue($event)"
     ></TimeSelect>
     <MyRadio
       v-if="showMyRadio"
       :optionsArr="optionsArr"
       :defaultValue="defaultStringValue"
+      @update="getValue"
     ></MyRadio>
     <MySelect
       v-if="showNormalDropdown"
       :arr="optionsArr"
       width="100%"
       :defaultValue="defaultStringValue"
+      @update="getValue"
     ></MySelect>
     <div class="hintBox" v-if="hint.length > 0">
       <svg-icon icon-class="warn"></svg-icon>
@@ -106,6 +109,10 @@ export default {
     defaultObjectValue: {
       type: Object,
       default: null,
+    },
+    readOnly: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

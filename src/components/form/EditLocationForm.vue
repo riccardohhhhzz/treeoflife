@@ -4,6 +4,7 @@
       <h2 class="title">位置</h2>
       <div class="edit-info">
         <UserInfoInputItem
+          ref="user-info-input"
           v-for="(item, idx) in inputItemList"
           :key="item.title"
           :title="item.title"
@@ -14,7 +15,12 @@
           inputBgColor="#fff"
         ></UserInfoInputItem>
       </div>
-      <MyButton :fontSize="16" :width="90" :height="40" class="save-btn"
+      <MyButton
+        :fontSize="16"
+        :width="90"
+        :height="40"
+        class="save-btn"
+        @click.native="saveLocation"
         >保存</MyButton
       >
     </div>
@@ -84,6 +90,9 @@ export default {
     },
     closeEditLocationForm() {
       this.$refs["form"].closeForm();
+    },
+    saveLocation() {
+      console.log(this.$refs["user-info-input"]);
     },
   },
   mounted() {
