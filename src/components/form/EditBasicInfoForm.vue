@@ -128,7 +128,6 @@ export default {
           const data = res.data;
           if (data.state === 200) {
             SessionUtils.set("user", data.data);
-            this.$bus.$emit("updateBasicInfo");
             const dialogOptions = {
               title: "提示",
               content: "保存成功",

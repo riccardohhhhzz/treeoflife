@@ -10,6 +10,7 @@
           :title="item.title"
           :inputType="item.inputType"
           :optionsArr="item.optionsArr"
+          :defaultStringValue="item.defaultValue"
           titleFontWeight="600"
           titleFontSize="16px"
           inputBgColor="#fff"
@@ -67,20 +68,41 @@ const ChineseProvinces = [
 import MyForm from "../basic/MyForm.vue";
 import MyButton from "../basic/MyButton.vue";
 import UserInfoInputItem from "../complex/UserInfoInputItem.vue";
+import axios from "axios";
+import { SessionUtils } from "@/utils";
 export default {
   name: "EditLocationForm",
   components: { MyForm, MyButton, UserInfoInputItem },
   data() {
     return {
       inputItemList: [
-        { title: "国家", inputType: "dropdown", optionsArr: ["中国"] },
+        {
+          title: "国家",
+          inputType: "dropdown",
+          optionsArr: ["中国"],
+          defaultValue: "中国",
+        },
         {
           title: "地区/省份",
           inputType: "dropdown",
           optionsArr: ChineseProvinces,
+          defaultValue: this.$store.state.userAbout.userInfo.province,
         },
-        { title: "城市（选填）", inputType: "text", optionsArr: null },
-        { title: "地区（选填）", inputType: "text", optionsArr: null },
+        {
+          title: "城市（选填）",
+          inputType: "text",
+          optionsArr: null,
+          defaultValue: this.$store.state.userAbout.userInfo.city,
+        },
+        {
+          title: "邮政编码（选填）",
+          inputType: "text",
+          optionsArr: null,
+          defaultValue:
+            this.$store.state.userAbout.userInfo.postcode === 0
+              ? null
+              : this.$store.state.userAbout.userInfo.postcode.toString(),
+        },
       ],
     };
   },
@@ -92,7 +114,37 @@ export default {
       this.$refs["form"].closeForm();
     },
     saveLocation() {
-      console.log(this.$refs["user-info-input"]);
+      const locationInfo = {
+        username: this.$store.state.userAbout.userInfo.username,
+        province:
+          this.$refs["user-info-input"][1].value ||
+          this.inputItemList[1].defaultValue,
+        city:
+          this.$refs["user-info-input"][2].value ||
+          this.inputItemList[2].defaultValue,
+        postcode:
+          this.$refs["user-info-input"][3].value ||
+          this.inputItemList[3].defaultValue,
+      };
+      axios({
+        url: "/userinfo/position/update",
+        headers: { "Content-Type": "application/json" },
+        method: "post",
+        data: locationInfo,
+      }).then((res) => {
+        const data = res.data;
+        if (data.state === 200) {
+          SessionUtils.set("user", data.data);
+          const dialogOptions = {
+            title: "提示",
+            content: "保存成功",
+            mainBtnContent: "确认",
+            showSecondaryBtn: false,
+            mainBtnClickHandler: () => {},
+          };
+          this.$bus.$emit("openDialog", dialogOptions);
+        }
+      });
     },
   },
   mounted() {

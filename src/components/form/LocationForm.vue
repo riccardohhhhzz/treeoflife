@@ -28,9 +28,18 @@ export default {
     return {
       properties: [
         { name: "国家", value: "中国" },
-        { name: "地区/省份", value: null },
-        { name: "城市", value: null },
-        { name: "邮政编码", value: null },
+        {
+          name: "地区/省份",
+          value: this.$store.state.userAbout.userInfo.province,
+        },
+        { name: "城市", value: this.$store.state.userAbout.userInfo.city },
+        {
+          name: "邮政编码",
+          value:
+            this.$store.state.userAbout.userInfo.postcode === 0
+              ? null
+              : this.$store.state.userAbout.userInfo.postcode.toString(),
+        },
       ],
     };
   },
