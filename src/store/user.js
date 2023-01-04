@@ -7,8 +7,22 @@ export default {
         userInfo: SessionUtils.get('user'),
     },
     getters: {
+        infoPerfected(state) {
+            const userinfo = state.userInfo;
+            return Boolean(
+                userinfo.birthday &&
+                userinfo.city &&
+                userinfo.email &&
+                userinfo.gender &&
+                userinfo.height &&
+                userinfo.hobbies &&
+                userinfo.province &&
+                userinfo.story &&
+                userinfo.height
+            );
+        },
         sex(state) {
-            let sex = state.userInfo.gender;
+            const sex = state.userInfo.gender;
             if (sex === 'male' || sex === "男") {
                 return "男";
             } else if (sex === 'female' || sex === "女") {
@@ -18,7 +32,7 @@ export default {
             }
         },
         birthday(state) {
-            let year = state.userInfo.birthday["year"];
+            const year = state.userInfo.birthday["year"];
             let month = state.userInfo.birthday["month"];
             let day = state.userInfo.birthday["day"];
             month = month < 10 ? "0" + month : month;

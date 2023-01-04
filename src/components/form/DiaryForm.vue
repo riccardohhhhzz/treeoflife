@@ -49,10 +49,17 @@ export default {
     ...mapActions("diaryAbout", ["updateCondition"]),
     publishDiary() {
       if (!this.publishable) {
-        alert("请选择今日状态");
+        const dialogOptions = {
+          title: "提示",
+          content: "请选择今日状态",
+          mainBtnContent: "确认",
+          showSecondaryBtn: false,
+          mainBtnClickHandler: () => {},
+        };
+        this.$bus.$emit("openDialog", dialogOptions);
         return;
       }
-      var myDate = new Date();
+      let myDate = new Date();
       let diary = {
         mood: this.selectedMood,
         publishTime: myDate.getTime(),
@@ -67,17 +74,29 @@ export default {
           emotion: diary.mood,
           content: diary.content,
         },
-      }).then((res) => {
-        var data = res.data;
-        if (data.state === 200) {
-          this.updateCondition(this.selectedMood);
-          this.$bus.$emit("conditionsUpdated");
-          this.$bus.$emit("publishNewDiary", data.data);
-          this.clearCondition();
-        } else {
-          alert("发布失败");
-        }
-      });
+      })
+        .then((res) => {
+          const data = res.data;
+          if (data.state === 200) {
+            this.updateCondition(this.selectedMood);
+            this.$bus.$emit("conditionsUpdated");
+            this.$bus.$emit("publishNewDiary", data.data);
+            this.$bus.$emit("finishTask", "日记记录");
+            this.clearCondition();
+          }
+        })
+        .catch((e) => {
+          const dialogOptions = {
+            title: "提示",
+            content: "发布失败！",
+            mainBtnContent: "重试",
+            secondaryBtnContent: "取消",
+            showSecondaryBtn: true,
+            mainBtnClickHandler: this.publishDiary,
+            secondaryBtnClickHandler: () => {},
+          };
+          this.$bus.$emit("openDialog", dialogOptions);
+        });
     },
     updateSelectedMood(data) {
       this.selectedMood = data;

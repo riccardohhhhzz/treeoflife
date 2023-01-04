@@ -37,7 +37,7 @@ export default {
         method: "post",
         data: {
           username: this.$store.state.userAbout.userInfo.username,
-          hobbies: this.hobbies,
+          hobbies: this.hobbies.length === 0 ? null : this.hobbies,
         },
       })
         .then((res) => {

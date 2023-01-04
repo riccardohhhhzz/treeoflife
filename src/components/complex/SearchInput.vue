@@ -28,7 +28,7 @@ export default {
   props: {
     placeholder: {
       type: String,
-      default: "糖尿病早期症状",
+      default: "新冠阳康后应注意什么",
     },
   },
   data() {

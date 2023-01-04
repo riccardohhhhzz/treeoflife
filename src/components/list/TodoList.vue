@@ -72,7 +72,7 @@ export default {
           icon: "personal-info",
           accentColor: "#66BEFD",
           leaves: 50,
-          finished: false,
+          finished: this.$store.getters["userAbout/infoPerfected"],
           isFirst: false,
           isLast: true,
           clickHandler: this.editPersonalInfo,
@@ -92,26 +92,13 @@ export default {
     },
   },
   methods: {
-    initTasks() {
-      axios({
-        url: "/userinfo/task/update",
-        headers: { "Content-Type": "application/json" },
-        method: "post",
-        data: {
-          username: this.$store.state.userAbout.userInfo.username,
-          finishedTasks: [],
-        },
-      }).then((res) => {
-        const data = res.data;
-        if (data.state === 200) {
-          SessionUtils.set("user", data.data);
-        }
-      });
-    },
     finishTask(taskName) {
       const task = this.todolist.find((todo) => todo.taskName === taskName);
       const credit = task.leaves;
       const username = this.$store.state.userAbout.userInfo.username;
+      if (task.finished) {
+        return;
+      }
       task.finished = true;
       axios({
         url: "/userinfo/task/update",
@@ -155,13 +142,19 @@ export default {
       this.$bus.$emit("openDialog", dialogOptions);
     },
     openDiary() {
-      console.log("日记记录");
+      this.$bus.$emit("openDiaryForm");
     },
     editPersonalInfo() {
-      console.log("完善个人信息");
+      this.$router.replace({
+        path: "/e/personalcenter",
+      });
+      this.$nextTick(() => {
+        this.$bus.$emit("navPathChanged");
+      });
     },
   },
   mounted() {
+    this.$bus.$on("finishTask", this.finishTask);
     const finishedTasks = this.$store.state.userAbout.userInfo.finishedTasks;
     if (!finishedTasks || finishedTasks.length === 0) {
       return;
@@ -171,6 +164,9 @@ export default {
         todo.finished = true;
       }
     }
+  },
+  beforeDestroy() {
+    this.$bus.$off("finishTask");
   },
 };
 </script>

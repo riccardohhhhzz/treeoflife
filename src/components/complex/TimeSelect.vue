@@ -69,9 +69,9 @@ export default {
         months: Array.from({ length: 12 }, (v, k) => k + 1),
       },
       selectDate: {
-        year: null,
-        month: null,
-        day: null,
+        year: this.defaultValue ? this.defaultValue["year"] : null,
+        month: this.defaultValue ? this.defaultValue["month"] : null,
+        day: this.defaultValue ? this.defaultValue["day"] : null,
       },
       // 数组长度为13位，让month与index对齐，语义化更好
       monthDays: [-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
