@@ -85,7 +85,16 @@ export default {
           });
           this.$bus.$emit("getPastMoods");
         } else {
-          alert("操作失败，请重试");
+          const dialogOptions = {
+            title: "提示",
+            content: "操作失败！请重试",
+            mainBtnContent: "重试",
+            secondaryBtnContent: "取消",
+            showSecondaryBtn: true,
+            mainBtnClickHandler: this.delDiary(id),
+            secondaryBtnClickHandler: () => {},
+          };
+          this.$bus.$emit("openDialog", dialogOptions);
         }
       });
     },
