@@ -48,6 +48,7 @@
       @click.native="gotoPage"
       >下一步</MyButton
     >
+    <MyDialog></MyDialog>
   </div>
 </template>
 
@@ -55,10 +56,11 @@
 import VerificationCode from "../../components/complex/VerificationCode.vue";
 import MyButton from "../../components/basic/MyButton.vue";
 import LinkText from "../../components/text/LinkText.vue";
+import MyDialog from "../../components/basic/MyDialog.vue";
 import axios from "axios";
 export default {
   name: "Verification",
-  components: { VerificationCode, MyButton, LinkText },
+  components: { VerificationCode, MyButton, LinkText, MyDialog },
   data() {
     return {
       second: 59,
@@ -117,16 +119,22 @@ export default {
               });
             }
             if (this.from === "register") {
-              alert("注册成功！欢迎加入Treeoflife");
               window.sessionStorage.setItem("user", JSON.stringify(data.data));
-              this.$router.push({
-                path: "/e",
-              });
+              const dialogOptions = {
+                title: "提示",
+                content: "注册成功！欢迎加入Treeoflife",
+                mainBtnContent: "确认",
+                showSecondaryBtn: false,
+                mainBtnClickHandler: () => {
+                  this.$router.push("/e");
+                },
+              };
+              this.$bus.$emit("openDialog", dialogOptions);
             }
           }
         });
       } else {
-        alert("请输入验证码");
+        this.showWarn = "请输入验证码";
       }
     },
   },

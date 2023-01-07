@@ -39,6 +39,7 @@
       @click.native="gotoLogin"
       >下一步</MyButton
     >
+    <MyDialog></MyDialog>
   </div>
 </template>
 
@@ -46,9 +47,10 @@
 import MyButton from "../../components/basic/MyButton.vue";
 import TextInput from "../../components/basic/TextInput.vue";
 import axios from "axios";
+import MyDialog from "../../components/basic/MyDialog.vue";
 export default {
   name: "SetNewPsw",
-  components: { MyButton, TextInput },
+  components: { MyButton, TextInput, MyDialog },
   data() {
     return {
       newPsw: "",
@@ -70,6 +72,7 @@ export default {
       this.$router.back();
     },
     checkNewPsw(value) {
+      this.showWarn = "";
       var valueCleaned = value.replace(/[^\a-\z\A-\Z0-9\_]/g, "");
       if (
         valueCleaned.length !== value.length ||
@@ -95,16 +98,25 @@ export default {
           var data = res.data;
           if (data.state === 2003) {
             this.showWarn =
-              "新密码格式错误，请输入6-20位字符，支持英文大小写、数字、下划线";
+              "格式错误，请输入6-20位字符，支持英文大小写、数字、下划线";
           }
           if (data.state === 200) {
-            alert("修改密码成功！");
             window.sessionStorage.removeItem("user");
-            this.$router.push("/login");
+            const dialogOptions = {
+              title: "提示",
+              content: "修改密码成功！",
+              mainBtnContent: "确认",
+              showSecondaryBtn: false,
+              mainBtnClickHandler: () => {
+                this.$router.push("/login");
+              },
+            };
+            this.$bus.$emit("openDialog", dialogOptions);
           }
         });
       } else {
-        alert("请输入新密码");
+        this.showWarn =
+          "格式错误，请输入6-20位字符，支持英文大小写、数字、下划线";
       }
     },
   },
