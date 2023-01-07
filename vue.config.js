@@ -34,5 +34,18 @@ module.exports = {
         symbolId: "icon-[name]"
       })
       .end();
+  },
+  devServer: {
+    open: true,
+    port: 8085,
+    proxy: {
+      "/api": {
+        target: "http://82.157.38.138:8085/api",
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   }
 };

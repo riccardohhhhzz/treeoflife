@@ -1,6 +1,6 @@
 <template>
   <div id="small-homepage">
-    <div>首页</div>
+    <div>更多内容，敬请期待</div>
   </div>
 </template>
 
